@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function TabOneScreen() {
   const [fetchError, setFetchError] = useState("");
-  const [citations, setCitations] = useState<any[]>([]);
+  const [citations, setCitations] = useState<String[]>([]);
   const [citationIndex, setCitationIndex] = useState(0);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function TabOneScreen() {
       const timer = setInterval(() => {
         setCitationIndex((prevValue) => (prevValue + 1) % citations.length);
       }, 5000);
-      return () => clearTimeout(timer);
+      return () => clearInterval(timer);
     }
   }, [citations.length]);
 
@@ -48,7 +48,7 @@ export default function TabOneScreen() {
         style={styles.imageBackground}
       >
         <View style={styles.headerContainer}>
-          {citations && citations.length > 0 ? (
+          {citations.length > 0 ? (
             <View style={styles.citationContainer}>
               <Text style={styles.citationTextContent}>
                 {citations[citationIndex].content}
