@@ -145,10 +145,10 @@ const styles = StyleSheet.create({
     height: "auto",
     borderWidth: 1,
     padding: 10,
-    marginTop: 30,
-    marginLeft: 15,
-    marginRight: 15,
-    maxHeight: "90%",
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    maxHeight: "100%",
     borderRadius: 18,
 
     ...Platform.select({
@@ -165,12 +165,12 @@ const styles = StyleSheet.create({
     }),
   },
   citationTextContent: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: "bold",
     textAlign: "center",
   },
   citationTextAuthor: {
-    marginTop: 30,
+    marginTop: 20,
     paddingLeft: 5,
   },
   mainContainer: {
