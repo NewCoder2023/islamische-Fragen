@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     flex: 0.65,
-    backgroundColor: "white",
     marginTop: 30,
     paddingTop: 30,
     borderWidth: 1,
