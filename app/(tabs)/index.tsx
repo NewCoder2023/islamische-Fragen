@@ -1,125 +1,72 @@
 import { StyleSheet, Platform, ImageBackground } from "react-native";
-import { Text, View } from "@/components/Themed";
+import { Text, View } from "components/Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Categories from "@/components/Categories";
-import { supabase } from "../utils/supabase";
-import { useEffect, useState } from "react";
+import Categories from "components/Categories";
+import Citations from "components/Citations";
 
 export default function TabOneScreen() {
-  const [fetchError, setFetchError] = useState("");
-  const [citations, setCitations] = useState<any[]>([]);
-  const [citationIndex, setCitationIndex] = useState(0);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const { data, error } = await supabase.from("Citations").select();
-
-      // Error checking
-
-      if (error) {
-        setFetchError(
-          "Elemente konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internet Verbindung!"
-        );
-        setCitations([]);
-      }
-
-      if (data) {
-        setCitations(data);
-        setFetchError("");
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    if (citations && citationIndex < citations.length) {
-      const timer = setInterval(() => {
-        setCitationIndex((prevValue) => (prevValue + 1) % citations.length);
-      }, 1000);
-      return () => clearInterval(timer);
-    }
-  }, [citations.length]);
-
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={require("@/assets/images/indexBackgroundImage.jpeg")}
+        source={require("assets/images/indexBackgroundImage.jpeg")}
         resizeMode='cover'
         style={styles.imageBackground}
       >
-        <View style={styles.headerContainer}>
-          {citations && citations.length > 0 ? (
-            <View style={styles.citationContainer}>
-              <Text style={styles.citationTextContent}>
-                {citations[citationIndex].content}
-              </Text>
-              <Text style={styles.citationTextAuthor}>
-                {citations[citationIndex].author}
-              </Text>
-            </View>
-          ) : (
-            <View style={styles.citationContainer}>
-              <Text style={[styles.citationTextContent, styles.errorText]}>
-                {fetchError}
-              </Text>
-            </View>
-          )}
-        </View>
-
+        <Citations />
         <View style={styles.mainContainer}>
           <View style={styles.categoryContainer}>
             <Categories
               category={"dua"}
               categoryDescriptions={"Dua"}
-              imageSource={require("@/assets/images/dua.png")}
+              imageSource={require("assets/images/dua.png")}
             />
 
             <Categories
               category={"ziyarat"}
               categoryDescriptions={"Ziyarat"}
-              imageSource={require("@/assets/images/ziyarat.png")}
+              imageSource={require("assets/images/ziyarat.png")}
             />
 
             <Categories
               category={"imamMahdi"}
               categoryDescriptions={"Imam Mahdi (a.)"}
-              imageSource={require("@/assets/images/imamMahdi.png")}
+              imageSource={require("assets/images/imamMahdi.png")}
             />
 
             <Categories
               category={"ashura"}
               categoryDescriptions={"Ashura"}
-              imageSource={require("@/assets/images/ashura.png")}
+              imageSource={require("assets/images/ashura.png")}
             />
 
             <Categories
               category={"gebete"}
               categoryDescriptions={"Gebete"}
-              imageSource={require("@/assets/images/gebete.png")}
+              imageSource={require("assets/images/gebete.png")}
             />
 
             <Categories
               category={"tashibat"}
               categoryDescriptions={"Tasbihat"}
-              imageSource={require("@/assets/images/tasbih.png")}
+              imageSource={require("assets/images/tasbih.png")}
             />
 
             <Categories
               category={"munajat"}
               categoryDescriptions={"Munajat"}
-              imageSource={require("@/assets/images/munajat.png")}
+              imageSource={require("assets/images/munajat.png")}
             />
 
             <Categories
               category={"heiligeMonate"}
               categoryDescriptions={"Heilige Monate"}
-              imageSource={require("@/assets/images/heiligeMonate.png")}
+              imageSource={require("assets/images/heiligeMonate.png")}
             />
 
             <Categories
               category={"salawat"}
               categoryDescriptions={"Salawat"}
-              imageSource={require("@/assets/images/salawat.png")}
+              imageSource={require("assets/images/salawat.png")}
             />
           </View>
         </View>
@@ -135,43 +82,6 @@ const styles = StyleSheet.create({
   imageBackground: {
     width: "100%",
     flex: 1,
-  },
-
-  headerContainer: {
-    flex: 0.35,
-    backgroundColor: "transparent",
-  },
-  citationContainer: {
-    flex: 1,
-    justifyContent: "center",
-    borderWidth: 1,
-    padding: 10,
-    marginTop: 20,
-    marginLeft: 10,
-    marginRight: 10,
-    borderRadius: 18,
-
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 5 },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-      },
-      android: {
-        elevation: 5,
-        backgroundColor: "#fff",
-      },
-    }),
-  },
-  citationTextContent: {
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  citationTextAuthor: {
-    marginTop: 30,
-    paddingLeft: 5,
   },
   mainContainer: {
     flex: 0.65,
@@ -189,9 +99,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexWrap: "wrap",
     gap: 5,
-  },
-  errorText: {
-    fontSize: 20,
-    color: "red",
   },
 });
