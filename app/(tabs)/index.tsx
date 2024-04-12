@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function TabOneScreen() {
   const [fetchError, setFetchError] = useState("");
-  const [citations, setCitations] = useState<String[]>([]);
+  const [citations, setCitations] = useState<any[]>([]);
   const [citationIndex, setCitationIndex] = useState(0);
 
   useEffect(() => {
