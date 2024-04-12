@@ -12,13 +12,13 @@ export default function TabOneScreen() {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const { data, error } = await supabase.from("Citations").select();
+      const { data, error } = await supabase.from("citations").select();
 
       // Error checking
 
       if (error) {
         setFetchError(
-          "Elemente konnten nicht geladen werden.\n Überprüfen Sie bitte, ob sie mit dem Internet verbunden sind!"
+          "Elemente konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internet Verbindung!"
         );
         setCitations([]);
       }
@@ -48,7 +48,7 @@ export default function TabOneScreen() {
         style={styles.imageBackground}
       >
         <View style={styles.headerContainer}>
-          {citations.length > 0 ? (
+          {citations && citations.length > 0 ? (
             <View style={styles.citationContainer}>
               <Text style={styles.citationTextContent}>
                 {citations[citationIndex].content}
@@ -59,8 +59,8 @@ export default function TabOneScreen() {
             </View>
           ) : (
             <View style={styles.citationContainer}>
-              <Text style={styles.citationTextContent}>
-                Keine Zitate gefunden.
+              <Text style={[styles.citationTextContent, styles.errorText]}>
+                {fetchError}
               </Text>
             </View>
           )}
@@ -189,5 +189,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexWrap: "wrap",
     gap: 5,
+  },
+  errorText: {
+    fontSize: 20,
+    color: "red",
   },
 });
