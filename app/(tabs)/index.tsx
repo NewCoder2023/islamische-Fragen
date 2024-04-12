@@ -12,7 +12,7 @@ export default function TabOneScreen() {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const { data, error } = await supabase.from("citations").select();
+      const { data, error } = await supabase.from("Citations").select();
 
       // Error checking
 
@@ -35,7 +35,7 @@ export default function TabOneScreen() {
     if (citations && citationIndex < citations.length) {
       const timer = setInterval(() => {
         setCitationIndex((prevValue) => (prevValue + 1) % citations.length);
-      }, 5000);
+      }, 1000);
       return () => clearInterval(timer);
     }
   }, [citations.length]);
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     }),
   },
   citationTextContent: {
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
   },
