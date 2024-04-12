@@ -138,17 +138,17 @@ const styles = StyleSheet.create({
   },
 
   headerContainer: {
-    flex: 0.3,
+    flex: 0.35,
     backgroundColor: "transparent",
   },
   citationContainer: {
-    height: "auto",
+    flex: 1,
+    justifyContent: "center",
     borderWidth: 1,
     padding: 10,
     marginTop: 20,
     marginLeft: 10,
     marginRight: 10,
-    maxHeight: "100%",
     borderRadius: 18,
 
     ...Platform.select({
@@ -170,11 +170,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   citationTextAuthor: {
-    marginTop: 20,
+    marginTop: 30,
     paddingLeft: 5,
   },
   mainContainer: {
-    flex: 0.7,
+    flex: 0.65,
     backgroundColor: "transparent",
   },
   categoryContainer: {
