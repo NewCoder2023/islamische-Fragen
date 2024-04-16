@@ -2,7 +2,6 @@ import { StyleSheet, Platform, ImageBackground } from "react-native";
 import { Text, View } from "components/Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Categories from "components/Categories";
-import Citations from "components/Citations";
 
 export default function TabOneScreen() {
   return (
@@ -12,12 +11,6 @@ export default function TabOneScreen() {
         resizeMode='cover'
         style={styles.imageBackground}
       >
-        {/* Header */}
-
-        <View style={styles.headerContainer}>
-          <Citations />
-        </View>
-
         {/* Main */}
         <View style={styles.categoryContainer}>
           <Categories />
@@ -31,20 +24,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  headerContainer: {
-    flex: 0.35,
-    backgroundColor: "transparent",
-  },
+
   imageBackground: {
     width: "100%",
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   categoryContainer: {
-    flex: 0.65,
-    marginTop: 30,
+    marginRight: 5,
+    marginLeft: 5,
     paddingTop: 30,
-    borderWidth: 1,
-    borderTopEndRadius: 20,
-    borderTopStartRadius: 20,
+    paddingBottom: 30,
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderWidth: 2,
+    borderRadius: 30,
   },
 });
