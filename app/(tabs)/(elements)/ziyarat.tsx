@@ -3,7 +3,7 @@ import React from "react";
 import Colors from "constants/Colors";
 import RenderItems from "components/RenderItems";
 import { StyleSheet } from "react-native";
-import fetchItems from "components/fetchData";
+import fetchItems from "components/fetchTable";
 
 export default function ziyarat() {
   const { items, fetchError } = fetchItems("Ziyarat");

@@ -3,12 +3,14 @@ import { FlatList, StyleSheet } from "react-native";
 import React from "react";
 import { Platform } from "react-native";
 import Colors from "constants/Colors";
+import fetchText from "./fetchText";
 
 const Separator = () => {
   return <View style={styles.separator} />;
 };
 
-export default function DisplayText({ title, text }) {
+export default function DisplayText({ title }) {
+  const text = fetchText(title);
   return (
     <View style={styles.container}>
       <FlatList
