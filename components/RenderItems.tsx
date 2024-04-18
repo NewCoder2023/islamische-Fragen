@@ -1,8 +1,9 @@
 import Colors from "constants/Colors";
 import { Text, View } from "components/Themed";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { EvilIcons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 
 export default function RenderItems({ categoryItems, error }) {
   return (
@@ -14,10 +15,14 @@ export default function RenderItems({ categoryItems, error }) {
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.FlatListItems}
             renderItem={({ item }) => (
-              <View style={styles.renderItem}>
-                <Text style={styles.itemText}>{item.title}</Text>
-                <EvilIcons name='arrow-right' size={30} color='black' />
-              </View>
+              <Link href={item.title} asChild>
+                <Pressable>
+                  <View style={styles.renderItem}>
+                    <Text style={styles.itemText}>{item.title}</Text>
+                    <EvilIcons name='arrow-right' size={30} color='black' />
+                  </View>
+                </Pressable>
+              </Link>
             )}
           />
         </View>
