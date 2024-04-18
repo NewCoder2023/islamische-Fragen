@@ -1,6 +1,5 @@
 import { StyleSheet, Platform, ImageBackground } from "react-native";
-import { Text, View } from "components/Themed";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View } from "components/Themed";
 import Categories from "components/Categories";
 
 export default function TabOneScreen() {

@@ -10,7 +10,7 @@ const text = [
 export default function bittgebete() {
   return (
     <View style={styles.container}>
-      <DisplayText text={text} />
+      <DisplayText text={text} title='title' />
     </View>
   );
 }

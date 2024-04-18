@@ -8,7 +8,7 @@ const Separator = () => {
   return <View style={styles.separator} />;
 };
 
-export default function DisplayText({ text }) {
+export default function DisplayText({ title, text }) {
   return (
     <View style={styles.container}>
       <FlatList
