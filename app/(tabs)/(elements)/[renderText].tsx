@@ -17,12 +17,25 @@ export default function renderText() {
   const Separator = () => {
     return <View style={styles.separator} />;
   };
+  const item = text.split("\n");
   return (
     <View style={styles.container}>
       {text && (
-        <View>
-          <Text>{text}</Text>
-        </View>
+        <FlatList
+          data={item}
+          renderItem={({ item, index }) => (
+            <View style={styles.itemContainer}>
+              <Text style={styles.text}>{item}</Text>
+              <View style={styles.pageNumberContainer}>
+                <Text style={styles.pageNumber}>{index + 1}</Text>
+              </View>
+            </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          pagingEnabled
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={Separator}
+        ></FlatList>
       )}
       {fetchError && (
         <View style={styles.renderError}>
