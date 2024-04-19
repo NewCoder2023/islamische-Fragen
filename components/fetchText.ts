@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 
 export default function fetchText(title: string, table: string) {
   const [fetchError, setFetchError] = useState<string>("");
-  const [text, setText] = useState<string[]>([]);
+  const [text, setText] = useState<string>("");
 
   useEffect(() => {
     const fetchItems = async () => {
       const { data, error } = await supabase
         .from(table)
         .select("*")
-        .eq("title", title);
+        .eq("title", title)
+        .single();
 
       // Error checking
 
@@ -18,11 +19,12 @@ export default function fetchText(title: string, table: string) {
         setFetchError(
           "Elemente konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internet Verbindung!"
         );
-        setText([]);
+
+        setText("");
       }
 
       if (data) {
-        setText(data);
+        setText(data.content);
         setFetchError("");
       }
     };

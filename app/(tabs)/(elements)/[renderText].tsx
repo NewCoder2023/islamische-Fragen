@@ -20,25 +20,13 @@ export default function renderText() {
   return (
     <View style={styles.container}>
       {text && (
-        <FlatList
-          data={text}
-          renderItem={({ item, index }) => (
-            <View style={styles.itemContainer}>
-              <Text style={styles.text}>{item}</Text>
-              <View style={styles.pageNumberContainer}>
-                <Text style={styles.pageNumber}>{index + 1}</Text>
-              </View>
-            </View>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          pagingEnabled
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={Separator}
-        ></FlatList>
+        <View>
+          <Text>{text}</Text>
+        </View>
       )}
       {fetchError && (
         <View style={styles.renderError}>
-          <Text style={styles.errorText}>{error}</Text>
+          <Text style={styles.errorText}>{fetchError}</Text>
         </View>
       )}
     </View>
@@ -85,7 +73,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   separator: {},
-  renderError: {},
-  errorText: {},
-
+  renderError: {
+    marginTop: 20,
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  errorText: {
+    fontSize: 20,
+    color: Colors.light.error,
+    textAlign: "center",
+  },
 });
