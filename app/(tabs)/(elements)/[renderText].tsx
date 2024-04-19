@@ -3,7 +3,7 @@ import React from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
 import { FlatList } from "react-native";
-import { Platform } from "react-native";
+import { Stack } from "expo-router";
 import Colors from "constants/Colors";
 
 export default function renderText() {
@@ -17,25 +17,28 @@ export default function renderText() {
   const Separator = () => {
     return <View style={styles.separator} />;
   };
-  const item = text.split("\n");
+  const items = text.split("\n").filter((item) => item !== "");
+
   return (
     <View style={styles.container}>
-      {text && (
-        <FlatList
-          data={item}
-          renderItem={({ item, index }) => (
-            <View style={styles.itemContainer}>
-              <Text style={styles.text}>{item}</Text>
-              <View style={styles.pageNumberContainer}>
-                <Text style={styles.pageNumber}>{index + 1}</Text>
+      {items && (
+        <View style={styles.listContainer}>
+          <FlatList
+            data={items}
+            renderItem={({ item, index }) => (
+              <View style={styles.itemContainer}>
+                <Text style={styles.text}>{item}</Text>
+                <View style={styles.pageNumberContainer}>
+                  <Text style={styles.pageNumber}>{index + 1}</Text>
+                </View>
               </View>
-            </View>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          pagingEnabled
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={Separator}
-        ></FlatList>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            pagingEnabled
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={Separator}
+          ></FlatList>
+        </View>
       )}
       {fetchError && (
         <View style={styles.renderError}>
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.light.white,
   },
-
+  listContainer: {},
   itemContainer: {
     flex: 1,
     borderWidth: 2,
@@ -61,18 +64,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 10,
     borderRadius: 10,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 5 },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-      },
-      android: {
-        elevation: 5,
-        backgroundColor: "#fff",
-      },
-    }),
   },
   pageNumberContainer: {},
   text: {
@@ -85,8 +76,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontWeight: "bold",
   },
-  separator: {},
+  separator: {
+    height: 2,
+    backgroundColor: Colors.light.sperator,
+  },
   renderError: {
+    flex: 1,
     marginTop: 20,
     paddingLeft: 12,
     paddingRight: 12,

@@ -10,6 +10,7 @@ export default {
     tabIconSelected: tintColorLight,
     white: "#FFFFFF",
     error: "red",
+    sperator: "#000000",
   },
   dark: {
     text: "#fff",

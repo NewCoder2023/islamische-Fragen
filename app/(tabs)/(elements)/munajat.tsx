@@ -18,7 +18,11 @@ export default function munajat() {
         </Text>
       </View>
       <View style={styles.itemContainer}>
-        <RenderItems categoryItems={items} fetchError={fetchError }  table={table} />
+        <RenderItems
+          categoryItems={items}
+          fetchError={fetchError}
+          table={table}
+        />
       </View>
     </View>
   );
