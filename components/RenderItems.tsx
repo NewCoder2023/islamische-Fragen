@@ -5,7 +5,7 @@ import React from "react";
 import { EvilIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 
-export default function RenderItems({ categoryItems, error }) {
+export default function RenderItems({ categoryItems, fetchError, table }) {
   return (
     <View style={styles.container}>
       {categoryItems && (
@@ -15,7 +15,14 @@ export default function RenderItems({ categoryItems, error }) {
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.FlatListItems}
             renderItem={({ item }) => (
-              <Link href={item.title} asChild>
+              <Link
+                href={{
+                  pathname: "/[renderText]",
+                  // /* 1. Navigate to the details route with query params */
+                  params: { title: item.title, table: table },
+                }}
+                asChild
+              >
                 <Pressable>
                   <View style={styles.renderItem}>
                     <Text style={styles.itemText}>{item.title}</Text>
@@ -27,9 +34,9 @@ export default function RenderItems({ categoryItems, error }) {
           />
         </View>
       )}
-      {error && (
+      {fetchError && (
         <View style={styles.renderError}>
-          <Text style={styles.errorText}>{error}</Text>
+          <Text style={styles.errorText}>{fetchError}</Text>
         </View>
       )}
     </View>

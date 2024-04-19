@@ -3,10 +3,10 @@ import React from "react";
 import Colors from "constants/Colors";
 import RenderItems from "components/RenderItems";
 import { StyleSheet } from "react-native";
-import fetchItems from "components/fetchTable";
+import fetchTable from "components/fetchTable";
 
 export default function imamMahdi() {
-  const { items, fetchError } = fetchItems("ImamMahdi");
+  const { items, fetchError, table } = fetchTable("ImamMahdi");
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -18,7 +18,11 @@ export default function imamMahdi() {
         </Text>
       </View>
       <View style={styles.itemContainer}>
-        <RenderItems categoryItems={items} error={fetchError} />
+        <RenderItems
+          categoryItems={items}
+          fetchError={fetchError}
+          table={table}
+        />
       </View>
     </View>
   );

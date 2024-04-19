@@ -7,8 +7,6 @@ export default function fetchDate(table: string) {
 
   useEffect(() => {
     const fetchItems = async () => {
-      // Reset Error
-      setFetchError("");
       const { data, error } = await supabase.from(table).select();
 
       // Error checking
@@ -27,9 +25,10 @@ export default function fetchDate(table: string) {
     };
 
     fetchItems();
-  }, []);
+  }, [table]);
   return {
     fetchError,
     items,
+    table,
   };
 }

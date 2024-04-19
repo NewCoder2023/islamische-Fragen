@@ -1,15 +1,16 @@
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
-export default function fetchText(title: string) {
+export default function fetchText(title: string, table: string) {
   const [fetchError, setFetchError] = useState<string>("");
-  const [text, SetText] = useState<String[]>([]);
+  const [text, setText] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchItems = async () => {
-      // Reset Error
-      setFetchError("");
-      const { data, error } = await supabase.from("*").select("title");
+      const { data, error } = await supabase
+        .from(table)
+        .select("*")
+        .eq("title", title);
 
       // Error checking
 
@@ -17,18 +18,17 @@ export default function fetchText(title: string) {
         setFetchError(
           "Elemente konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internet Verbindung!"
         );
-        SetText([]);
+        setText([]);
       }
 
       if (data) {
-        const titles = data.map((item) => item.title);
-        SetText(titles);
+        setText(data);
         setFetchError("");
       }
     };
 
     fetchItems();
-  }, [title]);
+  }, [title, table]);
   return {
     fetchError,
     text,
