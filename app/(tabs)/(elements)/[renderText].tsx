@@ -3,16 +3,15 @@ import React from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
 import { FlatList } from "react-native";
-import { Stack } from "expo-router";
 import Colors from "constants/Colors";
 
 export default function renderText() {
-  const { table, title } = useLocalSearchParams<{
+  const { id, table } = useLocalSearchParams<{
+    id: string;
     table: string;
-    title: string;
   }>();
 
-  const { text, fetchError } = fetchText(title, table);
+  const { text, fetchError } = fetchText(id, table);
 
   const Separator = () => {
     return <View style={styles.separator} />;

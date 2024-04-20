@@ -5,24 +5,23 @@ import RenderItems from "components/RenderItems";
 import { StyleSheet } from "react-native";
 import fetchTable from "components/fetchTable";
 
-export default function munajat() {
+export default function ashura() {
   const { items, fetchError, table } = fetchTable("Munajat");
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.informationText}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur
-          adipisci ipsum modi facere dolorem dignissimos quam assumenda
-          explicabo, unde earum perferendis voluptatum beatae iure? Praesentium
-          perspiciatis ea quod animi iste.
-        </Text>
+        <View style={styles.informationTextContainer}>
+          <Text style={styles.informationText}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Consequuntur adipisci ipsum modi facere dolorem dignissimos quam
+            assumenda explicabo, unde earum perferendis voluptatum beatae iure?
+            Praesentium perspiciatis ea quod animi iste.
+          </Text>
+        </View>
       </View>
       <View style={styles.itemContainer}>
-        <RenderItems
-          categoryItems={items}
-          fetchError={fetchError}
-          table={table}
-        />
+        <RenderItems items={items} fetchError={fetchError} table={table} />
       </View>
     </View>
   );
@@ -34,14 +33,38 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flex: 0.2,
+  },
+  itemContainer: {
+    flex: 0.8,
+  },
+  informationTextContainer: {
     margin: 10,
     padding: 10,
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: Colors.light.white,
   },
-  itemContainer: {
-    flex: 0.8,
-  },
   informationText: {},
+  mainContainer: {
+    flex: 0.8,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  FlatListItems: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    gap: 20,
+  },
+  renderItem: {
+    flexDirection: "row",
+    backgroundColor: "#FFFFFF",
+    padding: 20,
+    borderWidth: 0.2,
+  },
+  itemText: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  itemIcon: {},
 });

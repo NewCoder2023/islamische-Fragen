@@ -5,21 +5,29 @@ import React from "react";
 import { EvilIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 
-export default function RenderItems({ categoryItems, fetchError, table }) {
+export default function RenderItems({ items, fetchError, table }) {
+  const encodeTitle = (title: string) => {
+    // Clean the title by trimming and removing new lines
+    // Encode all characters with encodeURIComponent and manually encode parentheses since the cause trouble in the url
+    const cleanedTitle = title.trim().replace(/\n/g, "");
+    return encodeURIComponent(cleanedTitle)
+      .replace(/\(/g, "%28")
+      .replace(/\)/g, "%29");
+  };
   return (
     <View style={styles.container}>
-      {categoryItems && (
+      {items && (
         <View style={styles.itemsContainer}>
           <FlatList
-            data={categoryItems}
-            keyExtractor={(item) => item.id}
+            data={items}
+            keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={styles.FlatListItems}
             renderItem={({ item }) => (
               <Link
+                key={item.id}
                 href={{
-                  pathname: "/[renderText]",
-                  // /* 1. Navigate to the details route with query params */
-                  params: { title: item.title, table: table },
+                  pathname: `/${encodeTitle(item.title)}`,
+                  params: { id: item.id, table: table },
                 }}
                 asChild
               >

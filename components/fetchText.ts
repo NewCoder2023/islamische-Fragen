@@ -1,16 +1,18 @@
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
-export default function fetchText(title: string, table: string) {
+export default function fetchText(id: string, table: string) {
   const [fetchError, setFetchError] = useState<string>("");
   const [text, setText] = useState<string>("");
+
+  // Encode title because () in title causes problems
 
   useEffect(() => {
     const fetchItems = async () => {
       const { data, error } = await supabase
         .from(table)
         .select("*")
-        .eq("title", title)
+        .eq("id", id)
         .single();
 
       // Error checking
@@ -30,7 +32,7 @@ export default function fetchText(title: string, table: string) {
     };
 
     fetchItems();
-  }, [title, table]);
+  }, [id, table]);
   return {
     fetchError,
     text,

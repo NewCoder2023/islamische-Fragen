@@ -18,11 +18,7 @@ export default function imamMahdi() {
         </Text>
       </View>
       <View style={styles.itemContainer}>
-        <RenderItems
-          categoryItems={items}
-          fetchError={fetchError}
-          table={table}
-        />
+        <RenderItems items={items} fetchError={fetchError} table={table} />
       </View>
     </View>
   );

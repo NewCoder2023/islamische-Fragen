@@ -7,6 +7,7 @@ import fetchTable from "components/fetchTable";
 
 export default function ashura() {
   const { items, fetchError, table } = fetchTable("Ashura");
+ 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -20,7 +21,7 @@ export default function ashura() {
         </View>
       </View>
       <View style={styles.itemContainer}>
-        <RenderItems categoryItems={items} fetchError={fetchError} table={table} />
+        <RenderItems items={items} fetchError={fetchError} table={table} />
       </View>
     </View>
   );
