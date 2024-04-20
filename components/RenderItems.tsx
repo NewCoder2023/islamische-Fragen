@@ -27,7 +27,11 @@ export default function RenderItems({ items, fetchError, table }) {
                 key={item.id}
                 href={{
                   pathname: `/${encodeTitle(item.title)}`,
-                  params: { id: item.id, table: table },
+                  params: {
+                    id: item.id,
+                    table: table,
+                    title: `${encodeTitle(item.title)}`,
+                  },
                 }}
                 asChild
               >

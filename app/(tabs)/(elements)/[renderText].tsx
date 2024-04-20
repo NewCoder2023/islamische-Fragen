@@ -4,11 +4,13 @@ import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
 import { FlatList } from "react-native";
 import Colors from "constants/Colors";
+import { Stack } from "expo-router";
 
 export default function renderText() {
-  const { id, table } = useLocalSearchParams<{
+  const { id, table, title } = useLocalSearchParams<{
     id: string;
     table: string;
+    title: string;
   }>();
 
   const { text, fetchError } = fetchText(id, table);
@@ -20,6 +22,8 @@ export default function renderText() {
 
   return (
     <View style={styles.container}>
+      {/* Change header Title */}
+      <Stack.Screen options={{ headerTitle: title }} />
       {items && (
         <View style={styles.listContainer}>
           <FlatList
