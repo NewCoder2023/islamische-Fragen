@@ -17,7 +17,12 @@ export default function renderText() {
     title: string;
   }>();
 
-  const [favorites, setFavorites] = useState({ title: false });
+  const [favorites, setFavorites] = useState({
+    id: id,
+    title: title,
+    table: table,
+    isFavorite: false,
+  });
   const { text, fetchError } = fetchText(id, table);
 
   const Separator = () => {
@@ -50,7 +55,7 @@ export default function renderText() {
     /* Set the Favorites in the AsyncStorage and change icons*/
   }
   const favourite = async () => {
-    if (favorites[title]) {
+    if (favorites.isFavorite) {
       Toast.show({
         type: "error",
         text1: "Von Favoriten entfernt!",
@@ -61,7 +66,10 @@ export default function renderText() {
         text1: "Zu Favoriten hinzugefügt!",
       });
     }
-    const newFavorites = { ...favorites, [title]: !favorites[title] };
+    const newFavorites = {
+      ...favorites,
+      isFavorite: !favorites.isFavorite,
+    };
     setFavorites(newFavorites);
     await storeFavorites(newFavorites);
   };
@@ -86,11 +94,11 @@ export default function renderText() {
         options={{
           headerRight: () => (
             <Pressable onPress={favourite}>
-              {favorites[title] ? (
-                <AntDesign name='star' size={24} color={Colors.light.star} />
-              ) : (
-                <AntDesign name='staro' size={24} color={Colors.light.star} />
-              )}
+              <AntDesign
+                name={favorites.isFavorite ? "star" : "staro"}
+                size={24}
+                color={Colors.light.star}
+              />
             </Pressable>
           ),
 
