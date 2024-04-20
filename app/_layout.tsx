@@ -9,6 +9,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useColorScheme } from "components/useColorScheme";
+import Toast from "react-native-toast-message";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -58,6 +59,7 @@ function RootLayoutNav() {
           options={{ headerShown: false, headerTitle: "Home" }}
         />
       </Stack>
+      <Toast />
     </ThemeProvider>
   );
 }

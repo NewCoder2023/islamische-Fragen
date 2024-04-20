@@ -17,7 +17,7 @@ export default function renderText() {
     title: string;
   }>();
 
-  const [favorites, setFavorites] = useState({ [id]: false });
+  const [favorites, setFavorites] = useState({ title: false });
   const { text, fetchError } = fetchText(id, table);
 
   const Separator = () => {
@@ -36,7 +36,11 @@ export default function renderText() {
           setFavorites(JSON.parse(jsonValue));
         }
       } catch (e) {
-        console.log(e);
+        Toast.show({
+          type: "error",
+          text1:
+            "Fehler beim Laden der Favoriten! Bitte überprüfen Sie Ihre Internetverbindung",
+        });
       }
     };
     getFavorites();
@@ -46,7 +50,7 @@ export default function renderText() {
     /* Set the Favorites in the AsyncStorage and change icons*/
   }
   const favourite = async () => {
-    if (favorites[id]) {
+    if (favorites[title]) {
       Toast.show({
         type: "error",
         text1: "Von Favoriten entfernt!",
@@ -57,7 +61,7 @@ export default function renderText() {
         text1: "Zu Favoriten hinzugefügt!",
       });
     }
-    const newFavorites = { ...favorites, [id]: !favorites[id] };
+    const newFavorites = { ...favorites, [title]: !favorites[title] };
     setFavorites(newFavorites);
     await storeFavorites(newFavorites);
   };
@@ -67,7 +71,11 @@ export default function renderText() {
       const jsonValue = JSON.stringify(favorites);
       await AsyncStorage.setItem("Favorites", jsonValue);
     } catch (e) {
-      console.log(e);
+      Toast.show({
+        type: "error",
+        text1:
+          "Fehler beim Hinzufügen zu den Favoriten! Bitte überprüfen Sie Ihre Internetverbindung",
+      });
     }
   };
 
@@ -78,7 +86,7 @@ export default function renderText() {
         options={{
           headerRight: () => (
             <Pressable onPress={favourite}>
-              {favorites[id] ? (
+              {favorites[title] ? (
                 <AntDesign name='star' size={24} color={Colors.light.star} />
               ) : (
                 <AntDesign name='staro' size={24} color={Colors.light.star} />
