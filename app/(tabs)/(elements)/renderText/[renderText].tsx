@@ -1,6 +1,6 @@
 import { View, Text } from "components/Themed";
 import { StyleSheet, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
 import { FlatList } from "react-native";
@@ -17,8 +17,7 @@ export default function renderText() {
     title: string;
   }>();
 
-  const [favourites, setFavourites] = useState({ [id]: false });
-
+  const [favorites, setFavorites] = useState({ [id]: false });
   const { text, fetchError } = fetchText(id, table);
 
   const Separator = () => {
@@ -26,33 +25,49 @@ export default function renderText() {
   };
   const items = text.split("\n").filter((item) => item !== "");
 
-  const favourite = () => {
-    if (favourites[id]) {
-      setFavourites((prevFavourites) => ({
-        ...prevFavourites,
-        [id]: !prevFavourites[id],
-      }));
+  {
+    /* Get the Favorites from the AsyncStorage*/
+  }
+  useEffect(() => {
+    const getFavorites = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("Favorites");
+        if (jsonValue) {
+          setFavorites(JSON.parse(jsonValue));
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getFavorites();
+  }, []);
+
+  {
+    /* Set the Favorites in the AsyncStorage and change icons*/
+  }
+  const favourite = async () => {
+    if (favorites[id]) {
       Toast.show({
         type: "error",
         text1: "Von Favoriten entfernt!",
       });
     } else {
-      setFavourites((prevFavourites) => ({
-        ...prevFavourites,
-        [id]: !prevFavourites[id],
-      }));
       Toast.show({
         type: "success",
         text1: "Zu Favoriten hinzugefügt!",
       });
     }
+    const newFavorites = { ...favorites, [id]: !favorites[id] };
+    setFavorites(newFavorites);
+    await storeFavorites(newFavorites);
   };
 
-  const saveFavourites = async (favourites) => {
+  const storeFavorites = async (favorites) => {
     try {
-      await AsyncStorage.setItem("favourites", JSON.stringify(favourites));
+      const jsonValue = JSON.stringify(favorites);
+      await AsyncStorage.setItem("Favorites", jsonValue);
     } catch (e) {
-      console.error("Error saving favourites", e);
+      console.log(e);
     }
   };
 
@@ -63,7 +78,7 @@ export default function renderText() {
         options={{
           headerRight: () => (
             <Pressable onPress={favourite}>
-              {favourites[id] ? (
+              {favorites[id] ? (
                 <AntDesign name='star' size={24} color={Colors.light.star} />
               ) : (
                 <AntDesign name='staro' size={24} color={Colors.light.star} />
