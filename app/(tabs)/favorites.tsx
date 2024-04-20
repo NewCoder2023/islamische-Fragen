@@ -5,7 +5,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
-import RenderItems from "components/RenderItems";
+import RenderFavorites from "components/RenderFavorites";
 
 export default function favourites() {
   interface Favorite {
@@ -54,13 +54,16 @@ export default function favourites() {
 
   return (
     <View style={styles.container}>
-      {favorites.map((item) => (
-        <RenderItems
-          items={[item]}
-          table={item.table}
-          error='Fehler beim Laden der Favoriten! Bitte überprüfen Sie Ihre Internetverbindung'
-        />
-      ))}
+      <View style={styles.favoriteContainer}></View>
+      <FlatList
+        data={favorites}
+        keyExtractor={(item) => item.id.toString()}
+        style={styles.FlatList}
+        contentContainerStyle={styles.FlatListItems}
+        renderItem={({ item }) => (
+          <RenderFavorites key={item.id} items={[item]} table={item.table} />
+        )}
+      />
     </View>
   );
 }
@@ -68,5 +71,12 @@ export default function favourites() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  favoriteContainer: {},
+  FlatList: {
+    marginTop: 20,
+  },
+  FlatListItems: {
+    gap: 20,
   },
 });
