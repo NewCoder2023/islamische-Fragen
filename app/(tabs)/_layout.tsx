@@ -56,9 +56,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='favourites'
+        name='favorites'
         options={{
           title: "",
+          headerTitle: "Favoriten",
+          headerShown: true,
           tabBarIcon: ({ color }) => <TabBarIcon name='star' color={color} />,
         }}
       />

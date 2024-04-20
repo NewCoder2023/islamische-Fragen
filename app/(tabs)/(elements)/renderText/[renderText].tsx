@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text } from "components/Themed";
+import { StyleSheet, Pressable } from "react-native";
 import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
@@ -7,15 +8,16 @@ import Colors from "constants/Colors";
 import { Stack } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function renderText() {
-  const [isFavourite, setIsFavourite] = useState(false);
-
   const { id, table, title } = useLocalSearchParams<{
     id: string;
     table: string;
     title: string;
   }>();
+
+  const [favourites, setFavourites] = useState({ [id]: false });
 
   const { text, fetchError } = fetchText(id, table);
 
@@ -25,20 +27,35 @@ export default function renderText() {
   const items = text.split("\n").filter((item) => item !== "");
 
   const favourite = () => {
-    if (isFavourite) {
-      setIsFavourite(!isFavourite);
+    if (favourites[id]) {
+      setFavourites((prevFavourites) => ({
+        ...prevFavourites,
+        [id]: !prevFavourites[id],
+      }));
       Toast.show({
         type: "error",
         text1: "Von Favoriten entfernt!",
       });
     } else {
-      setIsFavourite(!isFavourite);
+      setFavourites((prevFavourites) => ({
+        ...prevFavourites,
+        [id]: !prevFavourites[id],
+      }));
       Toast.show({
         type: "success",
         text1: "Zu Favoriten hinzugefügt!",
       });
     }
   };
+
+  const saveFavourites = async (favourites) => {
+    try {
+      await AsyncStorage.setItem("favourites", JSON.stringify(favourites));
+    } catch (e) {
+      console.error("Error saving favourites", e);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -46,7 +63,7 @@ export default function renderText() {
         options={{
           headerRight: () => (
             <Pressable onPress={favourite}>
-              {isFavourite ? (
+              {favourites[id] ? (
                 <AntDesign name='star' size={24} color={Colors.light.star} />
               ) : (
                 <AntDesign name='staro' size={24} color={Colors.light.star} />

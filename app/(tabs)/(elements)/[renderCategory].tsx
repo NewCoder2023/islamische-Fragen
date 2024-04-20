@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "components/Themed";
+import { StyleSheet } from "react-native";
 import React from "react";
 import { useLocalSearchParams } from "expo-router";
 import RenderItems from "components/RenderItems";
-import Colors from "constants/Colors";
 import fetchTable from "components/fetchTable";
 import { Stack } from "expo-router";
+import RenderCategoryInformation from "components/RenderCategoryInformation";
 
 export default function renderCategory() {
   const { category } = useLocalSearchParams<{
@@ -16,16 +17,9 @@ export default function renderCategory() {
   return (
     <View style={styles.container}>
       {/* Change header Title */}
-      <Stack.Screen options={{ headerTitle: category }} />
       <View style={styles.headerContainer}>
-        <View style={styles.informationTextContainer}>
-          <Text style={styles.informationText}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consequuntur adipisci ipsum modi facere dolorem dignissimos quam
-            assumenda explicabo, unde earum perferendis voluptatum beatae iure?
-            Praesentium perspiciatis ea quod animi iste.
-          </Text>
-        </View>
+        <Stack.Screen options={{ headerTitle: category }} />
+        <RenderCategoryInformation category={category} />
       </View>
       <View style={styles.itemContainer}>
         <RenderItems items={items} fetchError={fetchError} table={table} />
@@ -44,34 +38,4 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 0.8,
   },
-  informationTextContainer: {
-    margin: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 10,
-    backgroundColor: Colors.light.white,
-  },
-  informationText: {},
-  mainContainer: {
-    flex: 0.8,
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  FlatListItems: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    gap: 20,
-  },
-  renderItem: {
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-    padding: 20,
-    borderWidth: 0.2,
-  },
-  itemText: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  itemIcon: {},
 });
