@@ -17,12 +17,15 @@ export default function renderText() {
     title: string;
   }>();
 
-  const [favorites, setFavorites] = useState({
-    id: id,
-    title: title,
-    table: table,
-    isFavorite: false,
-  });
+  interface FavoriteItem {
+    id: string;
+    title: string;
+    table: string;
+    isFavorite: boolean;
+  }
+
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
+
   const { text, fetchError } = fetchText(id, table);
 
   const Separator = () => {
@@ -38,7 +41,17 @@ export default function renderText() {
       try {
         const jsonValue = await AsyncStorage.getItem("Favorites");
         if (jsonValue) {
-          setFavorites(JSON.parse(jsonValue));
+          const parsedFavorites = JSON.parse(jsonValue);
+          if (Array.isArray(parsedFavorites)) {
+            // Ensure it's an array before setting
+            setFavorites(parsedFavorites);
+          } else {
+            // Initialize with an empty array
+            setFavorites([]);
+          }
+        } else {
+          // No data found, initialize with an empty array
+          setFavorites([]);
         }
       } catch (e) {
         Toast.show({
@@ -46,6 +59,8 @@ export default function renderText() {
           text1:
             "Fehler beim Laden der Favoriten! Bitte überprüfen Sie Ihre Internetverbindung",
         });
+        // Fallback to an empty array
+        setFavorites([]);
       }
     };
     getFavorites();
@@ -54,31 +69,44 @@ export default function renderText() {
   {
     /* Set the Favorites in the AsyncStorage and change icons*/
   }
-  const favourite = async () => {
-    if (favorites.isFavorite) {
+  const changeFavourite = async () => {
+    if (favorites.some((item) => item.id == id && item.isFavorite)) {
       Toast.show({
         type: "error",
         text1: "Von Favoriten entfernt!",
       });
+
+      const newFavorites = favorites.map((item) =>
+        item.id === id ? { ...item, isFavorite: false } : item
+      );
+      setFavorites(newFavorites);
+      await storeFavorites(newFavorites);
     } else {
       Toast.show({
         type: "success",
         text1: "Zu Favoriten hinzugefügt!",
       });
+
+      const newFavorites = [
+        ...favorites,
+        {
+          id: id,
+          title: title,
+          table: table,
+          isFavorite: true,
+        },
+      ];
+      setFavorites(newFavorites);
+      await storeFavorites(newFavorites);
     }
-    const newFavorites = {
-      ...favorites,
-      isFavorite: !favorites.isFavorite,
-    };
-    setFavorites(newFavorites);
-    await storeFavorites(newFavorites);
   };
 
-  const storeFavorites = async (favorites) => {
+  const storeFavorites = async (favorites: FavoriteItem[]) => {
     try {
       const jsonValue = JSON.stringify(favorites);
       await AsyncStorage.setItem("Favorites", jsonValue);
     } catch (e) {
+      console.log(e);
       Toast.show({
         type: "error",
         text1:
@@ -87,15 +115,22 @@ export default function renderText() {
     }
   };
 
+  const isInFavorites = () => {
+    return (
+      Array.isArray(favorites) &&
+      favorites.some((item) => item.id == id && item.isFavorite)
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* Change header Title */}
       <Stack.Screen
         options={{
           headerRight: () => (
-            <Pressable onPress={favourite}>
+            <Pressable onPress={changeFavourite}>
               <AntDesign
-                name={favorites.isFavorite ? "star" : "staro"}
+                name={isInFavorites() ? "star" : "staro"}
                 size={24}
                 color={Colors.light.star}
               />
