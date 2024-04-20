@@ -6,7 +6,8 @@
     "paths": {
       "@/utils/*": ["utils/*"],
       "@/*": ["app/*"]
-    }
+    },
+    "esModuleInterop": true
   },
   "include": [
     "**/*.ts",

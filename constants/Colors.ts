@@ -12,6 +12,7 @@ export default {
     error: "red",
     sperator: "#000000",
     border: "#808080",
+    star: "#fbc531",
   },
   dark: {
     text: "#fff",

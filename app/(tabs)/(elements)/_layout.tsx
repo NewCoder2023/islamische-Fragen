@@ -9,6 +9,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useColorScheme } from "components/useColorScheme";
+import Toast from "react-native-toast-message";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -57,10 +58,10 @@ function RootLayoutNav() {
           name='index'
           options={{ headerShown: false, headerTitle: "" }}
         />
-
         <Stack.Screen name='[renderCategory]' />
         <Stack.Screen name='renderText/[renderText]' />
       </Stack>
+      <Toast />
     </ThemeProvider>
   );
 }

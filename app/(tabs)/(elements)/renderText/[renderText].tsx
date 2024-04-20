@@ -1,12 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
 import { FlatList } from "react-native";
 import Colors from "constants/Colors";
 import { Stack } from "expo-router";
+import { AntDesign } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 
 export default function renderText() {
+  const [isFavourite, setIsFavourite] = useState(false);
+
   const { id, table, title } = useLocalSearchParams<{
     id: string;
     table: string;
@@ -20,10 +24,39 @@ export default function renderText() {
   };
   const items = text.split("\n").filter((item) => item !== "");
 
+  const favourite = () => {
+    if (isFavourite) {
+      setIsFavourite(!isFavourite);
+      Toast.show({
+        type: "error",
+        text1: "Von Favoriten entfernt!",
+      });
+    } else {
+      setIsFavourite(!isFavourite);
+      Toast.show({
+        type: "success",
+        text1: "Zu Favoriten hinzugefügt!",
+      });
+    }
+  };
   return (
     <View style={styles.container}>
       {/* Change header Title */}
-      <Stack.Screen options={{ headerTitle: title }} />
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <Pressable onPress={favourite}>
+              {isFavourite ? (
+                <AntDesign name='star' size={24} color={Colors.light.star} />
+              ) : (
+                <AntDesign name='staro' size={24} color={Colors.light.star} />
+              )}
+            </Pressable>
+          ),
+
+          headerTitle: title,
+        }}
+      />
       {items && (
         <View style={styles.listContainer}>
           <FlatList

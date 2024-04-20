@@ -4,6 +4,7 @@ import { useLocalSearchParams } from "expo-router";
 import RenderItems from "components/RenderItems";
 import Colors from "constants/Colors";
 import fetchTable from "components/fetchTable";
+import { Stack } from "expo-router";
 
 export default function renderCategory() {
   const { category } = useLocalSearchParams<{
@@ -14,6 +15,8 @@ export default function renderCategory() {
 
   return (
     <View style={styles.container}>
+      {/* Change header Title */}
+      <Stack.Screen options={{ headerTitle: category }} />
       <View style={styles.headerContainer}>
         <View style={styles.informationTextContainer}>
           <Text style={styles.informationText}>
