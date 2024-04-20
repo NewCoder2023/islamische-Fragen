@@ -11,7 +11,15 @@ export default function Categories() {
   return (
     <View>
       <View style={styles.container}>
-        <Link href='/bittgebete' asChild>
+        <Link
+          href={{
+            pathname: "/[renderCategory]",
+            params: {
+              category: "Bittgebete",
+            },
+          }}
+          asChild
+        >
           <Pressable>
             <View style={styles.element}>
               <Text style={styles.elementText}>Bittgebete</Text>
@@ -25,7 +33,15 @@ export default function Categories() {
           </Pressable>
         </Link>
 
-        <Link href='/ashura' asChild>
+        <Link
+          href={{
+            pathname: "/[renderCategory]",
+            params: {
+              category: "Ashura",
+            },
+          }}
+          asChild
+        >
           <Pressable>
             <View style={styles.element}>
               <Text style={styles.elementText}>Ashura</Text>
@@ -39,7 +55,15 @@ export default function Categories() {
           </Pressable>
         </Link>
 
-        <Link href='/munajat' asChild>
+        <Link
+          href={{
+            pathname: "/[renderCategory]",
+            params: {
+              category: "Munajat",
+            },
+          }}
+          asChild
+        >
           <Pressable>
             <View style={styles.element}>
               <Text style={styles.elementText}>Munajat</Text>
@@ -53,7 +77,15 @@ export default function Categories() {
           </Pressable>
         </Link>
 
-        <Link href='/gebete' asChild>
+        <Link
+          href={{
+            pathname: "/[renderCategory]",
+            params: {
+              category: "Gebete",
+            },
+          }}
+          asChild
+        >
           <Pressable>
             <View style={styles.element}>
               <Text style={styles.elementText}>Gebete</Text>
@@ -67,7 +99,15 @@ export default function Categories() {
           </Pressable>
         </Link>
 
-        <Link href='/ziyarat' asChild>
+        <Link
+          href={{
+            pathname: "/[renderCategory]",
+            params: {
+              category: "Ziyarat",
+            },
+          }}
+          asChild
+        >
           <Pressable>
             <View style={styles.element}>
               <Text style={styles.elementText}>Ziyarat</Text>
@@ -81,7 +121,15 @@ export default function Categories() {
           </Pressable>
         </Link>
 
-        <Link href='/imamMahdi' asChild>
+        <Link
+          href={{
+            pathname: "/[renderCategory]",
+            params: {
+              category: "ImamMahdi",
+            },
+          }}
+          asChild
+        >
           <Pressable>
             <View style={styles.element}>
               <Text style={styles.elementText}>Imam Mahdi</Text>
@@ -95,7 +143,15 @@ export default function Categories() {
           </Pressable>
         </Link>
 
-        <Link href='/tasbihat' asChild>
+        <Link
+          href={{
+            pathname: "/[renderCategory]",
+            params: {
+              category: "Tasbihat",
+            },
+          }}
+          asChild
+        >
           <Pressable>
             <View style={styles.element}>
               <Text style={styles.elementText}>Tashibat</Text>
@@ -109,7 +165,15 @@ export default function Categories() {
           </Pressable>
         </Link>
 
-        <Link href='/salawat' asChild>
+        <Link
+          href={{
+            pathname: "/[renderCategory]",
+            params: {
+              category: "Zalawat",
+            },
+          }}
+          asChild
+        >
           <Pressable>
             <View style={styles.element}>
               <Text style={styles.elementText}>Salawat</Text>
@@ -123,7 +187,15 @@ export default function Categories() {
           </Pressable>
         </Link>
 
-        <Link href='/heiligeMonate' asChild>
+        <Link
+          href={{
+            pathname: "/[renderCategory]",
+            params: {
+              category: "HeiligeMonate",
+            },
+          }}
+          asChild
+        >
           <Pressable>
             <View style={styles.element}>
               <Text style={styles.elementText}>Heilige Monate</Text>

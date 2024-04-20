@@ -1,12 +1,16 @@
-import { View, Text } from "components/Themed";
+import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import Colors from "constants/Colors";
+import { useLocalSearchParams } from "expo-router";
 import RenderItems from "components/RenderItems";
-import { StyleSheet } from "react-native";
+import Colors from "constants/Colors";
 import fetchTable from "components/fetchTable";
 
-export default function ashura() {
-  const { items, fetchError, table } = fetchTable("Munajat");
+export default function renderCategory() {
+  const { category } = useLocalSearchParams<{
+    category: string;
+  }>();
+
+  const { items, fetchError, table } = fetchTable(category);
 
   return (
     <View style={styles.container}>

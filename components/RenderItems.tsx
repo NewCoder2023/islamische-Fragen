@@ -26,7 +26,7 @@ export default function RenderItems({ items, fetchError, table }) {
               <Link
                 key={item.id}
                 href={{
-                  pathname: `/${encodeTitle(item.title)}`,
+                  pathname: `/renderText/${encodeTitle(item.title)}`,
                   params: {
                     id: item.id,
                     table: table,

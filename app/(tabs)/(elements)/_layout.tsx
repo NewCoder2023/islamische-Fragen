@@ -57,39 +57,9 @@ function RootLayoutNav() {
           name='index'
           options={{ headerShown: false, headerTitle: "" }}
         />
-        <Stack.Screen
-          name='ashura'
-          options={{ headerShown: true, headerTitle: "Ashura" }}
-        />
-        <Stack.Screen
-          name='bittgebete'
-          options={{ headerShown: true, headerTitle: "Bittgebete" }}
-        />
-        <Stack.Screen
-          name='gebete'
-          options={{ headerShown: true, headerTitle: "Gebete" }}
-        />
-        <Stack.Screen
-          name='ziyarat'
-          options={{ headerShown: true, headerTitle: "Ziyarat" }}
-        />
-        <Stack.Screen
-          name='munajat'
-          options={{ headerShown: true, headerTitle: "Munajat" }}
-        />
-        <Stack.Screen
-          name='tasbihat'
-          options={{ headerShown: true, headerTitle: "Tashibat" }}
-        />
-        <Stack.Screen
-          name='heiligeMonate'
-          options={{ headerShown: true, headerTitle: "Heilige Monate" }}
-        />
-        <Stack.Screen
-          name='imamMahdi'
-          options={{ headerShown: true, headerTitle: "Imam Mahdi" }}
-        />
-        <Stack.Screen name='[renderText]' />
+
+        <Stack.Screen name='[renderCategory]' />
+        <Stack.Screen name='renderText/[renderText]' />
       </Stack>
     </ThemeProvider>
   );
