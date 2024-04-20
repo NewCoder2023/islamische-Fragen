@@ -54,16 +54,30 @@ export default function favourites() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.favoriteContainer}></View>
-      <FlatList
-        data={favorites}
-        keyExtractor={(item) => item.id.toString()}
-        style={styles.FlatList}
-        contentContainerStyle={styles.FlatListItems}
-        renderItem={({ item }) => (
-          <RenderFavorites key={item.id} items={[item]} table={item.table} />
-        )}
-      />
+      {favorites[0] ? (
+        <View style={styles.favoriteContainer}>
+          <FlatList
+            data={favorites}
+            keyExtractor={(item) => item.id.toString()}
+            style={styles.FlatList}
+            contentContainerStyle={styles.FlatListItems}
+            renderItem={({ item }) => (
+              <RenderFavorites
+                key={item.id}
+                items={[item]}
+                table={item.table}
+              />
+            )}
+          />
+        </View>
+      ) : (
+        <View style={styles.noFavoritesContainer}>
+          <Text style={styles.noFavoritesText}>
+            Du hast noch keine Favoriten. {"\n"} {"\n"} Wenn dir etwas gefällt,
+            klicke oben auf den Stern!
+          </Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -72,11 +86,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  favoriteContainer: {},
+  favoriteContainer: {
+    flex: 1,
+  },
   FlatList: {
     marginTop: 20,
   },
   FlatListItems: {
     gap: 20,
+  },
+  noFavoritesContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  noFavoritesText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: Colors.light.text,
+    textAlign: "center",
   },
 });
