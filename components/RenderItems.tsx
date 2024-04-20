@@ -37,7 +37,7 @@ export default function RenderItems({ items, fetchError, table }) {
               >
                 <Pressable>
                   <View style={styles.renderItem}>
-                    <Text style={styles.itemText}>{item.title}</Text>
+                    <Text style={styles.itemText}>{item.title.trim()}</Text>
                     <EvilIcons name='arrow-right' size={30} color='black' />
                   </View>
                 </Pressable>

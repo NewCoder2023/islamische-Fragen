@@ -11,6 +11,7 @@ export default {
     white: "#FFFFFF",
     error: "red",
     sperator: "#000000",
+    border: "#808080",
   },
   dark: {
     text: "#fff",

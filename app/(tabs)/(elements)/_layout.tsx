@@ -89,6 +89,7 @@ function RootLayoutNav() {
           name='imamMahdi'
           options={{ headerShown: true, headerTitle: "Imam Mahdi" }}
         />
+        <Stack.Screen name='[renderText]' />
       </Stack>
     </ThemeProvider>
   );
