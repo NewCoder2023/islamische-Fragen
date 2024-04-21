@@ -1,8 +1,8 @@
 import { StyleSheet, Platform, ImageBackground } from "react-native";
 import { View } from "components/Themed";
-import Categories from "components/Categories";
+import CategoryLinks from "components/CategoryLinks";
 
-export default function TabOneScreen() {
+export default function Category() {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -12,7 +12,7 @@ export default function TabOneScreen() {
       >
         {/* Main */}
         <View style={styles.categoryContainer}>
-          <Categories />
+          <CategoryLinks />
         </View>
       </ImageBackground>
     </View>

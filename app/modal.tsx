@@ -27,6 +27,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  impressumContainer: {},
-  impressumText: {},
+  impressumContainer: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 50,
+  },
+  impressumText: {
+    fontSize: 30,
+    textAlign: "center",
+  },
 });
