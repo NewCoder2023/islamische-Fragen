@@ -169,7 +169,7 @@ export default function Categories() {
           href={{
             pathname: "/[renderCategory]",
             params: {
-              category: "Zalawat",
+              category: "Salawat",
             },
           }}
           asChild
@@ -241,7 +241,6 @@ const styles = StyleSheet.create({
       },
       android: {
         elevation: 5,
-        backgroundColor: Colors.light.black,
       },
     }),
   },

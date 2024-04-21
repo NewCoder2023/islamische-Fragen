@@ -31,6 +31,7 @@ export default function renderText() {
   const Separator = () => {
     return <View style={styles.separator} />;
   };
+
   const items = text.split("\n").filter((item) => item !== "");
 
   {
@@ -146,14 +147,15 @@ export default function renderText() {
             data={items}
             renderItem={({ item, index }) => (
               <View style={styles.itemContainer}>
-                <Text style={styles.text}>{item}</Text>
+                <Text style={styles.text} selectable={true}>
+                  {item}
+                </Text>
                 <View style={styles.pageNumberContainer}>
                   <Text style={styles.pageNumber}>{index + 1}</Text>
                 </View>
               </View>
             )}
             keyExtractor={(item, index) => index.toString()}
-            pagingEnabled
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={Separator}
           ></FlatList>
