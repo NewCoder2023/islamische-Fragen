@@ -222,13 +222,13 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   element: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     backgroundColor: "#FFFFFF",
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
-    gap: 10,
+    gap: 8,
     paddingTop: 10,
     paddingBottom: 10,
 
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
       ios: {
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 5 },
-        shadowOpacity: 0.6,
+        shadowOpacity: 0.3,
         shadowRadius: 5,
       },
       android: {
@@ -246,11 +246,11 @@ const styles = StyleSheet.create({
     }),
   },
   elementIcon: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
   },
   elementText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
   },
 });
