@@ -13,6 +13,7 @@ export default {
     sperator: "#000000",
     border: "#808080",
     star: "#fbc531",
+    black: "#000000",
   },
   dark: {
     text: "#fff",

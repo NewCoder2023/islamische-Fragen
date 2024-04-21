@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   element: {
     width: 90,
     height: 90,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.light.white,
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
       },
       android: {
         elevation: 5,
-        backgroundColor: "#fff",
+        backgroundColor: Colors.light.black,
       },
     }),
   },
