@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
-import { Text, View } from "components/Themed";
+import { Text, View, SafeAreaView } from "components/Themed";
 import { TextInput } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "constants/Colors";
 
@@ -37,6 +36,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderWidth: 2,
     borderRadius: 30,
+    backgroundColor: Colors.light.white,
   },
   searchIcon: {
     paddingLeft: 12,

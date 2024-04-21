@@ -14,6 +14,7 @@ export default {
     border: "#808080",
     star: "#fbc531",
     black: "#000000",
+    link: "#007AFF",
   },
   dark: {
     text: "#fff",
