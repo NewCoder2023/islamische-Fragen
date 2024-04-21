@@ -15,12 +15,16 @@ export default function index() {
             <Image
               style={styles.newsImage}
               source={require("assets/images/maher.jpg")}
-              contentFit='cover'
+              contentFit='contain'
             />
             <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
           </View>
           <View style={styles.newsContentTextContainer}>
-            <Text style={styles.newsContentText}>Morgen ist Ramadan</Text>
+            <Text style={styles.newsContentText}>
+              Morgen ist Ramadan Morgen ist Ramadan Morgen ist Ramadan Morgen
+              ist Ramadan Morgen ist Ramadan Morgen ist Ramadan Morgen ist
+              Ramadan
+            </Text>
           </View>
           <View style={styles.newsContentDataContainer}></View>
         </View>
@@ -32,30 +36,32 @@ export default function index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.white,
+    backgroundColor: Colors.light.background,
   },
   headerContainer: {
-    backgroundColor: "green",
+    flex: 0.1,
     marginTop: 20,
-    marginHorizontal: 10,
+    marginHorizontal: 14,
   },
   headerTitle: {
     fontSize: 30,
     fontWeight: "bold",
   },
   mainContainer: {
-    flex: 1,
-    marginTop: 10,
-    backgroundColor: "blue",
+    flex: 0.9,
+    backgroundColor: Colors.light.background,
   },
   newsContainer: {
     flex: 1,
-    borderWidth: 2,
+    marginTop: 5,
+    marginBottom: 10,
     marginHorizontal: 10,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    borderWidth: 2,
+    borderRadius: 10,
+    backgroundColor: Colors.light.white,
   },
   newsHeader: {
+    backgroundColor: "transparent",
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
@@ -73,9 +79,17 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   newsContentTextContainer: {
+    backgroundColor: "transparent",
     paddingVertical: 10,
     paddingHorizontal: 10,
   },
-  newsContentText: {},
-  newsContentDataContainer: {},
+  newsContentText: {
+    backgroundColor: "transparent",
+    fontSize: 18,
+  },
+  newsContentDataContainer: {
+    flex: 1,
+    marginTop: 20,
+    backgroundColor: "transparent",
+  },
 });

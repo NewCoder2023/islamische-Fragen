@@ -7,6 +7,9 @@ export default function TabOneScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.linkContainer}>
+        <Link style={styles.linkText} href='/adminDashboard'>
+          Admin Loggin
+        </Link>
         <Link style={styles.linkText} href='/modal'>
           Impressum
         </Link>
