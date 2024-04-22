@@ -3,7 +3,7 @@ import { View, SafeAreaView } from "components/Themed";
 import Colors from "constants/Colors";
 import { Link } from "expo-router";
 
-export default function TabOneScreen() {
+export default function settings() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.linkContainer}>

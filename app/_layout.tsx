@@ -10,6 +10,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useColorScheme } from "components/useColorScheme";
 import Toast from "react-native-toast-message";
+import Link from "@react-navigation/native";
+import { Pressable } from "react-native";
+import { Text } from "components/Themed";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -63,6 +66,12 @@ function RootLayoutNav() {
           options={{
             headerTitle: "Impressum",
             presentation: "modal",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name='adminDashboard'
+          options={{
             headerShown: true,
           }}
         />
