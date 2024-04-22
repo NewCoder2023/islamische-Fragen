@@ -7,10 +7,10 @@ export default function settings() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.linkContainer}>
-        <Link style={styles.linkText} href='/adminDashboard'>
-          Admin Loggin
-        </Link>
         <Link style={styles.linkText} href='/modal'>
+          Admin Login
+        </Link>
+        <Link style={styles.linkText} href='/impressum'>
           Impressum
         </Link>
       </View>

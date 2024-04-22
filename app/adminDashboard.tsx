@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import Colors from "constants/Colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextInput, Pressable } from "react-native";
 import { supabase } from "@/utils/supabase";
 import * as ImagePicker from "expo-image-picker";
@@ -13,7 +13,28 @@ import { Image } from "expo-image";
 
 export default function adminDashboard() {
   const [image, setImage] = useState(null);
-  const [text, setText] = useState("");
+  const [text, onChangeText] = useState("");
+  const [pdf, setPdf] = useState(null);
+  const [userId, setUserId] = useState("");
+  const uploadPDF = () => {};
+
+  const email = "hadi@mail.de";
+  const password = "hadi@mail.de";
+
+  const login = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.error("Anmeldefehler:", error.message);
+      return;
+    }
+
+    console.log("Erfolgreich angemeldet:", data);
+    // Weiterleiten oder Status aktualisieren
+  };
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -28,63 +49,32 @@ export default function adminDashboard() {
     }
   };
 
-  const uploadImage = async () => {
-    if (image) {
-      const { data, error } = await supabase.storage
-        .from("news_bucket")
-        .upload(`IMAGE_${uuid.v4()}`, image);
-
-      if (error) {
-        console.error("Fehler beim Hochladen:", error);
-      } else {
-        console.log("Bild erfolgreich hochgeladen:", data);
-      }
-    }
-  };
-
-  const uploadTextFile = async () => {
-    if (text) {
-      const textBlob = new Blob([text], { type: "text/plain" });
-
-      const { data, error } = await supabase.storage
-        .from("news_bucket")
-        .upload(`TXT_${uuid.v4()}.txt`, textBlob);
-
-      if (error) {
-        console.error("Fehler beim Hochladen:", error);
-      } else {
-        console.log("Textdatei erfolgreich hochgeladen:", data);
-      }
-    }
-  };
-
-  const uploadPDF = async () => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: "application/pdf",
-      copyToCacheDirectory: true,
-    });
-
-    if (result.type !== "cancel") {
-      const fileUri = result.uri;
-
-      const { data, error } = await supabase.storage
-        .from("news_bucket")
-        .upload(`PDF_${uuid.v4()}.pdf`, fileUri);
-
-      if (error) {
-        console.error("Fehler beim Hochladen:", error);
-      } else {
-        console.log("PDF-Datei erfolgreich hochgeladen:", data);
-      }
-    } else {
-      console.log("PDF-Auswahl abgebrochen.");
-    }
-  };
-
   const post = async () => {
-    await Promise.all([uploadTextFile(), uploadImage()]);
-  };
+    await login(); // Warte auf die Anmeldung
 
+    const user = supabase.auth.getUser();
+    if (!user) {
+      console.error("Benutzer ist null oder undefined");
+    } else {
+      console.log("Benutzer:", JSON.stringify(user, null, 2));
+    }
+    try {
+      const { data, error } = await supabase.storage
+        .from("news_bucket")
+        .upload("images/image2.jpg", image, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+      if (error) {
+        console.error("Fehler beim Hochladen:", error.message);
+        return;
+      }
+
+      console.log("Bild erfolgreich hochgeladen:", data);
+    } catch (e) {
+      console.error("Unerwarteter Fehler:", e);
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.selectContainer}>
@@ -100,7 +90,7 @@ export default function adminDashboard() {
           />
         </View>
         <View style={styles.postContainer}>
-          <Pressable style={styles.postButton}>
+          <Pressable style={styles.postButton} onPress={post}>
             <Text style={styles.postButtonText}>Posten</Text>
           </Pressable>
         </View>

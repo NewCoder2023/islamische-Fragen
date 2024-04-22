@@ -64,7 +64,7 @@ function RootLayoutNav() {
         <Stack.Screen
           name='modal'
           options={{
-            headerTitle: "Impressum",
+            headerTitle: "Admin Login",
             presentation: "modal",
             headerShown: true,
           }}
