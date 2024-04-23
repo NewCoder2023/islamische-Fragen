@@ -13,7 +13,7 @@ export default function Categories() {
       <View style={styles.container}>
         <Link
           href={{
-            pathname: "(renderCategory)/[renderCategory]",
+            pathname: "(renderNestedCategories)/[renderNestedCategories]",
             params: {
               category: "Bittgebete",
             },

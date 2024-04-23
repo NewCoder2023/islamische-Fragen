@@ -1,0 +1,14 @@
+{
+  "content": [
+    {
+      "text": "1. Dua für den ersten Tag im Ramadan",
+      "style": "italic"
+    },
+
+{
+
+      "text": "O Allah, mach mein Fasten an diesem Tag wie das Fasten jener, die aufrichtig fasten und mein Aufstehen zum Gebet wie das jener, die aus Gehorsamkeit aufstehen. Erwecke mich aus dem Schlaf der Unachtsamen und verzeih mir meine Sünden. O Herr der Welten. Vergib mir. O Du Einziger, der die Sünden verzeiht.
+"}, {
+      "style": "normal"
+    }
+]}

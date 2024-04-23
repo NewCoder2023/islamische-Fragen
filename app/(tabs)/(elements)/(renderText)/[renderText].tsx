@@ -137,8 +137,6 @@ export default function renderText() {
       {/* Change header Title */}
       <Stack.Screen
         options={{
-          headerShown: true,
-          headerBackButtonMenuEnabled: true,
           headerRight: () => (
             <Pressable onPress={changeFavourite}>
               <AntDesign
@@ -148,7 +146,6 @@ export default function renderText() {
               />
             </Pressable>
           ),
-
           headerTitle: title,
         }}
       />

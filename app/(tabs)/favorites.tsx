@@ -62,11 +62,7 @@ export default function favourites() {
             style={styles.FlatList}
             contentContainerStyle={styles.FlatListItems}
             renderItem={({ item }) => (
-              <RenderFavorites
-                key={`${item.table}-${item.id}`}
-                items={[item]}
-                table={item.table}
-              />
+              <RenderFavorites items={[item]} table={item.table} />
             )}
           />
         </View>
