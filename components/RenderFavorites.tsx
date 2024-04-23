@@ -20,7 +20,7 @@ export default function RenderFavorites({ items, table }) {
         <View style={styles.itemsContainer}>
           {items.map((item) => (
             <Link
-              key={item.id}
+              key={`${item.table}-${item.id}`}
               href={{
                 pathname: `/renderText/${encodeTitle(item.title)}`,
                 params: {

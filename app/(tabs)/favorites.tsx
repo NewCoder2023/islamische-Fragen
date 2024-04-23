@@ -58,12 +58,12 @@ export default function favourites() {
         <View style={styles.favoriteContainer}>
           <FlatList
             data={favorites}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item, index) => `${item.table}-${item.id}`}
             style={styles.FlatList}
             contentContainerStyle={styles.FlatListItems}
             renderItem={({ item }) => (
               <RenderFavorites
-                key={item.id}
+                key={`${item.table}-${item.id}`}
                 items={[item]}
                 table={item.table}
               />
