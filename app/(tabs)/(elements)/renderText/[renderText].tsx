@@ -71,14 +71,14 @@ export default function renderText() {
     /* Set the Favorites in the AsyncStorage and change icons*/
   }
   const changeFavourite = async () => {
-    if (favorites.some((item) => item.id == id && item.isFavorite)) {
+    if (favorites.some((item) => item.title == title && item.isFavorite)) {
       Toast.show({
         type: "error",
         text1: "Von Favoriten entfernt!",
       });
 
       const newFavorites = favorites.map((item) =>
-        item.id === id ? { ...item, isFavorite: false } : item
+        item.title === title ? { ...item, isFavorite: false } : item
       );
       setFavorites(newFavorites);
       await storeFavorites(newFavorites);
@@ -119,7 +119,7 @@ export default function renderText() {
   const isInFavorites = () => {
     return (
       Array.isArray(favorites) &&
-      favorites.some((item) => item.id == id && item.isFavorite)
+      favorites.some((item) => item.title == title && item.isFavorite)
     );
   };
 

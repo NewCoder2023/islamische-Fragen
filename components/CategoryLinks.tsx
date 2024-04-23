@@ -189,7 +189,7 @@ export default function Categories() {
 
         <Link
           href={{
-            pathname: "/[renderCategory]",
+            pathname: "/renderNestedCategories/[renderNestedCategories]",
             params: {
               category: "HeiligeMonate",
             },
