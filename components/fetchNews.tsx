@@ -7,13 +7,16 @@ export default function fetchNews() {
 
   useEffect(() => {
     const fetchItems = async () => {
-      const { data, error } = await supabase.from("News").select("*");
+      const { data, error } = await supabase
+        .from("News")
+        .select("*")
+        .order("created_at");
 
       // Error checking
 
       if (error) {
         setFetchError(
-          "Neuigkeiten konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internet Verbindung!"
+          "Neuigkeiten konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internetverbindung!"
         );
         SetItems([]);
       }

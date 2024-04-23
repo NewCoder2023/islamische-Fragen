@@ -4,6 +4,7 @@ import { Image } from "expo-image";
 import Colors from "constants/Colors";
 import fetchNews from "components/fetchNews";
 import { FlatList } from "react-native";
+import fetchNewsImages from "components/fetchNewsImages";
 
 export default function index() {
   const { items, fetchError } = fetchNews();
@@ -13,38 +14,52 @@ export default function index() {
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Neuigkeiten</Text>
       </View>
-      <View style={styles.mainContainer}>
-        <View style={styles.newsContainer}>
-          <View style={styles.newsHeader}>
-            <Image
-              style={styles.newsImage}
-              source={require("assets/images/maher.jpg")}
-              contentFit='contain'
-            />
-            <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
-          </View>
 
+      <View style={styles.mainContainer}>
+        {fetchError ? (
+          <View style={styles.renderError}>
+            <Text style={styles.errorText}>{fetchError}</Text>
+          </View>
+        ) : (
           <FlatList
             data={items}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={styles.newsContentTextContainer}>
-                {item.title && (
-                  <Text style={styles.newsTitletText}>{item.title}</Text>
-                )}
-                {item.content && (
-                  <Text style={styles.newsContentText}>{item.content}</Text>
-                )}
+              <View style={styles.newsContainer}>
+                <View style={styles.newsHeader}>
+                  <Image
+                    style={styles.newsImageMaher}
+                    source={require("assets/images/maher.jpg")}
+                    contentFit='contain'
+                  />
+                  <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
+                </View>
+                <View style={styles.newsContentTextContainer}>
+                  {item.title && (
+                    <Text style={styles.newsTitleText}>{item.title}</Text>
+                  )}
+                  {item.content && (
+                    <Text style={styles.newsContentText}>{item.content}</Text>
+                  )}
+                  {item.imagePath && (
+                    <View style={styles.newsImageContainer}>
+                      <Image
+                        style={styles.newsImage}
+                        source={{
+                          uri: item.imagePath,
+                        }}
+                      />
+                    </View>
+                  )}
+                </View>
               </View>
             )}
           />
-          <View style={styles.newsContentDataContainer}></View>
-        </View>
+        )}
       </View>
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -81,7 +96,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
-  newsImage: {
+  newsImageMaher: {
     height: 30,
     width: 30,
   },
@@ -94,14 +109,36 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
   },
-  newsTitletText: {},
+  newsTitleText: {
+    fontSize: 25,
+    fontWeight: "bold",
+    textDecorationLine: "underline",
+    paddingBottom: 20,
+  },
   newsContentText: {
     backgroundColor: "transparent",
     fontSize: 18,
   },
-  newsContentDataContainer: {
+  newsImageContainer: {
     flex: 1,
     marginTop: 20,
     backgroundColor: "transparent",
+  },
+  newsImage: {
+    width: "100%", // Beispielbreite in einer reaktionsfähigen Einheit
+    height: undefined,
+    aspectRatio: 0.8,
+  },
+
+  renderError: {
+    flex: 1,
+    marginTop: 20,
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  errorText: {
+    fontSize: 20,
+    color: Colors.light.error,
+    textAlign: "center",
   },
 });
