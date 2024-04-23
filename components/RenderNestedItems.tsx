@@ -25,7 +25,7 @@ export default function RenderNestedItems({ items, fetchError, table }) {
             renderItem={({ item }) => (
               <Link
                 href={{
-                  pathname: "/[renderCategory]",
+                  pathname: "(renderCategory)/[renderCategory]",
                   params: {
                     category: item.title,
                   },

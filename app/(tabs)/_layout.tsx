@@ -38,7 +38,7 @@ export default function TabLayout() {
         name='(elements)'
         options={{
           title: "",
-
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name='book' color={color} />,
           // headerRight: () => (
           //   <Link href='/modal' asChild>

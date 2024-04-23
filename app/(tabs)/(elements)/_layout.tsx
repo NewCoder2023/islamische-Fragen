@@ -58,9 +58,23 @@ function RootLayoutNav() {
           name='categories'
           options={{ headerShown: false, headerTitle: "" }}
         />
-        <Stack.Screen name='[renderCategory]' />
-        <Stack.Screen name='renderText/[renderText]' />
+
+        <Stack.Screen
+          name='(renderCategory)/[renderCategory]'
+          options={{ headerShown: false, headerTitle: "" }}
+        />
+
+        <Stack.Screen
+          name='(renderText)/[renderText]'
+          options={{ headerShown: false, headerTitle: "" }}
+        />
+
+        <Stack.Screen
+          name='(renderNestedCategories)/[renderNestedCategories]'
+          options={{ headerShown: false, headerTitle: "" }}
+        />
       </Stack>
+
       <Toast />
     </ThemeProvider>
   );

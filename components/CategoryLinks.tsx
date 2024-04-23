@@ -13,7 +13,7 @@ export default function Categories() {
       <View style={styles.container}>
         <Link
           href={{
-            pathname: "/[renderCategory]",
+            pathname: "(renderCategory)/[renderCategory]",
             params: {
               category: "Bittgebete",
             },
@@ -35,7 +35,7 @@ export default function Categories() {
 
         <Link
           href={{
-            pathname: "/[renderCategory]",
+            pathname: "(renderCategory)/[renderCategory]",
             params: {
               category: "Ashura",
             },
@@ -57,7 +57,7 @@ export default function Categories() {
 
         <Link
           href={{
-            pathname: "/[renderCategory]",
+            pathname: "(renderCategory)/[renderCategory]",
             params: {
               category: "Munajat",
             },
@@ -79,7 +79,7 @@ export default function Categories() {
 
         <Link
           href={{
-            pathname: "/[renderCategory]",
+            pathname: "(renderCategory)/[renderCategory]",
             params: {
               category: "Gebete",
             },
@@ -101,7 +101,7 @@ export default function Categories() {
 
         <Link
           href={{
-            pathname: "/[renderCategory]",
+            pathname: "(renderCategory)/[renderCategory]",
             params: {
               category: "Ziyarat",
             },
@@ -123,7 +123,7 @@ export default function Categories() {
 
         <Link
           href={{
-            pathname: "/[renderCategory]",
+            pathname: "(renderCategory)/[renderCategory]",
             params: {
               category: "ImamMahdi",
             },
@@ -145,7 +145,7 @@ export default function Categories() {
 
         <Link
           href={{
-            pathname: "/[renderCategory]",
+            pathname: "(renderCategory)/[renderCategory]",
             params: {
               category: "Tasbihat",
             },
@@ -167,7 +167,7 @@ export default function Categories() {
 
         <Link
           href={{
-            pathname: "/[renderCategory]",
+            pathname: "(renderCategory)/[renderCategory]",
             params: {
               category: "Salawat",
             },
@@ -189,7 +189,7 @@ export default function Categories() {
 
         <Link
           href={{
-            pathname: "/renderNestedCategories/[renderNestedCategories]",
+            pathname: "(renderNestedCategories)/[renderNestedCategories]",
             params: {
               category: "HeiligeMonate",
             },

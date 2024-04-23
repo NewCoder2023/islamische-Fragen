@@ -22,7 +22,7 @@ export default function RenderFavorites({ items, table }) {
             <Link
               key={`${item.table}-${item.id}`}
               href={{
-                pathname: `/renderText/${encodeTitle(item.title)}`,
+                pathname: `/(renderText)/${encodeTitle(item.title)}`,
                 params: {
                   id: item.id,
                   table: table,
