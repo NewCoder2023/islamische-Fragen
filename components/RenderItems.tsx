@@ -24,7 +24,7 @@ export default function RenderItems({ items, fetchError, table }) {
             contentContainerStyle={styles.FlatListItems}
             renderItem={({ item }) => (
               <Link
-                key={item.id}
+                keyExtractor={(item) => item.id.toString()}
                 href={{
                   pathname: `/(renderText)/${encodeTitle(item.title)}`,
                   params: {

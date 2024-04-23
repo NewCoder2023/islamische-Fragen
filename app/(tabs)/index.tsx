@@ -2,8 +2,12 @@ import { StyleSheet, Platform, ImageBackground } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
+import fetchNews from "components/fetchNews";
+import { FlatList } from "react-native";
 
 export default function index() {
+  const { items, fetchError } = fetchNews();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -19,13 +23,21 @@ export default function index() {
             />
             <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
           </View>
-          <View style={styles.newsContentTextContainer}>
-            <Text style={styles.newsContentText}>
-              Morgen ist Ramadan Morgen ist Ramadan Morgen ist Ramadan Morgen
-              ist Ramadan Morgen ist Ramadan Morgen ist Ramadan Morgen ist
-              Ramadan
-            </Text>
-          </View>
+
+          <FlatList
+            data={items}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.newsContentTextContainer}>
+                {item.title && (
+                  <Text style={styles.newsTitletText}>{item.title}</Text>
+                )}
+                {item.content && (
+                  <Text style={styles.newsContentText}>{item.content}</Text>
+                )}
+              </View>
+            )}
+          />
           <View style={styles.newsContentDataContainer}></View>
         </View>
       </View>
@@ -52,7 +64,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   newsContainer: {
-    flex: 1,
     marginTop: 5,
     marginBottom: 10,
     marginHorizontal: 10,
@@ -83,6 +94,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
   },
+  newsTitletText: {},
   newsContentText: {
     backgroundColor: "transparent",
     fontSize: 18,
