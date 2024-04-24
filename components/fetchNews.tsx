@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 
 export default function fetchNews() {
   const [fetchError, setFetchError] = useState<string>("");
-  const [items, SetItems] = useState<any[]>([]);
+  const [posts, SetPosts] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchItems = async () => {
       const { data, error } = await supabase
         .from("News")
         .select("*")
-        .order("created_at");
+        .order("id", { ascending: false });
 
       // Error checking
 
@@ -18,11 +18,11 @@ export default function fetchNews() {
         setFetchError(
           "Neuigkeiten konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internetverbindung!"
         );
-        SetItems([]);
+        SetPosts([]);
       }
 
       if (data) {
-        SetItems(data);
+        SetPosts(data);
         setFetchError("");
       }
     };
@@ -31,6 +31,6 @@ export default function fetchNews() {
   }, []);
   return {
     fetchError,
-    items,
+    posts,
   };
 }

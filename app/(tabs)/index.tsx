@@ -5,9 +5,10 @@ import Colors from "constants/Colors";
 import fetchNews from "components/fetchNews";
 import { FlatList } from "react-native";
 import fetchNewsImages from "components/fetchNewsImages";
+import { useEffect } from "react";
 
 export default function index() {
-  const { items, fetchError } = fetchNews();
+  const { posts, fetchError } = fetchNews();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -22,7 +23,7 @@ export default function index() {
           </View>
         ) : (
           <FlatList
-            data={items}
+            data={posts}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.newsContainer}>
@@ -49,7 +50,7 @@ export default function index() {
                           uri: item.imagePath,
                         }}
                       />
-                    </View>
+                    </View> 
                   )}
                 </View>
               </View>
