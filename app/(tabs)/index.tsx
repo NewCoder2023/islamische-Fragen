@@ -30,10 +30,10 @@ export default function index() {
                 <View style={styles.newsHeader}>
                   <Image
                     style={styles.newsImageMaher}
-                    source={require("assets/images/maher.jpg")}
+                    source={require("assets/images/ashura.png")}
                     contentFit='contain'
                   />
-                  <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
+                  <Text style={styles.newsHeaderText}>Test</Text>
                 </View>
                 <View style={styles.newsContentTextContainer}>
                   {item.title && (
@@ -50,7 +50,7 @@ export default function index() {
                           uri: item.imagePath,
                         }}
                       />
-                    </View> 
+                    </View>
                   )}
                 </View>
               </View>

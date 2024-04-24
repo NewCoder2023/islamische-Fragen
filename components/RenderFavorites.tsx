@@ -23,9 +23,7 @@ export default function RenderFavorites({ items, table }) {
               key={`${item.table}-${item.id}`}
               push
               href={{
-                pathname: `/(tabs)/(renderFavorite)/ ${encodeTitle(
-                  item.title
-                )}`,
+                pathname: `(tabs)/(renderText)/ ${encodeTitle(item.title)}`,
                 params: {
                   id: item.id,
                   table: table,
