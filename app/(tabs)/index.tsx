@@ -37,7 +37,7 @@ export default function index() {
                 <View style={styles.newsHeader}>
                   <Image
                     style={styles.newsImageMaher}
-                    source={require("assets/images/ashura.png")}
+                    source={require("assets/images/aschura.png")}
                     contentFit='contain'
                   />
                   <Text style={styles.newsHeaderText}>Test</Text>
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
 
   lightThemeError: { color: Colors.light.error },
-  darkThemeErro: {color: Colors.light.error},
+  darkThemeErro: { color: Colors.light.error },
   lightContainer: {
     backgroundColor: Colors.light.white,
   },

@@ -43,17 +43,17 @@ export default function Categories() {
           href={{
             pathname: "(renderCategory)/[renderCategory]",
             params: {
-              category: "Ashura",
+              category: "Aschura",
             },
           }}
           asChild
         >
           <Pressable>
             <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Ashura</Text>
+              <Text style={styles.elementText}>Aschura</Text>
               <Image
                 style={styles.elementIcon}
-                source={require("assets/images/ashura.png")}
+                source={require("assets/images/aschura.png")}
                 contentFit='cover'
                 transition={1000}
               />

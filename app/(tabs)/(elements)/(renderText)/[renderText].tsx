@@ -137,8 +137,6 @@ export default function renderText() {
 
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-  const themeErrorStyle =
-    colorScheme === "light" ? styles.lightError : styles.darkError;
 
   return (
     <View style={styles.container}>
@@ -178,7 +176,7 @@ export default function renderText() {
         </View>
       )}
       {fetchError && (
-        <View style={[styles.renderError, themeErrorStyle]}>
+        <View style={styles.renderError}>
           <Text style={styles.errorText}>{fetchError}</Text>
         </View>
       )}
@@ -233,11 +231,5 @@ const styles = StyleSheet.create({
   },
   darkContainer: {
     backgroundColor: Colors.dark.contrast,
-  },
-  lightError: {
-    color: Colors.light.error,
-  },
-  darkError: {
-    color: Colors.dark.error,
   },
 });
