@@ -18,8 +18,8 @@ export default function adminDashboard() {
   const [userId, setUserId] = useState("");
   const uploadPDF = () => {};
 
-  const email = "hadi@mail.de";
-  const password = "hadi@mail.de";
+  const email = "test@mail.de";
+  const password = "test@mail.de";
 
   const login = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
