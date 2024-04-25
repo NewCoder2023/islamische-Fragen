@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
   linkText: {
     color: Colors.light.link,
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 10,
   },
 });
