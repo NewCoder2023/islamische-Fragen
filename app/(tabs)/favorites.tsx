@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import RenderFavorites from "components/RenderFavorites";
+import { useColorScheme } from "react-native";
 
 export default function favourites() {
   interface Favorite {
@@ -16,6 +17,13 @@ export default function favourites() {
   }
 
   const [favorites, setFavorites] = useState<Favorite[]>([]);
+
+  const colorScheme = useColorScheme();
+
+  const themeContainerStyle =
+    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+  const themeErrorStyle =
+    colorScheme === "light" ? styles.lightError : styles.darkError;
 
   useEffect(() => {
     const getFavorites = async () => {
@@ -67,8 +75,8 @@ export default function favourites() {
           />
         </View>
       ) : (
-        <View style={styles.noFavoritesContainer}>
-          <Text style={styles.noFavoritesText}>
+        <View style={[styles.noFavoritesContainer, themeContainerStyle]}>
+          <Text style={[styles.noFavoritesText, themeErrorStyle]}>
             Du hast noch keine Favoriten. {"\n"} {"\n"} Wenn dir etwas gefällt,
             klicke oben auf den Stern!
           </Text>
@@ -101,7 +109,18 @@ const styles = StyleSheet.create({
   noFavoritesText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: Colors.light.text,
     textAlign: "center",
+  },
+  lightContainer: {
+    backgroundColor: Colors.light.white,
+  },
+  darkContainer: {
+    backgroundColor: Colors.dark.contrast,
+  },
+  lightError: {
+    color: Colors.light.error,
+  },
+  darkError: {
+    color: Colors.light.error,
   },
 });

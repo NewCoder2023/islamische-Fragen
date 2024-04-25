@@ -4,6 +4,7 @@ import { FlatList, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { EvilIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useColorScheme } from "react-native";
 
 export default function RenderItems({ items, fetchError, table }) {
   const encodeTitle = (title: string) => {
@@ -14,6 +15,14 @@ export default function RenderItems({ items, fetchError, table }) {
       .replace(/\(/g, "%28")
       .replace(/\)/g, "%29");
   };
+
+  const colorScheme = useColorScheme();
+
+  const themeContainerStyle =
+    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+  const themeErrorStyle =
+    colorScheme === "light" ? styles.lightError : styles.darkError;
+
   return (
     <View style={styles.container}>
       {items && (
@@ -36,7 +45,7 @@ export default function RenderItems({ items, fetchError, table }) {
                 asChild
               >
                 <Pressable>
-                  <View style={styles.renderItem}>
+                  <View style={[styles.renderItem, themeContainerStyle]}>
                     <Text style={styles.itemText}>{item.title.trim()}</Text>
                     <EvilIcons name='arrow-right' size={30} color='black' />
                   </View>
@@ -48,7 +57,7 @@ export default function RenderItems({ items, fetchError, table }) {
       )}
       {fetchError && (
         <View style={styles.renderError}>
-          <Text style={styles.errorText}>{fetchError}</Text>
+          <Text style={[styles.errorText, themeErrorStyle]}>{fetchError}</Text>
         </View>
       )}
     </View>
@@ -71,7 +80,6 @@ const styles = StyleSheet.create({
   },
   renderItem: {
     flexDirection: "row",
-    backgroundColor: "#FFFFFF",
     padding: 20,
     borderWidth: 0.2,
   },
@@ -88,7 +96,18 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 20,
-    color: Colors.light.error,
     textAlign: "center",
+  },
+  lightContainer: {
+    backgroundColor: Colors.light.white,
+  },
+  darkContainer: {
+    backgroundColor: Colors.dark.contrast,
+  },
+  lightError: {
+    color: Colors.light.error,
+  },
+  darkError: {
+    color: Colors.dark.error,
   },
 });

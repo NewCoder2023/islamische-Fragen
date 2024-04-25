@@ -3,11 +3,20 @@ import { Text, View, SafeAreaView } from "components/Themed";
 import { TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "constants/Colors";
+import { useColorScheme } from "react-native";
 
 export default function TabOneScreen() {
+  const colorScheme = useColorScheme();
+
+  const themeContainerStyle =
+    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+
+  const themeInputText =
+    colorScheme === "light" ? styles.lightInputText : styles.darkInputText;
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.searchContainer}>
+      <View style={[styles.searchContainer, themeContainerStyle]}>
         <AntDesign
           name='search1'
           size={20}
@@ -16,7 +25,7 @@ export default function TabOneScreen() {
         />
         <Text style={styles.border}>|</Text>
         <TextInput
-          style={styles.searchField}
+          style={[styles.searchField, themeInputText]}
           placeholder='Suche'
           keyboardType='default'
           editable
@@ -36,7 +45,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderWidth: 2,
     borderRadius: 30,
-    backgroundColor: Colors.light.white,
+    backgroundColor: Colors.dark.contrast,
   },
   searchIcon: {
     paddingLeft: 12,
@@ -55,5 +64,17 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingLeft: 5,
     paddingVertical: 10,
+  },
+  lightContainer: {
+    backgroundColor: Colors.light.white,
+  },
+  darkContainer: {
+    backgroundColor: Colors.dark.contrast,
+  },
+  lightInputText: {
+    color: Colors.light.text,
+  },
+  darkInputText: {
+    color: Colors.dark.text,
   },
 });

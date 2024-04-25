@@ -18,7 +18,7 @@ export default function renderCategory() {
     <View style={styles.container}>
       {/* Change header Title */}
       <View style={styles.headerContainer}>
-        <Stack.Screen options={{  headerTitle: category }} />
+        <Stack.Screen options={{ headerTitle: category }} />
         <RenderCategoryInformation category={category} />
       </View>
       <View style={styles.itemContainer}>

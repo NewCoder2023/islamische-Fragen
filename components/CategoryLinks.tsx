@@ -6,8 +6,14 @@ import { Pressable } from "react-native";
 import Colors from "constants/Colors";
 import { Image } from "expo-image";
 import { Platform } from "react-native";
+import { useColorScheme } from "react-native";
 
 export default function Categories() {
+  const colorScheme = useColorScheme();
+
+  const themeContainerStyle =
+    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+
   return (
     <View>
       <View style={styles.container}>
@@ -21,7 +27,7 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={styles.element}>
+            <View style={[styles.element, themeContainerStyle]}>
               <Text style={styles.elementText}>Bittgebete</Text>
               <Image
                 style={styles.elementIcon}
@@ -43,7 +49,7 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={styles.element}>
+            <View style={[styles.element, themeContainerStyle]}>
               <Text style={styles.elementText}>Ashura</Text>
               <Image
                 style={styles.elementIcon}
@@ -65,7 +71,7 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={styles.element}>
+            <View style={[styles.element, themeContainerStyle]}>
               <Text style={styles.elementText}>Munajat</Text>
               <Image
                 style={styles.elementIcon}
@@ -87,7 +93,7 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={styles.element}>
+            <View style={[styles.element, themeContainerStyle]}>
               <Text style={styles.elementText}>Gebete</Text>
               <Image
                 style={styles.elementIcon}
@@ -109,7 +115,7 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={styles.element}>
+            <View style={[styles.element, themeContainerStyle]}>
               <Text style={styles.elementText}>Ziyarat</Text>
               <Image
                 style={styles.elementIcon}
@@ -131,7 +137,7 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={styles.element}>
+            <View style={[styles.element, themeContainerStyle]}>
               <Text style={styles.elementText}>Imam Mahdi</Text>
               <Image
                 style={styles.elementIcon}
@@ -153,7 +159,7 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={styles.element}>
+            <View style={[styles.element, themeContainerStyle]}>
               <Text style={styles.elementText}>Tashibat</Text>
               <Image
                 style={styles.elementIcon}
@@ -175,7 +181,7 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={styles.element}>
+            <View style={[styles.element, themeContainerStyle]}>
               <Text style={styles.elementText}>Salawat</Text>
               <Image
                 style={styles.elementIcon}
@@ -197,7 +203,7 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={styles.element}>
+            <View style={[styles.element, themeContainerStyle]}>
               <Text style={styles.elementText}>Heilige Monate</Text>
               <Image
                 style={styles.elementIcon}
@@ -224,7 +230,6 @@ const styles = StyleSheet.create({
   element: {
     width: 90,
     height: 90,
-    backgroundColor: Colors.light.white,
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
@@ -251,5 +256,11 @@ const styles = StyleSheet.create({
   elementText: {
     fontSize: 14,
     fontWeight: "bold",
+  },
+  lightContainer: {
+    backgroundColor: Colors.light.white,
+  },
+  darkContainer: {
+    backgroundColor: Colors.dark.contrast,
   },
 });

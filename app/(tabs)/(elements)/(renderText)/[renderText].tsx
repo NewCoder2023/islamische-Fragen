@@ -10,6 +10,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { useColorScheme } from "react-native";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -132,6 +133,13 @@ export default function renderText() {
     );
   };
 
+  const colorScheme = useColorScheme();
+
+  const themeContainerStyle =
+    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+  const themeErrorStyle =
+    colorScheme === "light" ? styles.lightError : styles.darkError;
+
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -154,11 +162,11 @@ export default function renderText() {
           <FlatList
             data={items}
             renderItem={({ item, index }) => (
-              <View style={styles.itemContainer}>
+              <View style={[styles.itemContainer, themeContainerStyle]}>
                 <Text style={styles.text} selectable={true}>
                   {item}
                 </Text>
-                <View style={styles.pageNumberContainer}>
+                <View style={[styles.pageNumberContainer, themeContainerStyle]}>
                   <Text style={styles.pageNumber}>{index + 1}</Text>
                 </View>
               </View>
@@ -170,7 +178,7 @@ export default function renderText() {
         </View>
       )}
       {fetchError && (
-        <View style={styles.renderError}>
+        <View style={[styles.renderError, themeErrorStyle]}>
           <Text style={styles.errorText}>{fetchError}</Text>
         </View>
       )}
@@ -219,5 +227,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.light.error,
     textAlign: "center",
+  },
+  lightContainer: {
+    backgroundColor: Colors.light.white,
+  },
+  darkContainer: {
+    backgroundColor: Colors.dark.contrast,
+  },
+  lightError: {
+    color: Colors.light.error,
+  },
+  darkError: {
+    color: Colors.dark.error,
   },
 });

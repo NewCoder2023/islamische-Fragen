@@ -2,15 +2,21 @@ import { View, Text } from "components/Themed";
 import { StyleSheet } from "react-native";
 import React from "react";
 import Colors from "constants/Colors";
+import { useColorScheme } from "react-native";
 
 interface RenderCategoryInformationProps {
   category: string;
 }
+
 export default function RenderCategoryInformation({
   category,
 }: RenderCategoryInformationProps) {
+  const colorScheme = useColorScheme();
+  const themeContainerStyle =
+    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, themeContainerStyle]}>
       <Text style={styles.informationText}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur
         adipisci ipsum modi facere dolorem dignissimos quam assumenda explicabo,
@@ -35,5 +41,11 @@ const styles = StyleSheet.create({
     flex: 0.8,
     marginTop: 10,
     marginBottom: 10,
+  },
+  lightContainer: {
+    backgroundColor: Colors.light.white,
+  },
+  darkContainer: {
+    backgroundColor: Colors.dark.contrast,
   },
 });

@@ -3,12 +3,17 @@ import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
 import fetchNews from "components/fetchNews";
-import { FlatList } from "react-native";
-import fetchNewsImages from "components/fetchNewsImages";
-import { useEffect } from "react";
+import { FlatList, useColorScheme } from "react-native";
 
 export default function index() {
   const { posts, fetchError } = fetchNews();
+
+  const colorScheme = useColorScheme();
+
+  const themeErrorStyle =
+    colorScheme === "light" ? styles.lightThemeError : styles.darkThemeErro;
+  const themeContainerStyle =
+    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,14 +24,16 @@ export default function index() {
       <View style={styles.mainContainer}>
         {fetchError ? (
           <View style={styles.renderError}>
-            <Text style={styles.errorText}>{fetchError}</Text>
+            <Text style={[styles.errorText, themeErrorStyle]}>
+              {fetchError}
+            </Text>
           </View>
         ) : (
           <FlatList
             data={posts}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={styles.newsContainer}>
+              <View style={[styles.newsContainer, themeContainerStyle]}>
                 <View style={styles.newsHeader}>
                   <Image
                     style={styles.newsImageMaher}
@@ -64,7 +71,6 @@ export default function index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   headerContainer: {
     flex: 0.1,
@@ -77,7 +83,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 0.9,
-    backgroundColor: Colors.light.background,
   },
   newsContainer: {
     marginTop: 5,
@@ -85,7 +90,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderWidth: 2,
     borderRadius: 10,
-    backgroundColor: Colors.light.white,
   },
   newsHeader: {
     backgroundColor: "transparent",
@@ -141,5 +145,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.light.error,
     textAlign: "center",
+  },
+
+  lightThemeError: { color: Colors.light.error },
+  darkThemeErro: {color: Colors.light.error},
+  lightContainer: {
+    backgroundColor: Colors.light.white,
+  },
+  darkContainer: {
+    backgroundColor: Colors.dark.contrast,
   },
 });
