@@ -28,13 +28,11 @@ export default function renderText() {
 
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
 
-  const { text, fetchError } = fetchText(id, table);
+  const { content, fetchError } = fetchText(id, table);
 
   const Separator = () => {
     return <View style={styles.separator} />;
   };
-
-  const items = text.split("\n").filter((item) => item !== "");
 
   {
     /* Get the Favorites from the AsyncStorage*/
@@ -138,6 +136,22 @@ export default function renderText() {
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
+  const contentArray = Object.values(content).flat();
+
+  // Style Attributes
+  const getStyle = (item) => {
+    switch (item.style) {
+      case "notes":
+        return styles.notesStyle;
+      case "content":
+        return styles.contentStyle;
+      case "title":
+        return styles.titleStyle;
+      case "arabic":
+        return styles.arabicStyle;
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -155,15 +169,13 @@ export default function renderText() {
           headerTitle: title,
         }}
       />
-      {items && (
+      {content && (
         <View style={styles.listContainer}>
           <FlatList
-            data={items}
+            data={contentArray}
             renderItem={({ item, index }) => (
               <View style={[styles.itemContainer, themeContainerStyle]}>
-                <Text style={styles.text} selectable={true}>
-                  {item}
-                </Text>
+                <Text style={[getStyle(item), styles.text]}>{item.text}</Text>
                 <View style={[styles.pageNumberContainer, themeContainerStyle]}>
                   <Text style={styles.pageNumber}>{index + 1}</Text>
                 </View>
@@ -230,4 +242,10 @@ const styles = StyleSheet.create({
   darkContainer: {
     backgroundColor: Colors.dark.contrast,
   },
+  notesStyle: {
+    color: "red",
+  },
+  contentStyle: {},
+  titleStyle: {},
+  arabicStyle: {},
 });
