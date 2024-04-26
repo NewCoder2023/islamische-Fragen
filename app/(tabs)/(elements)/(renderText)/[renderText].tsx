@@ -243,9 +243,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.contrast,
   },
   notesStyle: {
-    color: "red",
+    textAlign: "center",
+    fontStyle: "italic",
   },
-  contentStyle: {},
-  titleStyle: {},
-  arabicStyle: {},
+  contentStyle: {
+    fontStyle: "normal",
+  },
+  titleStyle: {
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  arabicStyle: {
+    textAlign: "center",
+    fontStyle: "italic",
+  },
 });
