@@ -187,7 +187,6 @@ export default function renderText() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.white,
   },
   listContainer: {},
   itemContainer: {
@@ -213,7 +212,6 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 2,
-    backgroundColor: Colors.light.sperator,
   },
   renderError: {
     flex: 1,

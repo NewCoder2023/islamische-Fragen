@@ -18,7 +18,7 @@
     {
       "text": "",
       "style": "content"
-    },
+    }
   ]
   }
 
@@ -38,7 +38,7 @@
     {
       "text": "",
       "style": "notes"
-    },
+    }
 ]}
 
 
@@ -55,7 +55,7 @@
     {
       "text": "",
       "style": "arabic"
-    },
+    }
 ]}
 
 
@@ -70,7 +70,7 @@
     {
       "text": ""
       "style": "content"
-    },
+    }
     
 ]}
 
@@ -86,6 +86,6 @@
     {
       "text": ""
       "style": "arabic"
-    },
+    }
     
 ]}
