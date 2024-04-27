@@ -28,9 +28,6 @@ export default function settings() {
         />
       </View>
       <View style={styles.linkContainer}>
-        <Link style={styles.linkText} href='/modal'>
-          Admin Login
-        </Link>
         <Link style={styles.linkText} href='/impressum'>
           Impressum
         </Link>

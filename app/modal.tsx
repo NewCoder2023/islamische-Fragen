@@ -6,6 +6,7 @@ import { useState } from "react";
 import Colors from "constants/Colors";
 import { supabase } from "@/utils/supabase";
 import Toast from "react-native-toast-message";
+import { authStore, useAuthStore } from "components/authStore";
 
 export default function Modal() {
   // If the page was reloaded or navigated to directly, then the modal should be presented as
@@ -15,15 +16,14 @@ export default function Modal() {
   const [password, onChangePassword] = useState("hadi@mail.de");
   const [errorMessage, setError] = useState<string>("");
 
-  const login = async () => {
-    // if (email === "") {
-    //   setError("Bitte Email eingeben!");
-    //   return;
-    // }
-    // if (password === "") {
-    //   setError("Bitte Passwort eingeben!");
-    //   return;
-    // }
+  const { login } = useAuthStore();
+
+  const adminLogin = async () => {
+    if (email === "" || password === "") {
+      setError("Bitte Email und Passwort eingeben");
+      return;
+    }
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -31,16 +31,15 @@ export default function Modal() {
 
     if (error) {
       setError("Email oder Passwort falsch!");
-      console.error("Error:", error.message);
       return;
     } else {
       Toast.show({
         type: "success",
         text1: "Login erfolgreich!",
       });
-      console.log("Success", data);
+      await login();
+      router.replace("/adminDashboard");
     }
-    router.replace("/adminDashboard");
   };
 
   return (
@@ -52,15 +51,19 @@ export default function Modal() {
           onChangeText={onChangeEmail}
           value={email}
           placeholder='Email'
+          keyboardType='email-address'
+          accessibilityLabel='Email Input'
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.passwordInput}
           onChangeText={onChangePassword}
           value={password}
-          placeholder='Password'
+          placeholder='Passwort'
           secureTextEntry={true}
+          accessibilityLabel='Password Input'
         />
-        <Pressable style={styles.loginButton} onPress={login}>
+        <Pressable style={styles.loginButton} onPress={adminLogin}>
           <Text style={styles.loginText}>Login</Text>
         </Pressable>
       </View>
@@ -69,7 +72,7 @@ export default function Modal() {
           <Text style={styles.errorText}>{errorMessage}</Text>
         </View>
       )}
-      <StatusBar style='light' />
+      <StatusBar style='auto' />
     </View>
   );
 }

@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import Colors from "constants/Colors";
 import { useColorScheme } from "components/useColorScheme";
 import { useClientOnlyValue } from "components/useClientOnlyValue";
-import Toast from "react-native-toast-message";
-import { View } from "components/Themed";
+import { Link } from "expo-router";
+import { Pressable } from "react-native";
+import { useAuthStore } from "components/authStore";
+import { useEffect } from "react";
+import { Text } from "components/Themed";
+import { Entypo } from "@expo/vector-icons";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return <FontAwesome size={25} style={{ marginBottom: -15 }} {...props} />;
+  return <FontAwesome size={25} style={{ marginBottom: -20 }} {...props} />;
 }
 
 export default function TabLayout() {
@@ -20,6 +24,8 @@ export default function TabLayout() {
 
   const headerBackground =
     colorScheme === "light" ? Colors.light.white : Colors.dark.black;
+
+  const { isLoggedIn, logout } = useAuthStore();
 
   return (
     <Tabs
@@ -44,20 +50,6 @@ export default function TabLayout() {
           title: "",
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name='book' color={color} />,
-          // headerRight: () => (
-          //   <Link href='/modal' asChild>
-          //     <Pressable>
-          //       {({ pressed }) => (
-          //         <FontAwesome
-          //           name='info-circle'
-          //           size={25}
-          //           color={Colors[colorScheme ?? "light"].text}
-          //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-          //         />
-          //       )}
-          //     </Pressable>
-          //   </Link>
-          // ),
         }}
       />
       <Tabs.Screen
@@ -83,6 +75,20 @@ export default function TabLayout() {
           title: "",
           headerTitle: "Einstellungen",
           headerShown: true,
+          headerRight: () =>
+            isLoggedIn ? (
+              <Link href='/settings' asChild style={{ marginRight: 15 }}>
+                <Pressable onPress={() => logout()}>
+                  <Entypo name='log-out' size={24} color='black' />
+                </Pressable>
+              </Link>
+            ) : (
+              <Link href='/modal' asChild style={{ marginRight: 15 }}>
+                <Pressable>
+                  <Entypo name='login' size={24} color='black' />
+                </Pressable>
+              </Link>
+            ),
           tabBarIcon: ({ color }) => <TabBarIcon name='cog' color={color} />,
         }}
       />
