@@ -93,12 +93,14 @@ export default function index() {
                     contentFit='contain'
                   />
                   <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
-                  <FontAwesome
-                    name='trash-o'
-                    size={24}
-                    color='red'
-                    onPress={() => deletePost(item.id)}
-                  />
+                  {isLoggedIn ? (
+                    <FontAwesome
+                      name='trash-o'
+                      size={24}
+                      color='red'
+                      onPress={() => deletePost(item.id)}
+                    />
+                  ) : null}
                 </View>
                 <View style={styles.newsContentTextContainer}>
                   {item.title && (
