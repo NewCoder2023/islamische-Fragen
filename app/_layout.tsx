@@ -70,6 +70,7 @@ function RootLayoutNav() {
           name='adminDashboard'
           options={{
             headerShown: true,
+            headerTitle: "Neuer Beitrag",
           }}
         />
         <Stack.Screen
