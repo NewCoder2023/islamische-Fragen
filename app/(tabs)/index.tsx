@@ -7,6 +7,7 @@ import { FlatList, useColorScheme } from "react-native";
 import { useAuthStore } from "components/authStore";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useEffect } from "react";
 
 export default function index() {
   const { posts, fetchError } = fetchNews();
