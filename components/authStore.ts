@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { Alert } from "react-native";
+import Toast from "react-native-toast-message";
 const LOGIN_STATUS_KEY = "isLoggedIn";
 
 type AuthStoreState = {
@@ -14,16 +15,32 @@ export const useAuthStore = create((set) => ({
   isLoggedIn: false,
 
   login: async () => {
-    alert("Sicher, das Sie sich auslogen wollen?");
-
     set({ isLoggedIn: true });
-
     await AsyncStorage.setItem(LOGIN_STATUS_KEY, "true");
   },
 
   logout: async () => {
-    set({ isLoggedIn: false });
-
+    Alert.alert(
+      "Abmelden",
+      "Bist du sicher, dass du dich abmelden möchtest?",
+      [
+        {
+          text: "Abbrechen",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            set({ isLoggedIn: false });
+            Toast.show({
+              type: "success",
+              text1: "Erfolgreich ausgelogt!",
+            });
+          },
+        },
+      ],
+      { cancelable: true }
+    );
     await AsyncStorage.removeItem(LOGIN_STATUS_KEY);
   },
 }));
