@@ -25,6 +25,9 @@ export default function TabLayout() {
   const headerBackground =
     colorScheme === "light" ? Colors.light.white : Colors.dark.black;
 
+  const IconBackground =
+    colorScheme === "light" ? Colors.light.black : Colors.dark.white;
+
   const { isLoggedIn, logout } = useAuthStore();
 
   return (
@@ -80,13 +83,13 @@ export default function TabLayout() {
             isLoggedIn ? (
               <Link href='/settings' asChild style={{ marginRight: 15 }}>
                 <Pressable onPress={() => logout()}>
-                  <Entypo name='log-out' size={24} color='black' />
+                  <Entypo name='log-out' size={24} color={IconBackground} />
                 </Pressable>
               </Link>
             ) : (
               <Link href='/modal' asChild style={{ marginRight: 15 }}>
                 <Pressable>
-                  <Entypo name='login' size={24} color='black' />
+                  <Entypo name='login' size={24} color={IconBackground} />
                 </Pressable>
               </Link>
             ),
