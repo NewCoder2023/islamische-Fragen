@@ -37,10 +37,10 @@ export default function index() {
                 <View style={styles.newsHeader}>
                   <Image
                     style={styles.newsImageMaher}
-                    source={require("assets/images/aschura.png")}
+                    source={require("assets/images/indexIconMaher.jpg")}
                     contentFit='contain'
                   />
-                  <Text style={styles.newsHeaderText}>Test</Text>
+                  <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
                 </View>
                 <View style={styles.newsContentTextContainer}>
                   {item.title && (
