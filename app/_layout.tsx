@@ -75,6 +75,12 @@ function RootLayoutNav() {
             headerShown: true,
           }}
         />
+        <Stack.Screen
+          name='(text)/[renderText]'
+          options={{
+            headerShown: true,
+          }}
+        />
       </Stack>
       <Toast />
     </ThemeProvider>

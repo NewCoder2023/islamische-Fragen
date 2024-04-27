@@ -65,16 +65,10 @@ function RootLayoutNav() {
         />
 
         <Stack.Screen
-          name='(renderText)/[renderText]'
-          options={{ headerShown: true }}
-        />
-
-        <Stack.Screen
           name='(renderNestedCategories)/[renderNestedCategories]'
           options={{ headerShown: true }}
         />
       </Stack>
-
       <Toast />
     </ThemeProvider>
   );
