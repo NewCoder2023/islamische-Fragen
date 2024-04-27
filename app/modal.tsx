@@ -6,7 +6,7 @@ import { useState } from "react";
 import Colors from "constants/Colors";
 import { supabase } from "@/utils/supabase";
 import Toast from "react-native-toast-message";
-import { authStore, useAuthStore } from "components/authStore";
+import { useAuthStore } from "components/authStore";
 
 export default function Modal() {
   // If the page was reloaded or navigated to directly, then the modal should be presented as
@@ -37,8 +37,8 @@ export default function Modal() {
         type: "success",
         text1: "Login erfolgreich!",
       });
+      router.navigate("/");
       await login();
-      router.replace("/adminDashboard");
     }
   };
 
