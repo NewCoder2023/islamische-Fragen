@@ -1,9 +1,12 @@
-import { StyleSheet, Platform, ImageBackground } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
 import fetchNews from "components/fetchNews";
 import { FlatList, useColorScheme } from "react-native";
+import { useAuthStore } from "components/authStore";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 
 export default function index() {
   const { posts, fetchError } = fetchNews();
@@ -15,10 +18,22 @@ export default function index() {
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
+  const { isLoggedIn } = useAuthStore();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Neuigkeiten</Text>
+        {isLoggedIn ? (
+          <Link href='/adminDashboard' asChild>
+            <Pressable>
+              <MaterialIcons
+                name='add-circle-outline'
+                size={34}
+                color='black'
+              />
+            </Pressable>
+          </Link>
+        ) : null}
       </View>
 
       <View style={styles.mainContainer}>
@@ -73,11 +88,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
+    flexDirection: "row",
     flex: 0.1,
     marginTop: 20,
     marginHorizontal: 14,
   },
   headerTitle: {
+    flex: 1,
     fontSize: 30,
     fontWeight: "bold",
   },
