@@ -69,7 +69,7 @@ function RootLayoutNav() {
           options={{ headerShown: true }}
         />
       </Stack>
-      <Toast />
+      {/* <Toast /> */}
     </ThemeProvider>
   );
 }

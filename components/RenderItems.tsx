@@ -34,7 +34,6 @@ export default function RenderItems({ items, fetchError, table }) {
             renderItem={({ item }) => (
               <Link
                 keyExtractor={(item) => item.id.toString()}
-                push
                 href={{
                   pathname: `/(text)/${encodeTitle(item.title)}`,
                   params: {
