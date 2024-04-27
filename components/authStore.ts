@@ -5,43 +5,55 @@ import Toast from "react-native-toast-message";
 
 const LOGIN_STATUS_KEY = "isLoggedIn";
 
-type AuthStoreState = {
-  isLoggedIn: boolean;
-  login: () => Promise<void>;
-  logout: () => Promise<void>;
-};
+export const useAuthStore = create((set) => {
+  const initializeStore = async () => {
+    try {
+      const loggedIn = await AsyncStorage.getItem(LOGIN_STATUS_KEY);
+      if (loggedIn === "true") {
+        set({ isLoggedIn: true });
+      } else {
+        set({ isLoggedIn: false });
+      }
+    } catch (error) {
+      console.error("Error reading login status from AsyncStorage:", error);
+      set({ isLoggedIn: false });
+    }
+  };
 
-export const useAuthStore = create((set) => ({
-  // Default
-  isLoggedIn: false,
+  // Run the initialization on store creation
+  initializeStore();
 
-  login: async () => {
-    set({ isLoggedIn: true });
-    await AsyncStorage.setItem(LOGIN_STATUS_KEY, "true");
-  },
+  return {
+    isLoggedIn: false,
 
-  logout: async () => {
-    Alert.alert(
-      "Abmelden",
-      "Bist du sicher, dass du dich abmelden möchtest?",
-      [
-        {
-          text: "Abbrechen",
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => {
-            set({ isLoggedIn: false });
-            Toast.show({
-              type: "success",
-              text1: "Erfolgreich ausgelogt!",
-            });
+    login: async () => {
+      set({ isLoggedIn: true });
+      await AsyncStorage.setItem(LOGIN_STATUS_KEY, "true");
+    },
+
+    logout: async () => {
+      Alert.alert(
+        "Abmelden",
+        "Bist du sicher, dass du dich abmelden möchtest?",
+        [
+          {
+            text: "Abbrechen",
+            style: "cancel",
           },
-        },
-      ],
-      { cancelable: true }
-    );
-    await AsyncStorage.removeItem(LOGIN_STATUS_KEY);
-  },
-}));
+          {
+            text: "OK",
+            onPress: async () => {
+              set({ isLoggedIn: false });
+              await AsyncStorage.removeItem(LOGIN_STATUS_KEY);
+              Toast.show({
+                type: "success",
+                text1: "Erfolgreich ausgeloggt!",
+              });
+            },
+          },
+        ],
+        { cancelable: true }
+      );
+    },
+  };
+});
