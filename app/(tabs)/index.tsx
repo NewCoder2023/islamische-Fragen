@@ -96,7 +96,7 @@ export default function index() {
                   <FontAwesome
                     name='trash-o'
                     size={24}
-                    color='black'
+                    color='red'
                     onPress={() => deletePost(item.id)}
                   />
                 </View>
@@ -179,11 +179,12 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     textDecorationLine: "underline",
-    paddingBottom: 20,
+    paddingBottom: 15,
   },
   newsContentText: {
     backgroundColor: "transparent",
     fontSize: 18,
+    lineHeight: 28,
   },
   newsImageContainer: {
     flex: 1,
