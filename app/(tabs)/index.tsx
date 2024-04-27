@@ -1,13 +1,16 @@
-import { StyleSheet, Pressable } from "react-native";
+import { StyleSheet, Pressable, Alert } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
 import fetchNews from "components/fetchNews";
 import { FlatList, useColorScheme } from "react-native";
 import { useAuthStore } from "components/authStore";
-import { MaterialIcons } from "@expo/vector-icons";
+import { supabase } from "@/utils/supabase";
+import Toast from "react-native-toast-message";
 import { Link } from "expo-router";
-import { useEffect } from "react";
+import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function index() {
   const { posts, fetchError } = fetchNews();
@@ -20,6 +23,39 @@ export default function index() {
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
   const { isLoggedIn } = useAuthStore();
+
+  const deletePost = (id) => {
+    Alert.alert("Beitrag wirklich löschen?", "", [
+      {
+        text: "Abbrechen",
+        style: "cancel",
+        onPress: () => console.log("Ask me later pressed"),
+      },
+      {
+        text: "Ja",
+        onPress: () => removePost(id),
+      },
+    ]);
+
+    const removePost = async (id) => {
+      const { error } = await supabase.from("News").delete().eq("id", id);
+
+      if (error) {
+        Toast.show({
+          type: "error",
+          text1: "Fehler beim löschen eines Beitrags!",
+          text2: "Versuch es später nochmal!",
+        });
+      } else {
+        Toast.show({
+          type: "success",
+          text1: "Beitrag erfolgreich gelöscht!",
+        });
+        router.navigate("/");
+      }
+    };
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -57,6 +93,12 @@ export default function index() {
                     contentFit='contain'
                   />
                   <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
+                  <FontAwesome
+                    name='trash-o'
+                    size={24}
+                    color='black'
+                    onPress={() => deletePost(item.id)}
+                  />
                 </View>
                 <View style={styles.newsContentTextContainer}>
                   {item.title && (
@@ -124,6 +166,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   newsHeaderText: {
+    flex: 1,
     fontSize: 15,
     fontWeight: "600",
   },

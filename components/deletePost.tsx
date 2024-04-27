@@ -41,24 +41,10 @@ export default function fetchNews() {
           setPosts((prevPosts) => [payload.new, ...prevPosts]);
         }
       )
-      .on(
-        "postgres_changes",
-        {
-          event: "DELETE",
-          schema: "public",
-          table: "News",
-        },
-        (payload) => {
-          // Filter out the deleted post from the current posts
-          setPosts((prevPosts) =>
-            prevPosts.filter((post) => post.id !== payload.old.id)
-          );
-        }
-      )
       .subscribe();
 
     return () => {
-      subscription.unsubscribe();
+      subscription.unsubscribe(); // Clean up subscription on component unmount
     };
   }, []);
 
