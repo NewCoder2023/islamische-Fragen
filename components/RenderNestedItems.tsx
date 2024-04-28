@@ -38,7 +38,7 @@ export default function RenderNestedItems({ items, fetchError, table }) {
                   pathname: "(renderCategory)/[renderCategory]",
                   params: {
                     id: item.id,
-                    table: table,
+                    category: item.title,
                     title: `${encodeTitle(item.title)}`,
                   },
                 }}

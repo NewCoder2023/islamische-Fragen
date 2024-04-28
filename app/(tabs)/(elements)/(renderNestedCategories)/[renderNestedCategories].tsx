@@ -2,7 +2,6 @@ import { View, Text } from "components/Themed";
 import { StyleSheet } from "react-native";
 import React from "react";
 import { useLocalSearchParams } from "expo-router";
-import RenderItems from "components/RenderItems";
 import fetchTable from "components/fetchTable";
 import { Stack } from "expo-router";
 import RenderCategoryInformation from "components/RenderCategoryInformation";
@@ -14,6 +13,7 @@ export default function renderCategory() {
   }>();
 
   const { items, fetchError, table } = fetchTable(category);
+  console.log(table);
   return (
     <View style={styles.container}>
       {/* Change header Title */}

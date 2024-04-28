@@ -131,7 +131,7 @@ export default function Categories() {
           href={{
             pathname: "(renderCategory)/[renderCategory]",
             params: {
-              category: "ImamMahdi",
+              category: "Imam Mahdi",
             },
           }}
           asChild
@@ -197,7 +197,7 @@ export default function Categories() {
           href={{
             pathname: "(renderNestedCategories)/[renderNestedCategories]",
             params: {
-              category: "HeiligeMonate",
+              category: "Heilige Monate",
             },
           }}
           asChild

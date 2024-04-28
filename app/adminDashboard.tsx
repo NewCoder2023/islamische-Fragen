@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   },
   inputFieldsContainer: {
     flex: 1,
-    backgroundColor: "green",
   },
   headerInput: {
     marginHorizontal: 10,

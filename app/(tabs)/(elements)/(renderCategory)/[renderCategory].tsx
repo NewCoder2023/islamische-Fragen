@@ -13,7 +13,6 @@ export default function renderCategory() {
   }>();
 
   const { items, fetchError, table } = fetchTable(category);
-
   return (
     <View style={styles.container}>
       {/* Change header Title */}
