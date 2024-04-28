@@ -17,12 +17,17 @@ const fetchAllTables = async () => {
 };
 
 const ItemSearch = ({ search }) => {
+  console.log(search);
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setSearchResults([]);
-    setIsLoading(true);
+    if (search === "") {
+      setSearchResults([]);
+      setIsLoading(false);
+      return;
+    }
+
     const searchTables = async () => {
       const tables = await fetchAllTables();
 
@@ -52,12 +57,15 @@ const ItemSearch = ({ search }) => {
         })
       );
 
-      const filteredResults = results.filter((result) => result !== null);
+      const filteredResults = results
+        .filter((result) => result !== null)
+        .filter((value, index) => results.indexOf(value) === index);
 
       setSearchResults(filteredResults);
       setIsLoading(false);
     };
 
+    setIsLoading(true);
     searchTables();
   }, [search]);
 
@@ -71,7 +79,7 @@ const ItemSearch = ({ search }) => {
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>Lädt...</Text>
         </View>
-      ) : searchResults.length > 0 ? (
+      ) : search === "" ? null : searchResults.length > 0 ? (
         <FlatList
           data={searchResults}
           keyExtractor={(item, index) => index.toString()}

@@ -1,6 +1,6 @@
 import Colors from "constants/Colors";
 import { Text, View } from "components/Themed";
-import { FlatList, Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { EvilIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
