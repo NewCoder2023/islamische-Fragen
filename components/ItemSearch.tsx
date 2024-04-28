@@ -57,9 +57,17 @@ const ItemSearch = ({ search }) => {
         })
       );
 
-      const filteredResults = results
-        .filter((result) => result !== null)
-        .filter((value, index) => results.indexOf(value) === index);
+      const uniqueNames = new Set();
+
+      const filteredData = results.filter((item) => {
+        if (!uniqueNames.has(item?.items["title"])) {
+          uniqueNames.add(item?.items["title"]);
+          return true;
+        }
+        return false;
+      });
+
+      const filteredResults = filteredData.filter((result) => result !== null);
 
       setSearchResults(filteredResults);
       setIsLoading(false);
