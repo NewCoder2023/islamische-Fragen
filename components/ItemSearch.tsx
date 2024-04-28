@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import Colors from "constants/Colors";
+import { Text, View } from "components/Themed";
+import { FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase";
-import { Text, View } from "./Themed";
-import RenderItems from "./RenderItems";
+import RenderSearch from "./RenderSearch";
+import { useColorScheme } from "react-native";
 
 const fetchAllTables = async () => {
   const { data, error } = await supabase.from("AllTables").select("tableName");
@@ -10,7 +13,6 @@ const fetchAllTables = async () => {
     console.error("Error fetching tables:", error.message);
     return [];
   }
-
   return data;
 };
 
@@ -19,19 +21,21 @@ const ItemSearch = ({ search }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setSearchResults([]);
+    setIsLoading(true);
     const searchTables = async () => {
       const tables = await fetchAllTables();
 
       const results = await Promise.all(
         tables.map(async (table) => {
           const { data, error } = await supabase
-            .from(table)
+            .from(table.tableName)
             .select("*")
-            .ilike("title", search);
+            .ilike("title", `%${search}%`);
 
           if (error) {
             console.error(
-              `Error searching in ${table.tablename}:`,
+              `Error searching in ${table.tableName}:`,
               error.message
             );
             return null;
@@ -39,8 +43,8 @@ const ItemSearch = ({ search }) => {
 
           if (data && data.length > 0) {
             return {
-              table: table.tablename,
-              results: data,
+              table: table.tableName,
+              items: data,
             };
           }
 
@@ -54,30 +58,75 @@ const ItemSearch = ({ search }) => {
       setIsLoading(false);
     };
 
-    setSearchResults([]);
-    setIsLoading(true);
     searchTables();
   }, [search]);
 
-  if (isLoading) {
-    return <Text>Lädt...</Text>;
-  }
-
-  if (searchResults.length === 0) {
-    return <Text>Leider haben wir dazu noch nichts</Text>;
-  }
+  const colorScheme = useColorScheme();
+  const themeContainerStyle =
+    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
   return (
-    <View>
-      {searchResults.map((result, index) => (
-        <RenderItems
-          items={result.results}
-          fetchError={result.error}
-          table={result.table}
+    <View style={styles.container}>
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Lädt...</Text>
+        </View>
+      ) : searchResults.length > 0 ? (
+        <FlatList
+          data={searchResults}
+          keyExtractor={(item, index) => index.toString()}
+          style={styles.FlatListItems}
+          renderItem={({ item }) => (
+            <RenderSearch items={item.items} table={item.table} />
+          )}
         />
-      ))}
+      ) : (
+        <View style={styles.notFoundContainer}>
+          <Text style={styles.notFoundText}>
+            Leider konnten wir nichts finden!
+          </Text>
+        </View>
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  FlatListItems: {
+    marginTop: 10,
+    marginBottom: 15,
+  },
+  notFoundContainer: {
+    flex: 1,
+    justifyContent: "center",
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  notFoundText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  lightContainer: {
+    backgroundColor: Colors.light.white,
+  },
+  darkContainer: {
+    backgroundColor: Colors.dark.contrast,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  loadingText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
 
 export default ItemSearch;
