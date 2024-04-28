@@ -4,8 +4,13 @@ import { TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "constants/Colors";
 import { useColorScheme } from "react-native";
+import { useState } from "react";
+import ItemSearch from "components/ItemSearch";
+import RenderItems from "components/RenderItems";
 
 export default function TabOneScreen() {
+  const [search, setSearch] = useState("");
+
   const colorScheme = useColorScheme();
 
   const themeContainerStyle =
@@ -29,7 +34,12 @@ export default function TabOneScreen() {
           placeholder='Suche'
           keyboardType='default'
           editable
+          value={search}
+          onChangeText={setSearch}
         />
+      </View>
+      <View style={styles.renderSearchContainer}>
+        <ItemSearch search={search} />
       </View>
     </SafeAreaView>
   );
@@ -76,5 +86,8 @@ const styles = StyleSheet.create({
   },
   darkInputText: {
     color: Colors.dark.text,
+  },
+  renderSearchContainer: {
+    flex: 1,
   },
 });
