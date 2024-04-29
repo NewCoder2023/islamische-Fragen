@@ -15,20 +15,18 @@ export default function adminDashboard() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [storageURL, setStorageURL] = useState("");
 
-  const submitPost = async () => {
-    if (content === "" && !image) {
+  const uploadText = async (imagePath?: string) => {
+    if (content == "") {
       Toast.show({
         type: "error",
         text1: "Ein leerer Beitrag kann nicht erstellt werden!",
       });
-    } else if (image && !content) {
-      uploadImage(image);
-    } else if (image && content) {
     } else {
       const { error } = await supabase
         .from("News")
-        .insert({ title: title, content: content });
+        .insert({ title: title, content: content, imagePath: imagePath });
 
       if (error) {
         Toast.show({
@@ -41,7 +39,73 @@ export default function adminDashboard() {
           type: "success",
           text1: "Beitrag erfolgreich erstellt!",
         });
+        setContent("");
         router.navigate("/");
+      }
+    }
+  };
+
+  const uploadImage = async (uri) => {
+    const response = await fetch(uri);
+    const arrayBuffer = await response.arrayBuffer();
+    const fileExt = uri.split(".").pop();
+    const fileName = `images/${Date.now()}.${fileExt}`;
+
+    const { data, error } = await supabase.storage
+      .from("News_bucket")
+      .upload(fileName, arrayBuffer, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (error) {
+      Toast.show({
+        type: "error",
+        text1: "Fehler beim Erstellen eines Beitrags!",
+        text2: "Versuch es später nochmal!",
+      });
+    } else {
+      const { data } = supabase.storage
+        .from("News_bucket")
+        .getPublicUrl(fileName);
+
+      if (data) {
+        setStorageURL(data.publicUrl);
+      }
+      Toast.show({
+        type: "success",
+        text1: "Beitrag erfolgreich erstellt!",
+      });
+      return data.publicUrl;
+    }
+  };
+
+  const submitPost = async () => {
+    if (content != "" && !image) {
+      uploadText();
+    } else if (content == "" && image) {
+      uploadImage(image);
+    } else if (content != "" && image) {
+      try {
+        const imageUrl = await uploadImage(image);
+
+        if (imageUrl) {
+          await uploadText(imageUrl);
+
+          setContent("");
+          router.navigate("/");
+          Toast.show({
+            type: "success",
+            text1: "Beitrag erfolgreich erstellt!",
+          });
+        }
+      } catch (error) {
+        console.log("Error uploading post:", error);
+        Toast.show({
+          type: "error",
+          text1: "Fehler beim Erstellen eines Beitrags!",
+          text2: "Versuch es später nochmal!",
+        });
       }
     }
   };
@@ -64,37 +128,6 @@ export default function adminDashboard() {
     setImage(null);
   };
 
-  const uploadImage = async (uri) => {
-    const response = await fetch(uri);
-    const arrayBuffer = await response.arrayBuffer();
-    const fileExt = uri.split(".").pop();
-    const mimeType = getMimeType(fileExt);
-    const fileName = `images/${Date.now()}.${fileExt}`;
-    const file = new File([arrayBuffer], fileName, { type: mimeType });
-
-    const { data, error } = await supabase.storage
-      .from("News_bucket")
-      .upload(fileName, file, {
-        cacheControl: "3600",
-        upsert: false,
-      });
-
-    if (error) {
-      console.error("Upload error:", error.message);
-    } else {
-      console.log("File uploaded:", data);
-    }
-  };
-
-  function getMimeType(fileExt) {
-    const mimeTypes = {
-      jpg: "image/jpg",
-      jpeg: "image/jpeg",
-      png: "image/png",
-      // Add more mappings as needed
-    };
-    return mimeTypes[fileExt] || "image/png"; // Default to png
-  }
   return (
     <SafeAreaView style={styles.container}>
       {/* Submit button */}
