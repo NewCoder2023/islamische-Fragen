@@ -58,7 +58,7 @@ export default function adminDashboard() {
 
   const deleteImage = () => {
     setImage(null);
-  }
+  };
   return (
     <SafeAreaView style={styles.container}>
       {/* Submit button */}
@@ -102,7 +102,12 @@ export default function adminDashboard() {
             <FontAwesome name='remove' size={21} color='red' />
           </Pressable>
         )}
-        <Image style={styles.image} source={image} contentFit='cover' />
+        <Image
+          key={image}
+          style={styles.image}
+          source={{ uri: image }}
+          contentFit='cover'
+        />
       </View>
     </SafeAreaView>
   );
@@ -136,7 +141,7 @@ const styles = StyleSheet.create({
   },
   ContentInput: {
     flex: 1,
-    maxHeight: "80%",
+    maxHeight: "85%",
     marginHorizontal: 10,
     paddingHorizontal: 12,
     marginTop: 20,
@@ -147,18 +152,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlignVertical: "top",
     lineHeight: 30,
+
   },
   imagesContainer: {
+    margin: 0,
     flexDirection: "column",
-    margin: 10,
     alignItems: "center",
-
   },
   image: {
     width: 100,
     height: 100,
+    marginBottom: 10,
   },
   deleteImage: {
-   marginLeft: 110
-  }
+    marginLeft: 110,
+  },
 });
