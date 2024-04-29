@@ -18,30 +18,23 @@ export default function adminDashboard() {
   const [storageURL, setStorageURL] = useState("");
 
   const uploadText = async (imagePath?: string) => {
-    if (content == "") {
+    const { error } = await supabase
+      .from("News")
+      .insert({ title: title, content: content, imagePath: imagePath });
+
+    if (error) {
       Toast.show({
         type: "error",
-        text1: "Ein leerer Beitrag kann nicht erstellt werden!",
+        text1: "Fehler beim Erstellen eines Beitrags!",
+        text2: "Versuch es später nochmal!",
       });
     } else {
-      const { error } = await supabase
-        .from("News")
-        .insert({ title: title, content: content, imagePath: imagePath });
-
-      if (error) {
-        Toast.show({
-          type: "error",
-          text1: "Fehler beim Erstellen eines Beitrags!",
-          text2: "Versuch es später nochmal!",
-        });
-      } else {
-        Toast.show({
-          type: "success",
-          text1: "Beitrag erfolgreich erstellt!",
-        });
-        setContent("");
-        router.navigate("/");
-      }
+      Toast.show({
+        type: "success",
+        text1: "Beitrag erfolgreich erstellt!",
+      });
+      setContent("");
+      router.navigate("/");
     }
   };
 
@@ -64,49 +57,55 @@ export default function adminDashboard() {
         text1: "Fehler beim Erstellen eines Beitrags!",
         text2: "Versuch es später nochmal!",
       });
+      return null;
     } else {
       const { data } = supabase.storage
         .from("News_bucket")
         .getPublicUrl(fileName);
 
-      if (data) {
+      if (!data) {
+        return null;
+      } else {
         setStorageURL(data.publicUrl);
+        Toast.show({
+          type: "success",
+          text1: "Beitrag erfolgreich erstellt!",
+        });
+        return data.publicUrl;
       }
-      Toast.show({
-        type: "success",
-        text1: "Beitrag erfolgreich erstellt!",
-      });
-      return data.publicUrl;
     }
   };
 
   const submitPost = async () => {
-    if (content != "" && !image) {
-      uploadText();
-    } else if (content == "" && image) {
-      uploadImage(image);
-    } else if (content != "" && image) {
-      try {
+    if (content === "" && !image) {
+      Toast.show({
+        type: "error",
+        text1: "Ein leerer Beitrag kann nicht erstellt werden!",
+      });
+      return;
+    }
+    try {
+      if (image) {
         const imageUrl = await uploadImage(image);
-
         if (imageUrl) {
           await uploadText(imageUrl);
-
-          setContent("");
-          router.navigate("/");
-          Toast.show({
-            type: "success",
-            text1: "Beitrag erfolgreich erstellt!",
-          });
         }
-      } catch (error) {
-        console.log("Error uploading post:", error);
-        Toast.show({
-          type: "error",
-          text1: "Fehler beim Erstellen eines Beitrags!",
-          text2: "Versuch es später nochmal!",
-        });
+      } else {
+        await uploadText();
       }
+      setContent("");
+      router.navigate("/");
+      Toast.show({
+        type: "success",
+        text1: "Beitrag erfolgreich erstellt!",
+      });
+    } catch (error) {
+      console.log("Error uploading post:", error);
+      Toast.show({
+        type: "error",
+        text1: "Fehler beim Erstellen eines Beitrags!",
+        text2: "Versuch es später nochmal!",
+      });
     }
   };
 
