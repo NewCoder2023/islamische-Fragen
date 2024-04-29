@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   ContentInput: {
     flex: 1,
-    maxHeight: "85%",
+    maxHeight: "90%",
     marginHorizontal: 10,
     paddingHorizontal: 12,
     marginTop: 20,
@@ -152,19 +152,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlignVertical: "top",
     lineHeight: 30,
-
   },
   imagesContainer: {
-    margin: 0,
     flexDirection: "column",
     alignItems: "center",
   },
   image: {
     width: 100,
     height: 100,
-    marginBottom: 10,
   },
   deleteImage: {
+    marginTop: 5,
     marginLeft: 110,
   },
 });
