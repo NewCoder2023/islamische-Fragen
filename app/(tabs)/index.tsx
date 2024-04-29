@@ -9,7 +9,6 @@ import { supabase } from "@/utils/supabase";
 import Toast from "react-native-toast-message";
 import { Link } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import { RefreshControl } from "react-native";
 import { useCallback, useState } from "react";
@@ -33,7 +32,7 @@ export default function index() {
   const scrollRef = useRef();
 
   // Display refresh screen
-  const onRefresh = useCallback(() => {
+  const refresh = useCallback(() => {
     setRefreshing(true);
     // Get changes
     refetch().finally(() => {
@@ -74,8 +73,8 @@ export default function index() {
 
   const updateNews = useCallback(() => {
     scrollRef.current?.scrollToOffset({ offset: 0, animated: true });
-    onRefresh();
-    applyUpdates(); // Then apply updates
+    refresh();
+    applyUpdates();
   }, [applyUpdates]);
 
   return (
@@ -115,7 +114,7 @@ export default function index() {
             ref={scrollRef}
             keyExtractor={(item) => item.id.toString()}
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              <RefreshControl refreshing={refreshing} onRefresh={refresh} />
             }
             renderItem={({ item }) => (
               <View style={[styles.newsContainer, themeContainerStyle]}>

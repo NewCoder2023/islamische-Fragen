@@ -5,7 +5,6 @@ export default function fetchNews() {
   const [fetchError, setFetchError] = useState<string>("");
   const [posts, setPosts] = useState<any[]>([]);
   const [updateAvailable, setUpdateAvailable] = useState(false);
-  const [newData, setNewData] = useState<any[]>([]);
 
   const fetchItems = async () => {
     const { data, error } = await supabase
@@ -37,7 +36,6 @@ export default function fetchNews() {
         { event: "INSERT", schema: "public", table: "News" },
         (payload) => {
           setUpdateAvailable(true);
-          setNewData((prevData) => [payload.new, ...prevData]);
         }
       )
       .on(
@@ -45,9 +43,6 @@ export default function fetchNews() {
         { event: "DELETE", schema: "public", table: "News" },
         (payload) => {
           setUpdateAvailable(true);
-          setNewData((prevData) =>
-            prevData.filter((post) => post.id !== payload.old.id)
-          );
         }
       )
       .subscribe();
@@ -58,9 +53,7 @@ export default function fetchNews() {
   }, []);
 
   const applyUpdates = () => {
-    setPosts((prevPosts) => [...newData, ...prevPosts]);
     setUpdateAvailable(false);
-    setNewData([]);
   };
 
   return {
