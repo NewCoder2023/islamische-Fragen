@@ -6,7 +6,6 @@ import Colors from "constants/Colors";
 import { useColorScheme } from "react-native";
 import { useState } from "react";
 import ItemSearch from "components/ItemSearch";
-import RenderItems from "components/RenderItems";
 
 export default function TabOneScreen() {
   const [search, setSearch] = useState("");

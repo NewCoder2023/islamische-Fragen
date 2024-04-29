@@ -12,7 +12,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { RefreshControl } from "react-native";
 import { useCallback, useState } from "react";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 
 export default function index() {
   const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
@@ -20,10 +20,17 @@ export default function index() {
 
   const colorScheme = useColorScheme();
 
-  const themeErrorStyle =
-    colorScheme === "light" ? styles.lightThemeError : styles.darkThemeErro;
-  const themeContainerStyle =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+  const themeErrorStyle = useMemo(
+    () =>
+      colorScheme === "light" ? styles.lightThemeError : styles.darkThemeError,
+    [colorScheme]
+  );
+
+  const themeContainerStyle = useMemo(
+    () =>
+      colorScheme === "light" ? styles.lightContainer : styles.darkContainer,
+    [colorScheme]
+  );
 
   const { isLoggedIn } = useAuthStore();
 
@@ -121,7 +128,7 @@ export default function index() {
                 <View style={styles.newsHeader}>
                   <Image
                     style={styles.newsImageMaher}
-                    source={require("assets/images/indexIconMaher.jpg")}
+                    source={require("assets/images/indexIconMaher.png")}
                     contentFit='contain'
                   />
                   <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
@@ -244,7 +251,7 @@ const styles = StyleSheet.create({
   },
 
   lightThemeError: { color: Colors.light.error },
-  darkThemeErro: { color: Colors.light.error },
+  darkThemeError: { color: Colors.light.error },
   lightContainer: {
     backgroundColor: Colors.light.white,
   },
