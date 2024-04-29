@@ -17,11 +17,14 @@ export default function adminDashboard() {
   const [image, setImage] = useState(null);
 
   const submitPost = async () => {
-    if (content === "") {
+    if (content === "" && !image) {
       Toast.show({
         type: "error",
         text1: "Ein leerer Beitrag kann nicht erstellt werden!",
       });
+    } else if (image && !content) {
+      uploadImage(image);
+    } else if (image && content) {
     } else {
       const { error } = await supabase
         .from("News")
@@ -49,6 +52,7 @@ export default function adminDashboard() {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     });
 
     if (!result.canceled) {
@@ -59,6 +63,38 @@ export default function adminDashboard() {
   const deleteImage = () => {
     setImage(null);
   };
+
+  const uploadImage = async (uri) => {
+    const response = await fetch(uri);
+    const arrayBuffer = await response.arrayBuffer();
+    const fileExt = uri.split(".").pop();
+    const mimeType = getMimeType(fileExt);
+    const fileName = `images/${Date.now()}.${fileExt}`;
+    const file = new File([arrayBuffer], fileName, { type: mimeType });
+
+    const { data, error } = await supabase.storage
+      .from("News_bucket")
+      .upload(fileName, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (error) {
+      console.error("Upload error:", error.message);
+    } else {
+      console.log("File uploaded:", data);
+    }
+  };
+
+  function getMimeType(fileExt) {
+    const mimeTypes = {
+      jpg: "image/jpg",
+      jpeg: "image/jpeg",
+      png: "image/png",
+      // Add more mappings as needed
+    };
+    return mimeTypes[fileExt] || "image/png"; // Default to png
+  }
   return (
     <SafeAreaView style={styles.container}>
       {/* Submit button */}
