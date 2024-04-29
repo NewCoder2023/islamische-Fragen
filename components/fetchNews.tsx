@@ -61,9 +61,10 @@ export default function fetchNews() {
       subscription.unsubscribe();
     };
   }, []);
-
+  const refetch = fetchItems;
   return {
     fetchError,
     posts,
+    refetch,
   };
 }

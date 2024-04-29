@@ -11,9 +11,11 @@ import { Link } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
+import { RefreshControl } from "react-native";
+import { useCallback, useState } from "react";
 
 export default function index() {
-  const { posts, fetchError } = fetchNews();
+  const { posts, fetchError, refetch } = fetchNews();
 
   const colorScheme = useColorScheme();
 
@@ -23,6 +25,17 @@ export default function index() {
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
   const { isLoggedIn } = useAuthStore();
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Display refresh screen
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    // Get changes
+    refetch().finally(() => {
+      setRefreshing(false);
+    });
+  }, []);
 
   const deletePost = (id) => {
     Alert.alert("Beitrag wirklich löschen?", "", [
@@ -51,7 +64,6 @@ export default function index() {
           type: "success",
           text1: "Beitrag erfolgreich gelöscht!",
         });
-        router.navigate("/");
       }
     };
   };
@@ -84,6 +96,9 @@ export default function index() {
           <FlatList
             data={posts}
             keyExtractor={(item) => item.id.toString()}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             renderItem={({ item }) => (
               <View style={[styles.newsContainer, themeContainerStyle]}>
                 <View style={styles.newsHeader}>
