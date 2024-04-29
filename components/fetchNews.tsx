@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 export default function fetchNews() {
   const [fetchError, setFetchError] = useState<string>("");
   const [posts, setPosts] = useState<any[]>([]);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [newData, setNewData] = useState<any[]>([]);
 
   const fetchItems = async () => {
     const { data, error } = await supabase
@@ -32,26 +34,19 @@ export default function fetchNews() {
       .channel("News")
       .on(
         "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "News",
-        },
+        { event: "INSERT", schema: "public", table: "News" },
         (payload) => {
-          setPosts((prevPosts) => [payload.new, ...prevPosts]);
+          setUpdateAvailable(true);
+          setNewData((prevData) => [payload.new, ...prevData]);
         }
       )
       .on(
         "postgres_changes",
-        {
-          event: "DELETE",
-          schema: "public",
-          table: "News",
-        },
+        { event: "DELETE", schema: "public", table: "News" },
         (payload) => {
-          // Filter out the deleted post from the current posts
-          setPosts((prevPosts) =>
-            prevPosts.filter((post) => post.id !== payload.old.id)
+          setUpdateAvailable(true);
+          setNewData((prevData) =>
+            prevData.filter((post) => post.id !== payload.old.id)
           );
         }
       )
@@ -61,10 +56,18 @@ export default function fetchNews() {
       subscription.unsubscribe();
     };
   }, []);
-  const refetch = fetchItems;
+
+  const applyUpdates = () => {
+    setPosts((prevPosts) => [...newData, ...prevPosts]);
+    setUpdateAvailable(false);
+    setNewData([]);
+  };
+
   return {
     fetchError,
     posts,
-    refetch,
+    refetch: fetchItems,
+    updateAvailable,
+    applyUpdates,
   };
 }

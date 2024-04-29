@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable, Alert } from "react-native";
+import { StyleSheet, Pressable, Alert, Button } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
@@ -13,9 +13,11 @@ import { router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import { RefreshControl } from "react-native";
 import { useCallback, useState } from "react";
+import { useRef } from "react";
 
 export default function index() {
-  const { posts, fetchError, refetch } = fetchNews();
+  const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
+    fetchNews();
 
   const colorScheme = useColorScheme();
 
@@ -27,6 +29,8 @@ export default function index() {
   const { isLoggedIn } = useAuthStore();
 
   const [refreshing, setRefreshing] = useState(false);
+
+  const scrollRef = useRef();
 
   // Display refresh screen
   const onRefresh = useCallback(() => {
@@ -68,6 +72,12 @@ export default function index() {
     };
   };
 
+  const updateNews = useCallback(() => {
+    scrollRef.current?.scrollToOffset({ offset: 0, animated: true });
+    onRefresh();
+    applyUpdates(); // Then apply updates
+  }, [applyUpdates]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -86,6 +96,13 @@ export default function index() {
       </View>
 
       <View style={styles.mainContainer}>
+        {updateAvailable && (
+          <View style={styles.updateContainer}>
+            <Pressable style={styles.updateButton} onPress={() => updateNews()}>
+              <Text style={styles.updateButtonText}>Aktualisieren</Text>
+            </Pressable>
+          </View>
+        )}
         {fetchError ? (
           <View style={styles.renderError}>
             <Text style={[styles.errorText, themeErrorStyle]}>
@@ -95,6 +112,7 @@ export default function index() {
         ) : (
           <FlatList
             data={posts}
+            ref={scrollRef}
             keyExtractor={(item) => item.id.toString()}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -233,5 +251,25 @@ const styles = StyleSheet.create({
   },
   darkContainer: {
     backgroundColor: Colors.dark.contrast,
+  },
+  updateContainer: {
+    width: "100%",
+    position: "absolute",
+    top: 0,
+    zIndex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent",
+  },
+  updateButton: {
+    backgroundColor: "#2ecc71",
+    borderWidth: 1,
+    borderRadius: 30,
+  },
+  updateButtonText: {
+    fontSize: 16,
+    padding: 6,
+    fontWeight: "bold",
+    color: Colors.light.black,
   },
 });
