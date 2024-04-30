@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable, Alert, Button } from "react-native";
+import { StyleSheet, Pressable, Alert, ActivityIndicator } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
@@ -13,10 +13,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import { RefreshControl } from "react-native";
 import { useCallback, useState } from "react";
 import { useRef, useMemo } from "react";
+import { useIsUpLoading } from "components/uploadingStore";
 
 export default function index() {
   const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
     fetchNews();
+
+  const { isLoading, startLoading, finishLoading } = useIsUpLoading();
 
   const colorScheme = useColorScheme();
 
@@ -29,6 +32,11 @@ export default function index() {
   const themeContainerStyle = useMemo(
     () =>
       colorScheme === "light" ? styles.lightContainer : styles.darkContainer,
+    [colorScheme]
+  );
+
+  const themeButtonStyle = useMemo(
+    () => (colorScheme === "light" ? styles.lightButton : styles.darkButton),
     [colorScheme]
   );
 
@@ -94,7 +102,7 @@ export default function index() {
               <MaterialIcons
                 name='add-circle-outline'
                 size={34}
-                color='black'
+                style={themeButtonStyle}
               />
             </Pressable>
           </Link>
@@ -102,6 +110,14 @@ export default function index() {
       </View>
 
       <View style={styles.mainContainer}>
+        {isLoading ? (
+          <View style={styles.activityContainer}>
+            <Text style={styles.activityText}>
+              Neuer Beitrag wird hochgeladen!
+            </Text>
+            <ActivityIndicator size='large' color='#009432' />
+          </View>
+        ) : null}
         {updateAvailable && (
           <View style={styles.updateContainer}>
             <Pressable style={styles.updateButton} onPress={() => updateNews()}>
@@ -171,6 +187,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   headerContainer: {
     flexDirection: "row",
     flex: 0.1,
@@ -180,6 +197,16 @@ const styles = StyleSheet.create({
   headerTitle: {
     flex: 1,
     fontSize: 30,
+    fontWeight: "bold",
+  },
+  activityContainer: {
+    flexDirection: "column",
+    gap: 10,
+    marginBottom: 15,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  activityText: {
     fontWeight: "bold",
   },
   mainContainer: {
@@ -250,14 +277,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  lightThemeError: { color: Colors.light.error },
-  darkThemeError: { color: Colors.light.error },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
   updateContainer: {
     width: "100%",
     position: "absolute",
@@ -277,5 +296,23 @@ const styles = StyleSheet.create({
     padding: 6,
     fontWeight: "bold",
     color: Colors.light.black,
+  },
+  lightThemeError: {
+    color: Colors.light.error,
+  },
+  darkThemeError: {
+    color: Colors.light.error,
+  },
+  lightContainer: {
+    backgroundColor: Colors.light.white,
+  },
+  darkContainer: {
+    backgroundColor: Colors.dark.contrast,
+  },
+  lightButton: {
+    color: Colors.dark.black,
+  },
+  darkButton: {
+    color: Colors.dark.white,
   },
 });

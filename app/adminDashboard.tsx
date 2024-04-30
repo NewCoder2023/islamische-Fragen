@@ -10,12 +10,13 @@ import { Stack } from "expo-router";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
-
+import { useIsUpLoading } from "components/uploadingStore";
 export default function adminDashboard() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
-  const [storageURL, setStorageURL] = useState("");
+
+  const { startLoading, finishLoading } = useIsUpLoading();
 
   const uploadText = async (imagePath?: string) => {
     const { error } = await supabase
@@ -34,7 +35,6 @@ export default function adminDashboard() {
         text1: "Beitrag erfolgreich erstellt!",
       });
       setContent("");
-      router.navigate("/");
     }
   };
 
@@ -66,7 +66,6 @@ export default function adminDashboard() {
       if (!data) {
         return null;
       } else {
-        setStorageURL(data.publicUrl);
         Toast.show({
           type: "success",
           text1: "Beitrag erfolgreich erstellt!",
@@ -83,29 +82,33 @@ export default function adminDashboard() {
         text1: "Ein leerer Beitrag kann nicht erstellt werden!",
       });
       return;
-    }
-    try {
-      if (image) {
-        const imageUrl = await uploadImage(image);
-        if (imageUrl) {
-          await uploadText(imageUrl);
-        }
-      } else {
-        await uploadText();
-      }
-      setContent("");
+    } else {
+      startLoading();
       router.navigate("/");
-      Toast.show({
-        type: "success",
-        text1: "Beitrag erfolgreich erstellt!",
-      });
-    } catch (error) {
-      console.log("Error uploading post:", error);
-      Toast.show({
-        type: "error",
-        text1: "Fehler beim Erstellen eines Beitrags!",
-        text2: "Versuch es später nochmal!",
-      });
+      try {
+        if (image) {
+          const imageUrl = await uploadImage(image);
+          if (imageUrl) {
+            await uploadText(imageUrl);
+          }
+        } else {
+          await uploadText();
+        }
+        setContent("");
+        router.navigate("/");
+        Toast.show({
+          type: "success",
+          text1: "Beitrag erfolgreich erstellt!",
+        });
+      } catch (error) {
+        console.log("Error uploading post:", error);
+        Toast.show({
+          type: "error",
+          text1: "Fehler beim Erstellen eines Beitrags!",
+          text2: "Versuch es später nochmal!",
+        });
+      }
+      finishLoading();
     }
   };
 
@@ -145,7 +148,6 @@ export default function adminDashboard() {
           ),
         }}
       />
-
       <View style={styles.inputFieldsContainer}>
         <TextInput
           style={styles.headerInput}
@@ -162,6 +164,7 @@ export default function adminDashboard() {
           placeholder='Beitrag'
           multiline
           editable
+          autoCapitalize='none'
         />
       </View>
       <View style={styles.imagesContainer}>
