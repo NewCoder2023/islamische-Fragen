@@ -16,10 +16,16 @@ import { useRef, useMemo } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
 
 export default function index() {
+  const [refreshing, setRefreshing] = useState(false);
+  
   const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
     fetchNews();
 
   const { isLoading, startLoading, finishLoading } = useIsUpLoading();
+
+  const { isLoggedIn } = useAuthStore();
+
+  const scrollRef = useRef();
 
   const colorScheme = useColorScheme();
 
@@ -39,12 +45,6 @@ export default function index() {
     () => (colorScheme === "light" ? styles.lightButton : styles.darkButton),
     [colorScheme]
   );
-
-  const { isLoggedIn } = useAuthStore();
-
-  const [refreshing, setRefreshing] = useState(false);
-
-  const scrollRef = useRef();
 
   // Display refresh screen
   const refresh = useCallback(() => {
@@ -310,9 +310,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.contrast,
   },
   lightButton: {
-    color: Colors.dark.black,
+    color: Colors.light.adButton,
   },
   darkButton: {
-    color: Colors.dark.white,
+    color: Colors.dark.adButton,
   },
 });

@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
+import { Keyboard, StyleSheet } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import Colors from "constants/Colors";
 import { useEffect, useState } from "react";
-import { TextInput, Pressable } from "react-native";
+import { TextInput, Pressable, TouchableWithoutFeedback } from "react-native";
 import { supabase } from "@/utils/supabase";
 import * as ImagePicker from "expo-image-picker";
 import { Image } from "expo-image";
@@ -11,12 +11,17 @@ import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import { useIsUpLoading } from "components/uploadingStore";
+import { useColorScheme } from "react-native";
+
 export default function adminDashboard() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
 
   const { startLoading, finishLoading } = useIsUpLoading();
+  const colorScheme = useColorScheme();
+  const themeInputStyle =
+    colorScheme === "light" ? styles.lightInput : styles.darkInput;
 
   const uploadText = async (imagePath?: string) => {
     const { error } = await supabase
@@ -113,6 +118,8 @@ export default function adminDashboard() {
   };
 
   const pickImage = async () => {
+    Keyboard.dismiss();
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -131,56 +138,61 @@ export default function adminDashboard() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Submit button */}
-      <Stack.Screen
-        options={{
-          headerRight: () => (
-            <View style={styles.headerButtons}>
-              <Pressable onPress={pickImage}>
-                <FontAwesome name='image' size={24} color='green' />
-              </Pressable>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        {/* Submit button */}
+        <Stack.Screen
+          options={{
+            headerRight: () => (
+              <View style={styles.headerButtons}>
+                <Pressable onPress={pickImage}>
+                  <FontAwesome name='image' size={24} color='green' />
+                </Pressable>
 
-              <Pressable onPress={submitPost}>
-                <Text style={styles.submitButtonText}>Erstellen</Text>
-              </Pressable>
-            </View>
-          ),
-        }}
-      />
-      <View style={styles.inputFieldsContainer}>
-        <TextInput
-          style={styles.headerInput}
-          onChangeText={setTitle}
-          value={title}
-          placeholder='Title (optional)'
-          editable
+                <Pressable onPress={submitPost}>
+                  <Text style={styles.submitButtonText}>Erstellen</Text>
+                </Pressable>
+              </View>
+            ),
+          }}
         />
+        <View style={styles.inputFieldsContainer}>
+          <TextInput
+            style={[styles.headerInput, themeInputStyle]}
+            onChangeText={setTitle}
+            value={title}
+            placeholder='Title (optional)'
+            editable
+            onSubmitEditing={Keyboard.dismiss}
+            focus
+          />
 
-        <TextInput
-          style={styles.ContentInput}
-          onChangeText={setContent}
-          value={content}
-          placeholder='Beitrag'
-          multiline
-          editable
-          autoCapitalize='none'
-        />
+          <TextInput
+            style={[styles.ContentInput, themeInputStyle]}
+            onChangeText={setContent}
+            value={content}
+            placeholder='Beitrag'
+            multiline
+            editable
+            autoCapitalize='none'
+            onSubmitEditing={Keyboard.dismiss}
+          />
+        </View>
+        <View style={styles.imagesContainer}>
+          {image && (
+            <Pressable style={styles.deleteImage} onPress={deleteImage}>
+              <FontAwesome name='remove' size={21} color='red' />
+            </Pressable>
+          )}
+          <Image
+            key={image}
+            style={styles.image}
+            source={{ uri: image }}
+            contentFit='cover'
+          />
+        </View>
       </View>
-      <View style={styles.imagesContainer}>
-        {image && (
-          <Pressable style={styles.deleteImage} onPress={deleteImage}>
-            <FontAwesome name='remove' size={21} color='red' />
-          </Pressable>
-        )}
-        <Image
-          key={image}
-          style={styles.image}
-          source={{ uri: image }}
-          contentFit='cover'
-        />
-      </View>
-    </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -235,5 +247,11 @@ const styles = StyleSheet.create({
   deleteImage: {
     marginTop: 5,
     marginLeft: 110,
+  },
+  lightInput: {
+    color: Colors.light.text,
+  },
+  darkInput: {
+    color: Colors.dark.text,
   },
 });

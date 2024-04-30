@@ -17,7 +17,6 @@ const fetchAllTables = async () => {
 };
 
 const ItemSearch = ({ search }) => {
-  console.log(search);
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

@@ -15,6 +15,7 @@ export default {
     star: "#fbc531",
     black: "#000000",
     link: "rgb(10, 132, 255)",
+    adButton: "#000000",
   },
   dark: {
     text: "#d0d0c0",
@@ -30,5 +31,6 @@ export default {
     black: "#000000",
     link: "rgb(10, 132, 255)",
     contrast: "#34495e",
+    adButton: "#d0d0c0",
   },
 };
