@@ -1,7 +1,7 @@
 import Colors from "constants/Colors";
 import { Text, View } from "components/Themed";
 import { FlatList, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { supabase } from "@/utils/supabase";
 import RenderSearch from "./RenderSearch";
 import { useColorScheme } from "react-native";
@@ -21,7 +21,7 @@ const ItemSearch = ({ search }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (search === "") {
       setSearchResults([]);
       setIsLoading(false);
@@ -75,7 +75,7 @@ const ItemSearch = ({ search }) => {
     <View style={styles.container}>
       {isLoading ? (
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Lädt...</Text>
+          <Text style={styles.loadingText}>Suche...</Text>
         </View>
       ) : search === "" ? null : searchResults.length > 0 ? (
         <View style={styles.searchContainer}>
