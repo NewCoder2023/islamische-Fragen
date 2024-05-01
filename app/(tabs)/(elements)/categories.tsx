@@ -1,20 +1,20 @@
 import { StyleSheet, Platform, ImageBackground } from "react-native";
 import { View } from "components/Themed";
 import CategoryLinks from "components/CategoryLinks";
-
+import { Image } from "expo-image";
 export default function Category() {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require("assets/images/indexBackgroundImage.jpeg")}
-        resizeMode='cover'
+      <Image
+        source={require("assets/images/categoryBackgroundImage.jpeg")}
         style={styles.imageBackground}
+        contentFit='cover'
       >
         {/* Main */}
         <View style={styles.categoryContainer}>
           <CategoryLinks />
         </View>
-      </ImageBackground>
+      </Image>
     </View>
   );
 }
