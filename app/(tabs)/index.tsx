@@ -14,10 +14,11 @@ import { RefreshControl } from "react-native";
 import { useCallback, useState } from "react";
 import { useRef, useMemo } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
+import { FlashList } from "@shopify/flash-list";
 
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
-  
+
   const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
     fetchNews();
 
@@ -92,6 +93,45 @@ export default function index() {
     applyUpdates();
   }, [applyUpdates]);
 
+  const renderItems = ({ item }) => {
+    return (
+      <View style={[styles.newsContainer, themeContainerStyle]}>
+        <View style={styles.newsHeader}>
+          <Image
+            style={styles.newsImageMaher}
+            source={require("assets/images/indexIconMaher.png")}
+            contentFit='contain'
+          />
+          <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
+          {isLoggedIn ? (
+            <FontAwesome
+              name='trash-o'
+              size={24}
+              color='red'
+              onPress={() => deletePost(item.id)}
+            />
+          ) : null}
+        </View>
+        <View style={styles.newsContentTextContainer}>
+          {item.title && <Text style={styles.newsTitleText}>{item.title}</Text>}
+          {item.content && (
+            <Text style={styles.newsContentText}>{item.content}</Text>
+          )}
+          {item.imagePath && (
+            <View style={styles.newsImageContainer}>
+              <Image
+                style={styles.newsImage}
+                source={{
+                  uri: item.imagePath,
+                }}
+              />
+            </View>
+          )}
+        </View>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -132,51 +172,14 @@ export default function index() {
             </Text>
           </View>
         ) : (
-          <FlatList
-            data={posts}
+          <FlashList
             ref={scrollRef}
+            data={posts}
+            renderItem={renderItems}
+            estimatedItemSize={254}
             keyExtractor={(item) => item.id.toString()}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-            }
-            renderItem={({ item }) => (
-              <View style={[styles.newsContainer, themeContainerStyle]}>
-                <View style={styles.newsHeader}>
-                  <Image
-                    style={styles.newsImageMaher}
-                    source={require("assets/images/indexIconMaher.png")}
-                    contentFit='contain'
-                  />
-                  <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
-                  {isLoggedIn ? (
-                    <FontAwesome
-                      name='trash-o'
-                      size={24}
-                      color='red'
-                      onPress={() => deletePost(item.id)}
-                    />
-                  ) : null}
-                </View>
-                <View style={styles.newsContentTextContainer}>
-                  {item.title && (
-                    <Text style={styles.newsTitleText}>{item.title}</Text>
-                  )}
-                  {item.content && (
-                    <Text style={styles.newsContentText}>{item.content}</Text>
-                  )}
-                  {item.imagePath && (
-                    <View style={styles.newsImageContainer}>
-                      <Image
-                        style={styles.newsImage}
-                        source={{
-                          uri: item.imagePath,
-                        }}
-                      />
-                    </View>
-                  )}
-                </View>
-              </View>
-            )}
+            onRefresh={refresh}
+            refreshing={refreshing}
           />
         )}
       </View>
