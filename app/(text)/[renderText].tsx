@@ -1,6 +1,6 @@
 import { View, Text } from "components/Themed";
 import { StyleSheet, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
 import { FlatList } from "react-native";
@@ -9,7 +9,6 @@ import { Stack } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
 import { useColorScheme } from "react-native";
 
 export default function renderText() {
@@ -37,7 +36,7 @@ export default function renderText() {
   {
     /* Get the Favorites from the AsyncStorage*/
   }
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getFavorites = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem("Favorites");

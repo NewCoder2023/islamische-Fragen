@@ -1,8 +1,8 @@
 import Colors from "constants/Colors";
 import { Text, View } from "components/Themed";
 import { FlatList, Pressable, StyleSheet } from "react-native";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
+import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import RenderFavorites from "components/RenderFavorites";
@@ -26,7 +26,7 @@ export default function favourites() {
   const themeErrorStyle =
     colorScheme === "light" ? styles.lightError : styles.darkError;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getFavorites = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem("Favorites");
