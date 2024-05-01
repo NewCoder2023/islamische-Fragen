@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import RenderFavorites from "components/RenderFavorites";
 import { useColorScheme } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 
 export default function favourites() {
   interface Favorite {
@@ -64,11 +65,10 @@ export default function favourites() {
     <View style={styles.container}>
       {favorites[0] ? (
         <View style={styles.favoriteContainer}>
-          <FlatList
+          <FlashList
             data={favorites}
+            estimatedItemSize={70}
             keyExtractor={(item, index) => `${item.table}-${item.id}`}
-            style={styles.FlatList}
-            contentContainerStyle={styles.FlatListItems}
             renderItem={({ item }) => (
               <RenderFavorites items={[item]} table={item.table} />
             )}
@@ -92,13 +92,9 @@ const styles = StyleSheet.create({
   },
   favoriteContainer: {
     flex: 1,
+    marginTop: 30,
   },
-  FlatList: {
-    marginTop: 20,
-  },
-  FlatListItems: {
-    gap: 20,
-  },
+
   noFavoritesContainer: {
     flex: 1,
     justifyContent: "center",

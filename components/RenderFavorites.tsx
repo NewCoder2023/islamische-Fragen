@@ -26,6 +26,7 @@ export default function RenderFavorites({ items, table }) {
         <View style={[styles.itemsContainer]}>
           {items.map((item) => (
             <Link
+              style={styles.link}
               key={`${item.table}-${item.id}`}
               href={{
                 pathname: `/(text)/${encodeTitle(item.title)}`,
@@ -56,7 +57,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  itemsContainer: {},
+  link: {
+    paddingBottom: 20,
+  },
 
   renderItem: {
     flexDirection: "row",
