@@ -26,6 +26,7 @@ export default function RenderSearch({ items, table }) {
         <View style={[styles.itemsContainer]}>
           {items.map((item) => (
             <Link
+              style={styles.FlashListItems}
               key={`${item.table}-${item.id}`}
               href={{
                 pathname: `/(text)/${encodeTitle(item.title)}`,
@@ -56,13 +57,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  itemsContainer: {},
+  itemsContainer: {
+    flex: 1,
+  },
 
+  FlashListItems: {
+    paddingTop: 15,
+  },
   renderItem: {
     flexDirection: "row",
     padding: 20,
     borderWidth: 0.2,
-    marginTop: 10,
   },
 
   itemText: {

@@ -5,6 +5,7 @@ import React from "react";
 import { EvilIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useColorScheme } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 
 export default function RenderItems({ items, fetchError, table }) {
   const encodeTitle = (title: string) => {
@@ -27,12 +28,13 @@ export default function RenderItems({ items, fetchError, table }) {
     <View style={styles.container}>
       {items && (
         <View style={styles.itemsContainer}>
-          <FlatList
+          <FlashList
             data={items}
+            estimatedItemSize={63}
             keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={styles.FlatListItems}
             renderItem={({ item }) => (
               <Link
+                style={styles.FlashListItems}
                 keyExtractor={(item) => item.id.toString()}
                 href={{
                   pathname: `/(text)/${encodeTitle(item.title)}`,
@@ -71,12 +73,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  itemsContainer: {},
+  itemsContainer: {
+    flex: 1,
+  },
 
-  FlatListItems: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    gap: 15,
+  FlashListItems: {
+    paddingTop: 15,
   },
   renderItem: {
     flexDirection: "row",

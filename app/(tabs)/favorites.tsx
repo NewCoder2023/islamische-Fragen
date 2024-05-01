@@ -65,8 +65,9 @@ export default function favourites() {
     <View style={styles.container}>
       {favorites[0] ? (
         <View style={styles.favoriteContainer}>
-          <FlatList
+          <FlashList
             data={favorites}
+            estimatedItemSize={88}
             keyExtractor={(item, index) => `${item.table}-${item.id}`}
             renderItem={({ item }) => (
               <RenderFavorites items={[item]} table={item.table} />

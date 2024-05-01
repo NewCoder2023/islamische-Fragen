@@ -175,7 +175,7 @@ export default function index() {
             ref={scrollRef}
             data={posts}
             renderItem={renderItems}
-            estimatedItemSize={254}
+            estimatedItemSize={118}
             keyExtractor={(item) => item.id.toString()}
             onRefresh={refresh}
             refreshing={refreshing}

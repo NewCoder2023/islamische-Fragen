@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase";
 import RenderSearch from "./RenderSearch";
 import { useColorScheme } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 
 const fetchAllTables = async () => {
   const { data, error } = await supabase.from("AllTables").select("tableName");
@@ -77,14 +78,16 @@ const ItemSearch = ({ search }) => {
           <Text style={styles.loadingText}>Lädt...</Text>
         </View>
       ) : search === "" ? null : searchResults.length > 0 ? (
-        <FlatList
-          data={searchResults}
-          keyExtractor={(item, index) => index.toString()}
-          style={styles.FlatListItems}
-          renderItem={({ item }) => (
-            <RenderSearch items={item.items} table={item.table} />
-          )}
-        />
+        <View style={styles.searchContainer}>
+          <FlashList
+            data={searchResults}
+            estimatedItemSize={63}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <RenderSearch items={item.items} table={item.table} />
+            )}
+          />
+        </View>
       ) : (
         <View style={styles.notFoundContainer}>
           <Text style={styles.notFoundText}>
@@ -100,9 +103,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  FlatListItems: {
+  searchContainer: {
+    flex: 1,
     marginTop: 10,
-    marginBottom: 15,
   },
   notFoundContainer: {
     flex: 1,
