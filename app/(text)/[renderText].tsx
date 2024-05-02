@@ -10,6 +10,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColorScheme } from "react-native";
+import { useIsChanging } from "components/favStore";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -28,6 +29,8 @@ export default function renderText() {
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
 
   const { content, fetchError } = fetchText(id, table);
+
+  const { change } = useIsChanging();
 
   const Separator = () => {
     return <View style={styles.separator} />;
@@ -111,6 +114,7 @@ export default function renderText() {
     try {
       const jsonValue = JSON.stringify(favorites);
       await AsyncStorage.setItem("Favorites", jsonValue);
+      change();
     } catch (e) {
       console.log(e);
       Toast.show({

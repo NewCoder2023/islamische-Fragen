@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import RenderFavorites from "components/RenderFavorites";
 import { useColorScheme } from "react-native";
-import { FlashList } from "@shopify/flash-list";
+import { useIsChanging } from "components/favStore";
 
 export default function favourites() {
   interface Favorite {
@@ -20,6 +20,8 @@ export default function favourites() {
   const [favorites, setFavorites] = useState<Favorite[]>([]);
 
   const colorScheme = useColorScheme();
+
+  const { favoriteChange } = useIsChanging();
 
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
@@ -60,7 +62,7 @@ export default function favourites() {
       }
     };
     getFavorites();
-  }, [favorites]);
+  }, [favoriteChange]);
 
   return (
     <View style={styles.container}>

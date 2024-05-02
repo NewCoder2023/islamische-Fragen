@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
 
   FlashListItems: {
-    paddingTop: 5,
+    paddingTop: 15,
   },
   renderItem: {
     flexDirection: "row",

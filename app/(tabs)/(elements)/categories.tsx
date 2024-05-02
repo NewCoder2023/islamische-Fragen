@@ -1,20 +1,14 @@
 import { StyleSheet, Platform, ImageBackground } from "react-native";
 import { View } from "components/Themed";
 import CategoryLinks from "components/CategoryLinks";
-import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
+
 export default function Category() {
   return (
     <View style={styles.container}>
-      <Image
-        source={require("assets/images/categoryBackgroundImage.jpeg")}
-        style={styles.imageBackground}
-        contentFit='cover'
-      >
-        {/* Main */}
-        <View style={styles.categoryContainer}>
-          <CategoryLinks />
-        </View>
-      </Image>
+      <View style={styles.categoryContainer}>
+        <CategoryLinks />
+      </View>
     </View>
   );
 }
@@ -22,14 +16,11 @@ export default function Category() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-
-  imageBackground: {
-    width: "100%",
-    flex: 1,
+    backgroundColor: "#177245",
     justifyContent: "center",
     alignItems: "center",
   },
+
   categoryContainer: {
     marginRight: 5,
     marginLeft: 5,
