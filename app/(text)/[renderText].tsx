@@ -95,7 +95,7 @@ export default function renderText() {
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
   const textContentPerPage: string[] = text
-    .split("\n\n\n")
+    .split("\n\n")
     .filter((text) => text.trim() !== "");
 
   return (
@@ -152,7 +152,8 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     margin: 10,
-    padding: 10,
+    padding: 20,
+    borderRadius: 10
   },
   text: {},
   index: {
