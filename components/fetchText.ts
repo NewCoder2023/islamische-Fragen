@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function fetchText(id: string, table: string) {
   const [fetchError, setFetchError] = useState<string>("");
-  const [content, setContent] = useState<string>("");
+  const [text, setText] = useState<string>("");
 
   // Encode title because () in title causes problems
   useEffect(() => {
@@ -21,11 +21,11 @@ export default function fetchText(id: string, table: string) {
           "Elemente konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internet Verbindung!"
         );
 
-        setContent("");
+        setText("");
       }
 
       if (data) {
-        setContent(data.content);
+        setText(data.content);
         setFetchError("");
       }
     };
@@ -34,6 +34,6 @@ export default function fetchText(id: string, table: string) {
   }, [id, table]);
   return {
     fetchError,
-    content,
+    text,
   };
 }

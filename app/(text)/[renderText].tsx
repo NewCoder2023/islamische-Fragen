@@ -10,6 +10,7 @@ import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
 import { useIsChanging } from "components/favStore";
 import Markdown from "react-native-markdown-display";
+import { FlashList } from "@shopify/flash-list";
 import { storeFavorites, getFavorites } from "components/manageFavorites";
 import { useMemo } from "react";
 
@@ -28,7 +29,7 @@ export default function renderText() {
   }
 
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
-  const { content, fetchError } = fetchText(id, table);
+  const { text, fetchError } = fetchText(id, table);
   const { change } = useIsChanging();
 
   const Separator = () => {
@@ -93,6 +94,10 @@ export default function renderText() {
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
+  const textContentPerPage: string[] = text
+    .split("\n")
+    .filter((text) => text.trim() !== "");
+
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -110,15 +115,17 @@ export default function renderText() {
           headerTitle: title,
         }}
       />
-      {content && (
-        <View style={styles.listContainer}>
-          <View style={[styles.itemContainer, themeContainerStyle]}>
-            <Markdown>{content}</Markdown>
-            <View
-              style={[styles.pageNumberContainer, themeContainerStyle]}
-            ></View>
-          </View>
-        </View>
+      {text && (
+        <FlashList
+          data={textContentPerPage}
+          renderItem={({ item, index }) => (
+            <View style={[styles.textContainer, themeContainerStyle]}>
+              <Markdown>{item}</Markdown>
+              <Text style={styles.index}>{index + 1}</Text>
+            </View>
+          )}
+          estimatedItemSize={100}
+        />
       )}
       {fetchError && (
         <View style={styles.renderError}>
@@ -133,33 +140,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  listContainer: {
+  textContainer: {
     flex: 1,
-  },
-  itemContainer: {
-    flex: 1,
-    borderWidth: 2,
-    marginTop: 15,
-    marginBottom: 15,
-    marginRight: 10,
-    marginLeft: 10,
+    margin: 10,
     padding: 10,
-    borderRadius: 10,
   },
-  pageNumberContainer: {},
-  text: {
-    fontSize: 18,
-    lineHeight: 30,
+  text: {},
+  index: {
+    marginTop: 10,
+    textAlign: "center",
   },
-  pageNumber: {
-    paddingTop: 10,
-    fontSize: 15,
-    alignSelf: "center",
-    fontWeight: "bold",
-  },
-  separator: {
-    height: 2,
-  },
+  pageNumber: {},
+  separator: {},
   renderError: {
     flex: 1,
     marginTop: 20,
@@ -176,20 +168,5 @@ const styles = StyleSheet.create({
   },
   darkContainer: {
     backgroundColor: Colors.dark.contrast,
-  },
-  notesStyle: {
-    textAlign: "center",
-    fontStyle: "italic",
-  },
-  contentStyle: {
-    fontStyle: "normal",
-  },
-  titleStyle: {
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  arabicStyle: {
-    textAlign: "center",
-    fontStyle: "italic",
   },
 });
