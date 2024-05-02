@@ -95,7 +95,7 @@ export default function renderText() {
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
   const textContentPerPage: string[] = text
-    .split("\n")
+    .split("\n\n\n")
     .filter((text) => text.trim() !== "");
 
   return (
@@ -120,7 +120,16 @@ export default function renderText() {
           data={textContentPerPage}
           renderItem={({ item, index }) => (
             <View style={[styles.textContainer, themeContainerStyle]}>
-              <Markdown>{item}</Markdown>
+              <Markdown
+                style={{
+                  body: { fontSize: 20, lineHeight: 40 },
+                  heading1: { color: "purple" },
+                  code_block: { color: "black", fontSize: 14 },
+                  em: { textAlign: "center" },
+                }}
+              >
+                {item}
+              </Markdown>
               <Text style={styles.index}>{index + 1}</Text>
             </View>
           )}
