@@ -1,111 +1,82 @@
-_Der folgende Dua wird nach der Ziyarat von Aschura verlesen. Der Dua ist bekannt und sehr segensreich._
+Im Namen Gottes, des Sich-Allerbarmenden, des Barmherzigen
 
-O Allah!
-O Allah!
-O Allah!
+Gegrüßt seiest Du und der Friede sei mit Dir
+Oh Freund und Stellvertreter Gottes und Geliebter Gottes
+Gegrüßt seiest Du und der Friede sei mit Dir
+Du Liebender und Empfänger der Gunst Gottes und der bei Ihm hoch Angesehene.
 
+Gegrüßt seiest Du und der Friede sei mit Dir Auserwählter unter der Elite Seiner Diener und Sohn dieser Elite.
 
-O Erhörer der Bittgebete der Bedürftigen!
-O Erlöser der Bedrängnisse der Bedrängten!
-O Helfer der um Hilfe flehenden!
-O Helfer des vor Furcht Schreienden!
+Gegrüßt seiest Du und der Friede sei mit dir der Unterdrückte und Märtyrer auf dem Wege Gottes
 
+Gegrüßt seiest Du und der Friede sei mit Dir, der getötet wurde auf dem Wege von Wahrheit und Recht, so das jedes Auge um dieses Rechtes Willen Tränen vergießt und
 
-O Der, der mir näher ist als meine Halsschlagader!
-O Der, der zwischen einem Menschen und seinem Herzen tritt!
-O Der, der im höchsten Schauplatz und im klaren Horizont ist!
-O Der, der der Barmherzige und der Gnädige, der Sich auf den Thron niederließ, ist!
+Dadurch ewige Glückseligkeit erlangt.
 
+Oh mein Gott, ich bezeuge, das er Dein Stellvertreter und Freund ist und der Sohn deines Stellvertreters und Freundes und dein auserwählter Diener und der Sohn der von Dir Auserwählten.
 
-O Der, der die Untreue der Augen und was die Brüste verbergen kennt!
-O Der, vor dem nichts Verborgenes verborgen ist!
-O Der, bei dem die Stimmen nicht (verwirrend) ähnlich sind!
-O Der, den die Bedürfnisse nicht zu Fehlern führen!
+Er wurde durch deine freigiebige Güte und deine Großmut erfolgreich und siegreich und durch das Martyrium hast Du Ihn geehrt und durch Glückseligkeit hast Du Ihn besonders erwählt.
 
+Du hast Ihn erwählt, durch seine Nachkommen und hast ihn bestimmt zum Herrn aller Herrn und zum großen Führer unter den Großen der Welt und Führer für die göttlichen Führer der Welt.
 
-O Der, den der Drang der Bedürftigen nicht ungeduldig macht!
-O Der, der alles was entrinnt, einholt!
-O Der, der alle Getrennten zusammenführt!
-O Der, der die Seelen nach dem Tod belebt!
+Und Du hast Ihn erwählt zum Beschützer und Verteidiger des Islams
+Und bestimmtest Ihn zum Erben aller Propheten und zu einem der Nachfolger des Propheten
+Und Du hast Ihn erwählt zum Beweis für die Menschheit.
 
+Und Er ist gleichfalls die Vervollkommnung der Beweiskraft und Du beseitigst durch Ihn alle Ausflüchte und Vorwände.
 
-O Der, der sich jeden Tag in neuem Glanz offenbart!
-O Der, der die Bedürfnisse erfüllt!
-O Der, der die Erschwernisse auflöst!
-O Der, der das Erfragte gibt!
+Und er hat die Belehrungen und Predigten für die Gemeinschaft freundlich beschert und Sein reines Blut floss auf der Erde auf Deinem Wege um Deine Diener aus der Unwissenheit und dem Irrtum zu erretten.
 
+Und die Menschen, die sich von der Welt täuschen ließen und Ihr Jenseits verkauften für ein Nichts dieser Welt
+Und die Ungerechtes und Unterdrückung begingen und die beim Folgen Ihrer Triebseele elend zugrunde gingen
+Und die zornig waren auf Dich und Deinen Propheten
 
-O Vertrauter der Wünsche!
-O Genügender von den Sorgen!
-O Du, der von allem genügt und nichts ist (wird) ihm Genüge, weder in den Himmel noch auf der Erde!
+Und die, die denen unter Deinen Dienern gehorchten, die zu den Leuten des Verrates und der Spaltung und Zwietracht gehören.
 
+Diese Diener haben die schwere Last der Sünde getragen, was zum Anlass wurde dafür, dass sie ins Feuer kamen.
+Dieser geehrte Imam hat gegen jene Unterdrücker gekämpft, mit Geduld und Durchhaltevermögen bis sein Blut floss, in Gehorsamkeit zu Dir und er kämpfte bis der Bereich seiner Würde verletzt wurde.
 
-Ich bitte dich beim Recht des Siegels der Propheten und (beim Recht) Alis der Fürst der Gläubigen und beim Recht Fatimas die Tochter Deines Propheten und beim Recht von Al-Hassan und Al-Hussein, denn ich richte mich zu Dir durch sie in meinem Zustand, diesen(Zustand) und ich nehme sie als Mittel zu Dir und als Fürsprecher bei Dir und bei ihrem Recht bitte ich Dich und schwöre bei Dir und entschließe mich (durch Dich) und bei ihrer Stellung, die sie
+Oh mein Gott, verfluche diese Unterdrücker hart und bestrafe sie mit einer schmerzhaften Strafe.
 
+Gegrüßt seiest Du und der Friede sei mit Dir, oh Sohn des Gesandten Gottes.
 
-bei Dir haben und beim Rang, die sie bei Dir haben und bei denen, die Du unter allen Menschen den Vorzug gegeben hast, und bei Deinem Namen, den Du bei ihnen niedergelassen hast und mit dem Du sie unter den Menschen ausgezeichnet hast, und durch den Du sie zum Vorschein brachtest und ebenfalls ihren Vorzug in alle Welten zum Vorschein brachtest, bis ihr Vorzug den Vorzug aller Völker überschritten hat, ich bitte Dich,
+Gegrüßt seiest Du, und der Friede sei mit Dir, oh Sohn des Herrn der Auserwählten.
 
+Ich bezeuge, dass Du der Vertraute Gottes bist und der Sohn seines Vertrauten.
+Du hast glücklich gelebt.
 
-Dass du über Muhammed und die Familie Muhammads Deine Gebete sprichst und dass Du mich von meinem Kummer (Beschwernis), meinen Sorgen und meinem Leid löst. und dass du von den Bekürmmernissen in meinen Angelegenheiten befreist, und dass du meine Schulden bezahlst und dass Du mich vor der Armut schützt und dass Du mich vor dem Bedürfnis schützt und dass Du mich davor bewahrst, die Geschöpfe um Hilfe zu bitten und dass Du mich von der
+Und bist im Lob der Wahrheit und Gottes vergangen
+Und bist gestorben, als es zu dir keinen Vergleich gab.
 
+Du wurdest auf dem Wege der Wahrheit unterdrückt und zum Märtyrer.
 
-Bekümmernis der Dinge schützt, deren Bekümmernis ich befürchte und von der Schwierigkeit der Dinge, deren Schwierigkeit ich befürchte, und von der Rauheit der Dinge, deren Rauheit ich befürchte und der Bosheit der Dinge, deren Bosheit ich fürchte, und der List der Dinge, deren List ich fürchte, und von dem Überfall derjenigen, deren Überfall ich fürchte und von der Ungerechtigkeit derjenigen, deren Ungerechtigkeit ich fürchte und von der
+Ich bezeuge, das Gott der Erhabene, sein Versprechen, das er Dir gab (der Rang der höchsten Glückseligkeit und das Recht der umfassenden, großen Fürsprache für die Menschen) einlösen wird und diejenigen, die dich störten und erniedrigten zu Grunde richtet.
+Und diejenigen, die dich töteten werden hart bestraft.
 
+Ich bezeuge, das du dem Vertrag mit Gott treu geblieben bist (um deine dir von Gott verliehene Aufgabe zu erfüllen)
+Und Du hast auf dem Wege Gottes gekämpft, bis Du die Gewissheit erlangtest.
 
-Fähigkeit derjenigen, deren Macht ich fürchte und dass Du von mir die List der Listigen und die Hinterlist der Hinterlistigen abwehrst,
+Verflucht seien die, die dich töteten. Die dich unterdrückten.
 
+Verflucht sei die Gemeinschaft derer, die die Nachricht von Deinem Tode und der Unterdrückung an Dir vernahmen und die damit zufrieden waren.
 
-O Allah wer gegen mich plant so plane gegen ihn und wer mich überlisten will so überliste ihn und wende von mir seine List, Hinterlist, seine Stärke und seine Wünsche ab, und verbiete es ihm mich zu erreichen, auf die Weise, die Du willst und wann und wie Du willst.
+Oh mein Gott, Ich nehme Dich zum Zeugen, dass ich der Freund dessen bin, der Sein (des geehrten Imams) Freund ist und der Feind dessen, der Sein Feind ist.
 
+Bei meinem Vater und meiner Mutter, die geopfert sein sollen für dich, Sohn des Gesandten Gottes, ich bezeuge, dass Du Licht bist von geehrten Lenden und einem reinen Mutterleib.
 
-O Allah beschäftige ihn mit einer Armut die Du nicht aufhebst und mit einer schweren Prüfung, die Du nicht beendest und mit einem Bedürfnis die Du nicht erfüllst und mit einer Krankheit die Du nicht heilst und mit einer Erniedrigung nach der Du ihn nicht würdigst und mit einer Dürftigkeit die Du nicht aufhebst.
+Du wurdest nicht verunreinigt durch die Unreinheit der Unwissenden. Du wurdest nicht mit dem dunklen Gewand der Unwissenheit bekleidet und ich bezeuge, dass Du eine der Säulen der Religion bist und eine Grundlage für die Muslime und ein Schutz für die Gläubigen und ich bezeuge, dass Du ein Führer bist, der gut ist, gottesfürchtig, zufrieden, klug, rein rechtleitend und der der rechtgeleitet wurde. Und ich bezeuge, dass die Imame, die von deinen Söhnen stammen ein Wort der Gottesfurcht sind, Zeichen auf dem richtigen Weg und ein starkes Seil des Glaubens und ein Beweis Gottes für alle Weltenbewohner
 
+Und ich bezeuge, dass ich an Euch glaube und mit Gewissheit überzeugt bin von Eurer Rückkehr.
 
-O Allah schlage die Erniedrigung vor seine Augen und lass die Armut in seinem Haus und die Beschwerden und die Erkrankung seinen Körper durchdringen, bis Du ihn endlos mit sich selbst beschäftigst, so dass Er mich nicht beachtet, und lass Ihn mich vergessen, so wie Du ihn dazu gebracht hast, Dich zu vergessen.
+Am Beginn meiner Religion und am Ende meiner Taten ( die Alle der Führung durch Euch unterstehen)
 
+Und mein Herz hat sich Euren Herzen unterworfen
+Und mein ganzes Leben mit all seinem Tun folgt Eurem Befehl.
+Meine Unterstützung steht zu Eurer Bereitschaft
+Bis Gott Euch die Erlaubnis gibt [für den Aufstand von Imam Zaman (ع)]
 
-Und schütze mich vor seinem Gehör und seinem Blick und seiner Zunge, seiner Hand, seinem Fuß und seinem Herzen, und lass das Übel das Erwähnte betreten und heile ihn nicht, so dass alle diese Beschwerden ihn beschäftigen, ihn mich vergessen lassen und genüge mir o Allah mit Besitz, der mich auf alle andere verzichten lässt. Denn Du bist der Genügende, außer dem keiner genügt und Du bist der Erlöser, außer dem keiner erlöst und Du bist der Helfer außer dem keiner hilft und Du bist der Nachbar außer dem kein Nachbar ist,
+Und so bin ich mit Euch, mit Euch und nicht mit euren Feinden!
 
+Der Gruß Gottes sei auf Euch und Eurem Geist und Euren Leibern und Eurem Zeugnis und Eurer Abwesenheit und Eurer Erscheinung und Eurem Inneren.
 
-Und enttäuscht wird jeder sein, der einen Nachbarn außer dir hat und enttäuscht wird jeder sein, der einen Helfer außer Dir hat und enttäuscht wird jeder sein, der einen Schutzort außer bei Dir sucht und enttäuscht wird jeder, der einen anderen Fluchtort außer bei Dir sucht und enttäuscht wird jeder sein, der ein Asyl außer bei Dir sucht und enttäuscht wird jeder sein, der die Rettung von einem Geschöpf außer Dir sucht.
-
-
-Denn Du bist meine Stütze, meine Hoffnung, mein Schutzort, mein Fluchtort, mein Asyl und meine Rettung, durch Dich finde ich den Beginn und durch Dich suche ich den Erfolg und mit Muhammad und der Familie Muhammads richte ich mich an Dich und ich nehme sie als Mittel und Fürsprecher.
-
-
-So bitte ich Dich, o Allah! o Allah! o Allah! (denn) dir gebührt der Lob und der Dank und zu Dir ist die Beschwerde und Du bist derjenige, der zu Hilfe genommen wird.
-
-
-So bitte ich dich o Allah! o Allah! o Allah! beim Recht Muhammads und der Familie Muhammads, dass du Muhammad und die Familie Muhammads segnest und dass Du mich von meinen Erschwernissen und Bedrängnissen und Sorgen in diesem Zustand, in dem ich mich befinde, befreist, so wie Du deinen Propheten von seinen Sorgen, Erschwernissen und Bedrängnissen befreit hast und ihm vom Gräuel seines Feindes genügt hast, und wende von mir den Gräuel der Dinge ab, deren Gräuel ich fürchte und die Aufnahme der Dinge deren Aufnahme ich fürchte und die Sorgen der Dinge, deren
-
-
-Sorgen ich fürchte ohne dass ich dadurch irgendwelche seelische Last erleide, und lass mich nicht gehen bevor du meine Bedürfnisse erfüllt hast und von den Sorgen, die mir sowohl in diesseitiger Hinsicht als auch in jenseitiger Hinsicht bevorstehen, genügst (befreist).
-
-
-O Fürst der Gläubigen und o Aba Abdillah! Ich wünsche euch, dass der Frieden Allahs, in Ewigkeit, auf euch sein soll, solange ich existiere und Nacht und Tag bestehen, und möge Allah es nicht zu meinem letzten Gelübde machen, euch zu besuchen, und möge Allah zwischen mir und euch nicht trennen.
-
-
-O Allah! lass mich so leben wie Mohammad und seine Nachkommenschaft gelebt haben und lass mich sterben, so wie sie gestorben sind und nimm mich, während ich auf ihrem Weg weile und lass mich in ihrer Versammlung sein und trenne mich keinen Augenblick von ihnen, sowohl im Diesseits als auch im Jenseits.
-
-
-O Fürst der Gläubigen und O Aba Abdillah! Ich kam zu euch um euch zu besuchen und euch als Mittel zu meinem Herrn, eurem Herrn Allah zu nehmen und mich an Ihm durch euch zu richten und um euch als Fürsprecher bei Ihm zu nehmen, wegen dem Bedürfnis, das ich habe, legt für mich Fürsprache ein, denn ihr habt bei Allah den löblichen Rang und den ruhmreichen Ruhm und die höchste Stelle und die Wasila (Mittel), ich verlasse euch wartend auf die Erfüllung des
-
-
-Bedürfnisses und seinen Abschluss und seinen Erfolg von Allah, durch eure Fürsprache für mich bei Allah in dieser Angelegenheit, so werde ich nicht enttäuscht werden und nachdem ich gehe, werde ich nicht enttäuscht gehen und ich werde keinen Verlust, erleiden.
-
-
-Sondern mein Abschied wird erfolgreich erhört und all meine Bedürfnisse werden erfüllt sein. Legt bei Allah Fürsprache für mich ein. Ich habe mich darauf verlassen, auf dass, was Allah will und keine Bewegung und keine Kraft außer durch Allah.
-
-
-Ich übergab meine Angelegenheit an Allah und nahm Zuflucht bei Allah und stütze mich auf Allah und ich sage: „Mir genügt Allah.“ Allah erhört, den der ruft. Ich habe außer bei Allah und bei euch O meine Meister keine Zuflucht. Was mein Herr wollte, war.
-
-
-Und was er nicht wollte, war nicht und keine Bewegung und keine Kraft außer durch Allah, Ich lasse euch bei Allah und möge Allah diesen Besuch nicht zu meinem letzten Versprechen machen.
-
-Ich gehe nun, O mein Herr O Fürst der Gläubigen und mein Meister und du O Aba Abdillah O mein Herr und mein Salam auf euch besteht, solange die Nacht mit dem Tag verbunden ist und mein Salam erreicht euch und mein Salam ist nicht verborgen von euch, so Allah will.
-
-
-Ich bitte Ihn bei eurem Recht, dass Er es will und, dass Er es abschließt. Er ist gepriesen und ruhmreich, ich gehe nun mein Herr, reuend, Allah preisend, Ihn dankend, mit großer Hoffnung auf das Erhören, ohne Verzweiflung, voller Reue, zurückkehrend, ohne dass ich von euch oder von eurem Besuch abgeneigt bin, sondern ich werde zurückkommen, so Allah will, und keine Bewegung, keine Kraft außer durch Allah.
-
-
-O meine Herren, ich begehre euch und euren Besuch, nachdem sich die Leute des Diesseits, euch und euren Besuch entbehrt haben. Möge Allah mich in meiner Hoffnung und in meinen Wünschen weswegen ich euch besucht habe nicht enttäuschen. Er ist nah und erhört die Bittgebete.
+Oh Gott beider Welten nimm dieses Bittgebet an.
