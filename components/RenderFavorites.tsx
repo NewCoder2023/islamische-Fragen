@@ -7,6 +7,7 @@ import { Link } from "expo-router";
 import { useColorScheme } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import uuid from "react-native-uuid";
+import { Appearance } from "react-native";
 
 export default function RenderItems({ items }) {
   const encodeTitle = (title: string) => {
@@ -24,6 +25,8 @@ export default function RenderItems({ items }) {
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
   const themeErrorStyle =
     colorScheme === "light" ? styles.lightError : styles.darkError;
+
+    const appColor = Appearance.getColorScheme();
 
   const renderItems = ({ item }) => (
     <Link
@@ -54,6 +57,7 @@ export default function RenderItems({ items }) {
         <View style={styles.itemsContainer}>
           <FlashList
             data={items}
+            extraData={appColor}
             estimatedItemSize={63}
             keyExtractor={(item) => `${item.id}-${item.title}`}
             renderItem={renderItems}

@@ -6,6 +6,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useColorScheme } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import { Appearance } from "react-native";
 
 export default function RenderNestedItems({ items, fetchError, table }) {
   const encodeTitle = (title: string) => {
@@ -24,12 +25,19 @@ export default function RenderNestedItems({ items, fetchError, table }) {
   const themeErrorStyle =
     colorScheme === "light" ? styles.lightError : styles.darkError;
 
+  const appColor = Appearance.getColorScheme();
   return (
     <View style={styles.container}>
+      {fetchError && (
+        <View style={styles.renderError}>
+          <Text style={[styles.errorText, themeErrorStyle]}>{fetchError}</Text>
+        </View>
+      )}
       {items && (
         <View style={styles.itemsContainer}>
           <FlashList
             data={items}
+            extraData={appColor}
             estimatedItemSize={63}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
@@ -57,11 +65,7 @@ export default function RenderNestedItems({ items, fetchError, table }) {
           />
         </View>
       )}
-      {fetchError && (
-        <View style={styles.renderError}>
-          <Text style={[styles.errorText, themeErrorStyle]}>{fetchError}</Text>
-        </View>
-      )}
+      
     </View>
   );
 }

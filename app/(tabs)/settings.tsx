@@ -1,4 +1,4 @@
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet } from "react-native";
 import { View, Text } from "components/Themed";
 import Colors from "constants/Colors";
 import { Link } from "expo-router";
@@ -14,7 +14,9 @@ export default function settings() {
     const changeColor = isDarkMode ? "light" : "dark";
     Appearance.setColorScheme(changeColor);
     setIsDarkMode(!isDarkMode);
+   
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.switchContainer}>

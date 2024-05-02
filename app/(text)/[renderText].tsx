@@ -93,6 +93,10 @@ export default function renderText() {
   const colorScheme = useColorScheme();
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+  
+    const themeTextStyle =
+    colorScheme === "light" ? styles.lightText : styles.darkText;
+
 
   const textContentPerPage: string[] = text
     .split("\n\n")
@@ -115,6 +119,11 @@ export default function renderText() {
           headerTitle: title,
         }}
       />
+      {fetchError && (
+        <View style={styles.renderError}>
+          <Text style={styles.errorText}>{fetchError}</Text>
+        </View>
+      )}
       {text && (
         <FlashList
           data={textContentPerPage}
@@ -122,10 +131,11 @@ export default function renderText() {
             <View style={[styles.textContainer, themeContainerStyle]}>
               <Markdown
                 style={{
-                  body: { fontSize: 20, lineHeight: 40 },
+                  body: {...themeTextStyle, fontSize: 20, lineHeight: 40,},
                   heading1: { color: "purple" },
                   code_block: { color: "black", fontSize: 14 },
                   em: { textAlign: "center" },
+                  
                 }}
               >
                 {item}
@@ -135,11 +145,6 @@ export default function renderText() {
           )}
           estimatedItemSize={100}
         />
-      )}
-      {fetchError && (
-        <View style={styles.renderError}>
-          <Text style={styles.errorText}>{fetchError}</Text>
-        </View>
       )}
     </View>
   );
@@ -179,4 +184,10 @@ const styles = StyleSheet.create({
   darkContainer: {
     backgroundColor: Colors.dark.contrast,
   },
+  lightText: {
+    color: Colors.light.text
+  },
+  darkText: {
+    color: Colors.dark.text
+  }
 });

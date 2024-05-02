@@ -14,6 +14,8 @@ import { useCallback, useState } from "react";
 import { useRef, useMemo } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
+import { Appearance } from "react-native";
+
 
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
@@ -28,6 +30,9 @@ export default function index() {
   const scrollRef = useRef();
 
   const colorScheme = useColorScheme();
+
+  const appColor = Appearance.getColorScheme();
+ 
 
   const themeErrorStyle = useMemo(
     () =>
@@ -181,6 +186,7 @@ export default function index() {
           <FlashList
             ref={scrollRef}
             data={posts}
+           extraData={appColor}
             renderItem={renderItems}
             estimatedItemSize={118}
             keyExtractor={(item) => item.id.toString()}
