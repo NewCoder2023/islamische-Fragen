@@ -9,7 +9,7 @@ import { FlashList } from "@shopify/flash-list";
 import uuid from "react-native-uuid";
 import { Appearance } from "react-native";
 
-export default function RenderItems({ items }) {
+export default function RenderFavorites({ items }) {
   const encodeTitle = (title: string) => {
     // Clean the title by trimming and removing new lines
     // Encode all characters with encodeURIComponent and manually encode parentheses since the cause trouble in the url
@@ -26,12 +26,12 @@ export default function RenderItems({ items }) {
   const themeErrorStyle =
     colorScheme === "light" ? styles.lightError : styles.darkError;
 
-    const appColor = Appearance.getColorScheme();
+  const appColor = Appearance.getColorScheme();
 
   const renderItems = ({ item }) => (
     <Link
       style={styles.FlashListItems}
-      keyExtractor={(item) => item.id.toString()}
+      key={`${item.table}-${item.id}`}
       href={{
         pathname: `/(text)/${encodeTitle(item.title)}`,
         params: {

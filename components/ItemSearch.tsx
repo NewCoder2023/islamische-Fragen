@@ -6,6 +6,7 @@ import { supabase } from "@/utils/supabase";
 import RenderSearch from "./RenderSearch";
 import { useColorScheme } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import { Appearance } from "react-native";
 
 const fetchAllTables = async () => {
   const { data, error } = await supabase.from("AllTables").select("tableName");
@@ -16,6 +17,8 @@ const fetchAllTables = async () => {
   }
   return data;
 };
+
+const appColor = Appearance.getColorScheme();
 
 const ItemSearch = ({ search }) => {
   const [searchResults, setSearchResults] = useState([]);
@@ -82,6 +85,7 @@ const ItemSearch = ({ search }) => {
           <FlashList
             data={searchResults}
             estimatedItemSize={63}
+            extraData={appColor}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <RenderSearch items={item.items} table={item.table} />
