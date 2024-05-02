@@ -164,6 +164,13 @@ export default function index() {
             </Pressable>
           </View>
         )}
+        {posts.length == 0 ? (
+          <View style={styles.renderError}>
+            <Text style={styles.emptyText}>
+              Es gibt derzeit noch keine Neugikeiten!
+            </Text>
+          </View>
+        ) : null}
         {fetchError ? (
           <View style={styles.renderError}>
             <Text style={[styles.errorText, themeErrorStyle]}>
@@ -275,10 +282,14 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 20,
-    color: Colors.light.error,
     textAlign: "center",
+    fontWeight: "bold",
   },
-
+  emptyText: {
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
   updateContainer: {
     width: "100%",
     position: "absolute",

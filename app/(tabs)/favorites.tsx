@@ -1,7 +1,7 @@
 import Colors from "constants/Colors";
 import { Text, View } from "components/Themed";
 import { FlatList, Pressable, StyleSheet } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
@@ -26,7 +26,7 @@ export default function favourites() {
   const themeErrorStyle =
     colorScheme === "light" ? styles.lightError : styles.darkError;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const getFavorites = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem("Favorites");
@@ -39,6 +39,7 @@ export default function favourites() {
             const filteredFavorites = parsedFavorites.filter(
               (item) => item.isFavorite
             );
+
             setFavorites(filteredFavorites);
           } else {
             // Initialize with empty array
@@ -65,14 +66,7 @@ export default function favourites() {
     <View style={styles.container}>
       {favorites[0] ? (
         <View style={styles.favoriteContainer}>
-          <FlashList
-            data={favorites}
-            estimatedItemSize={88}
-            keyExtractor={(item, index) => `${item.table}-${item.id}`}
-            renderItem={({ item }) => (
-              <RenderFavorites items={[item]} table={item.table} />
-            )}
-          />
+          <RenderFavorites items={favorites} />
         </View>
       ) : (
         <View style={[styles.noFavoritesContainer, themeContainerStyle]}>
@@ -92,7 +86,6 @@ const styles = StyleSheet.create({
   },
   favoriteContainer: {
     flex: 1,
-    marginTop: 30,
   },
 
   noFavoritesContainer: {
