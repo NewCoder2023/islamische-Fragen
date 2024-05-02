@@ -3,14 +3,15 @@ import { StyleSheet, Pressable } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
-import { FlatList } from "react-native";
 import Colors from "constants/Colors";
 import { Stack } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColorScheme } from "react-native";
 import { useIsChanging } from "components/favStore";
+import Markdown from "react-native-markdown-display";
+import { storeFavorites, getFavorites } from "components/manageFavorites";
+import { useMemo } from "react";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -27,9 +28,7 @@ export default function renderText() {
   }
 
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
-
   const { content, fetchError } = fetchText(id, table);
-
   const { change } = useIsChanging();
 
   const Separator = () => {
@@ -37,41 +36,15 @@ export default function renderText() {
   };
 
   {
-    /* Get the Favorites from the AsyncStorage*/
+    useLayoutEffect(() => {
+      const loadFavorites = async () => {
+        const fav = await getFavorites();
+        setFavorites(fav);
+      };
+      loadFavorites();
+    }, []);
   }
-  useLayoutEffect(() => {
-    const getFavorites = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem("Favorites");
-        if (jsonValue) {
-          const parsedFavorites = JSON.parse(jsonValue);
-          if (Array.isArray(parsedFavorites)) {
-            // Ensure it's an array before setting
-            setFavorites(parsedFavorites);
-          } else {
-            // Initialize with an empty array
-            setFavorites([]);
-          }
-        } else {
-          // No data found, initialize with an empty array
-          setFavorites([]);
-        }
-      } catch (e) {
-        Toast.show({
-          type: "error",
-          text1:
-            "Fehler beim Laden der Favoriten! Bitte überprüfen Sie Ihre Internetverbindung",
-        });
-        // Fallback to an empty array
-        setFavorites([]);
-      }
-    };
-    getFavorites();
-  }, []);
 
-  {
-    /* Set the Favorites in the AsyncStorage and change icons*/
-  }
   const changeFavourite = async () => {
     if (
       favorites.some(
@@ -89,7 +62,7 @@ export default function renderText() {
           : item
       );
       setFavorites(newFavorites);
-      await storeFavorites(newFavorites);
+      await storeFavorites(newFavorites, change);
     } else {
       Toast.show({
         type: "success",
@@ -106,54 +79,19 @@ export default function renderText() {
         },
       ];
       setFavorites(newFavorites);
-      await storeFavorites(newFavorites);
+      await storeFavorites(newFavorites, change);
     }
   };
 
-  const storeFavorites = async (favorites: FavoriteItem[]) => {
-    try {
-      const jsonValue = JSON.stringify(favorites);
-      await AsyncStorage.setItem("Favorites", jsonValue);
-      change();
-    } catch (e) {
-      console.log(e);
-      Toast.show({
-        type: "error",
-        text1:
-          "Fehler beim Hinzufügen zu den Favoriten! Bitte überprüfen Sie Ihre Internetverbindung",
-      });
-    }
-  };
-
-  const isInFavorites = () => {
-    return (
-      Array.isArray(favorites) &&
-      favorites.some(
-        (item) => item.table == table && item.id == id && item.isFavorite
-      )
+  const isInFavorites = useMemo(() => {
+    return favorites.some(
+      (item) => item.table === table && item.id === id && item.isFavorite
     );
-  };
+  }, [favorites, table, id]);
 
   const colorScheme = useColorScheme();
-
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-
-  const contentArray = Object.values(content).flat();
-
-  // Style Attributes
-  const getStyle = (item) => {
-    switch (item.style) {
-      case "notes":
-        return styles.notesStyle;
-      case "content":
-        return styles.contentStyle;
-      case "title":
-        return styles.titleStyle;
-      case "arabic":
-        return styles.arabicStyle;
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -163,7 +101,7 @@ export default function renderText() {
           headerRight: () => (
             <Pressable onPress={changeFavourite}>
               <AntDesign
-                name={isInFavorites() ? "star" : "staro"}
+                name={isInFavorites ? "star" : "staro"}
                 size={24}
                 color={Colors.light.star}
               />
@@ -174,20 +112,12 @@ export default function renderText() {
       />
       {content && (
         <View style={styles.listContainer}>
-          <FlatList
-            data={contentArray}
-            renderItem={({ item, index }) => (
-              <View style={[styles.itemContainer, themeContainerStyle]}>
-                <Text style={[getStyle(item), styles.text]}>{item.text}</Text>
-                <View style={[styles.pageNumberContainer, themeContainerStyle]}>
-                  <Text style={styles.pageNumber}>{index + 1}</Text>
-                </View>
-              </View>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={Separator}
-          ></FlatList>
+          <View style={[styles.itemContainer, themeContainerStyle]}>
+            <Markdown>{content}</Markdown>
+            <View
+              style={[styles.pageNumberContainer, themeContainerStyle]}
+            ></View>
+          </View>
         </View>
       )}
       {fetchError && (
@@ -203,7 +133,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  listContainer: {},
+  listContainer: {
+    flex: 1,
+  },
   itemContainer: {
     flex: 1,
     borderWidth: 2,

@@ -1,6 +1,11 @@
 import { create } from "zustand";
 
-export const useIsChanging = create((set) => ({
+interface IsChangingState {
+  favoriteChange: boolean;
+  change: () => void;
+}
+
+export const useIsChanging = create<IsChangingState>((set) => ({
   favoriteChange: false,
   change: () => set((state) => ({ favoriteChange: !state.favoriteChange })),
 }));

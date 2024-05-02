@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 
 export default function fetchText(id: string, table: string) {
   const [fetchError, setFetchError] = useState<string>("");
-  const [content, setContent] = useState<any[]>([]);
+  const [content, setContent] = useState<string>("");
 
   // Encode title because () in title causes problems
-
   useEffect(() => {
     const fetchItems = async () => {
       const { data, error } = await supabase
@@ -22,7 +21,7 @@ export default function fetchText(id: string, table: string) {
           "Elemente konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internet Verbindung!"
         );
 
-        setContent([]);
+        setContent("");
       }
 
       if (data) {
