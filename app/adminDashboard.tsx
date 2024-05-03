@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     color: Colors.light.link,
   },
   inputFieldsContainer: {
-    flex: 1,
+    flex: 0.82,
   },
   headerInput: {
     marginHorizontal: 10,
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   ContentInput: {
     flex: 1,
-    maxHeight: "85%",
+    maxHeight: "90%",
     marginHorizontal: 10,
     paddingHorizontal: 12,
     marginTop: 20,
@@ -237,16 +237,17 @@ const styles = StyleSheet.create({
     lineHeight: 30,
   },
   imagesContainer: {
+    flex: 0.18,
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: 15,
+    marginBottom: 10,
   },
   image: {
     width: 100,
     height: 100,
   },
   deleteImage: {
-    marginTop: 5,
+    //marginTop: 5,
     marginLeft: 110,
   },
   lightInput: {
