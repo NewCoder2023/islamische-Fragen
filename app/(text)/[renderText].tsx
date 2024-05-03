@@ -16,6 +16,7 @@ import { useMemo } from "react";
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRef } from "react";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -38,6 +39,10 @@ export default function renderText() {
   const [downloadedText, setDownloadedText] = useState("");
   const key = `text-${id}-${table}`;
   const appColor = Appearance.getColorScheme();
+  const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
+  const CONTENT_OFFSET_THRESHOLD = 300;
+
+  const flashListRef = useRef(null);
 
   const Separator = () => {
     return <View style={styles.separator} />;
@@ -196,9 +201,24 @@ export default function renderText() {
       )}
       {textContentPerPage.length > 0 && (
         <View style={styles.FlashContainer}>
+          {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD && (
+            <Feather
+              name='arrow-up-circle'
+              size={28}
+              color={colorScheme == "dark" ? "#45CE30" : "#019031"}
+              style={styles.toTopButton}
+              onPress={() => {
+                flashListRef.current.scrollToOffset(true, 0);
+              }}
+            />
+          )}
           <FlashList
             data={textContentPerPage}
             extraData={appColor}
+            ref={flashListRef}
+            onScroll={(event) => {
+              setContentVerticalOffset(event.nativeEvent.contentOffset.y);
+            }}
             renderItem={({ item, index }) => (
               <View style={[styles.textContainer, themeContainerStyle]}>
                 <Markdown
@@ -243,6 +263,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     padding: 20,
     borderRadius: 10,
+  },
+  toTopButton: {
+    position: "absolute",
+    top: 300,
+    right: 10,
+    zIndex: 1,
   },
   text: {},
   index: {
