@@ -1,5 +1,5 @@
 import { View, Text } from "components/Themed";
-import { StyleSheet, Pressable } from "react-native";
+import { StyleSheet, Pressable, Appearance } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
@@ -37,6 +37,7 @@ export default function renderText() {
   const [isDownloaded, setIsDownloaded] = useState(false);
   const [downloadedText, setDownloadedText] = useState("");
   const key = `text-${id}-${table}`;
+  const appColor = Appearance.getColorScheme();
 
   const Separator = () => {
     return <View style={styles.separator} />;
@@ -196,6 +197,7 @@ export default function renderText() {
       {textContentPerPage.length > 0 && (
         <FlashList
           data={textContentPerPage}
+          extraData={appColor}
           renderItem={({ item, index }) => (
             <View style={[styles.textContainer, themeContainerStyle]}>
               <Markdown
