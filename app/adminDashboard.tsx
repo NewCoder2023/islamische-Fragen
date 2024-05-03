@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   ContentInput: {
     flex: 1,
-    maxHeight: "90%",
+    maxHeight: "85%",
     marginHorizontal: 10,
     paddingHorizontal: 12,
     marginTop: 20,
@@ -239,6 +239,7 @@ const styles = StyleSheet.create({
   imagesContainer: {
     flexDirection: "column",
     alignItems: "center",
+    marginBottom: 15,
   },
   image: {
     width: 100,

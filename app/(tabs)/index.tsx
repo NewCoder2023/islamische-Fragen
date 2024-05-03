@@ -1,4 +1,10 @@
-import { StyleSheet, Pressable, Alert, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  Pressable,
+  Alert,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
@@ -16,7 +22,6 @@ import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Appearance } from "react-native";
 
-
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -32,7 +37,6 @@ export default function index() {
   const colorScheme = useColorScheme();
 
   const appColor = Appearance.getColorScheme();
- 
 
   const themeErrorStyle = useMemo(
     () =>
@@ -186,7 +190,7 @@ export default function index() {
           <FlashList
             ref={scrollRef}
             data={posts}
-           extraData={appColor}
+            extraData={appColor}
             renderItem={renderItems}
             estimatedItemSize={118}
             keyExtractor={(item) => item.id.toString()}
