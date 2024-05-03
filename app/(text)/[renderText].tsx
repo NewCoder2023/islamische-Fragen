@@ -195,26 +195,28 @@ export default function renderText() {
         </View>
       )}
       {textContentPerPage.length > 0 && (
-        <FlashList
-          data={textContentPerPage}
-          extraData={appColor}
-          renderItem={({ item, index }) => (
-            <View style={[styles.textContainer, themeContainerStyle]}>
-              <Markdown
-                style={{
-                  body: { ...themeTextStyle, fontSize: 20, lineHeight: 40 },
-                  heading1: { color: "purple" },
-                  code_block: { color: "black", fontSize: 14 },
-                  em: { textAlign: "center" },
-                }}
-              >
-                {item}
-              </Markdown>
-              <Text style={styles.index}>{index + 1}</Text>
-            </View>
-          )}
-          estimatedItemSize={100}
-        />
+        <View style={styles.FlashContainer}>
+          <FlashList
+            data={textContentPerPage}
+            extraData={appColor}
+            renderItem={({ item, index }) => (
+              <View style={[styles.textContainer, themeContainerStyle]}>
+                <Markdown
+                  style={{
+                    body: { ...themeTextStyle, fontSize: 20, lineHeight: 40 },
+                    heading1: { color: "purple" },
+                    code_block: { color: "black", fontSize: 14 },
+                    em: { textAlign: "center" },
+                  }}
+                >
+                  {item}
+                </Markdown>
+                <Text style={styles.index}>{index + 1}</Text>
+              </View>
+            )}
+            estimatedItemSize={100}
+          />
+        </View>
       )}
     </View>
   );
@@ -230,9 +232,15 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     marginLeft: 5,
   },
+  FlashContainer: {
+    flex: 1,
+    marginTop: 10,
+    marginBottom: 30,
+  },
   textContainer: {
     flex: 1,
-    margin: 10,
+    marginBottom: 10,
+    marginHorizontal: 15,
     padding: 20,
     borderRadius: 10,
   },
