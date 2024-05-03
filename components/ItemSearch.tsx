@@ -50,6 +50,7 @@ const ItemSearch = ({ search }) => {
           }
 
           if (data && data.length > 0) {
+
             return {
               table: table.tableName,
               items: data,

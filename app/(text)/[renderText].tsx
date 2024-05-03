@@ -13,6 +13,9 @@ import Markdown from "react-native-markdown-display";
 import { FlashList } from "@shopify/flash-list";
 import { storeFavorites, getFavorites } from "components/manageFavorites";
 import { useMemo } from "react";
+import { Feather } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -31,20 +34,36 @@ export default function renderText() {
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const { text, fetchError } = fetchText(id, table);
   const { change } = useIsChanging();
+  const [isDownloaded, setIsDownloaded] = useState(false);
+  const [downloadedText, setDownloadedText] = useState("");
+  const key = `text-${id}-${table}`;
 
   const Separator = () => {
     return <View style={styles.separator} />;
   };
 
-  {
-    useLayoutEffect(() => {
-      const loadFavorites = async () => {
-        const fav = await getFavorites();
-        setFavorites(fav);
-      };
-      loadFavorites();
-    }, []);
-  }
+  useLayoutEffect(() => {
+    const loadFavorites = async () => {
+      const fav = await getFavorites();
+      setFavorites(fav);
+    };
+    const loadDownloadedText = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem(key);
+        if (jsonValue) {
+          console.log(jsonValue);
+          setDownloadedText(JSON.parse(jsonValue));
+          setIsDownloaded(true);
+        } else {
+          setIsDownloaded(false);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    loadDownloadedText();
+    loadFavorites();
+  }, [id, table]);
 
   const changeFavourite = async () => {
     if (
@@ -93,14 +112,42 @@ export default function renderText() {
   const colorScheme = useColorScheme();
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-  
-    const themeTextStyle =
+
+  const themeTextStyle =
     colorScheme === "light" ? styles.lightText : styles.darkText;
 
+  const textContentPerPage = useMemo(() => {
+    if (!text && !downloadedText) return [];
+    const content = downloadedText || text;
+    return content.split("\n\n").filter((t) => t.trim() !== "");
+  }, [text, downloadedText]);
 
-  const textContentPerPage: string[] = text
-    .split("\n\n")
-    .filter((text) => text.trim() !== "");
+  const download = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(key);
+      if (jsonValue) {
+        await AsyncStorage.removeItem(key);
+        Toast.show({
+          type: "success",
+          text1: "Text erfolgreich aus dem Speicher entfernt!",
+        });
+        setIsDownloaded((prev) => !prev);
+      } else {
+        await AsyncStorage.setItem(key, JSON.stringify(text));
+        Toast.show({
+          type: "success",
+          text1: "Text wird heruntergeladen!",
+        });
+        setIsDownloaded((prev) => !prev);
+      }
+    } catch (e) {
+      Toast.show({
+        type: "error",
+        text1: "Fehler, bitte versuchen Sie es später erneut!",
+      });
+      console.log(e);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -108,13 +155,30 @@ export default function renderText() {
       <Stack.Screen
         options={{
           headerRight: () => (
-            <Pressable onPress={changeFavourite}>
+            <View style={styles.buttonsHeaderContainer}>
+              {isDownloaded ? (
+                <MaterialCommunityIcons
+                  name='file-remove-outline'
+                  size={24}
+                  color={colorScheme == "dark" ? "white" : "black"}
+                  onPress={download}
+                />
+              ) : (
+                <Feather
+                  name='download'
+                  size={24}
+                  color={colorScheme == "dark" ? "white" : "black"}
+                  onPress={download}
+                />
+              )}
+
               <AntDesign
                 name={isInFavorites ? "star" : "staro"}
                 size={24}
                 color={Colors.light.star}
+                onPress={changeFavourite}
               />
-            </Pressable>
+            </View>
           ),
           headerTitle: title,
         }}
@@ -124,18 +188,22 @@ export default function renderText() {
           <Text style={styles.errorText}>{fetchError}</Text>
         </View>
       )}
-      {text && (
+      {textContentPerPage.length < 0 && (
+        <View style={styles.renderError}>
+          <Text style={styles.errorText}>{fetchError}</Text>
+        </View>
+      )}
+      {textContentPerPage.length > 0 && (
         <FlashList
           data={textContentPerPage}
           renderItem={({ item, index }) => (
             <View style={[styles.textContainer, themeContainerStyle]}>
               <Markdown
                 style={{
-                  body: {...themeTextStyle, fontSize: 20, lineHeight: 40,},
+                  body: { ...themeTextStyle, fontSize: 20, lineHeight: 40 },
                   heading1: { color: "purple" },
                   code_block: { color: "black", fontSize: 14 },
                   em: { textAlign: "center" },
-                  
                 }}
               >
                 {item}
@@ -154,11 +222,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  buttonsHeaderContainer: {
+    flexDirection: "row",
+    gap: 15,
+    backgroundColor: "transparent",
+    marginLeft: 5,
+  },
   textContainer: {
     flex: 1,
     margin: 10,
     padding: 20,
-    borderRadius: 10
+    borderRadius: 10,
   },
   text: {},
   index: {
@@ -185,9 +259,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.contrast,
   },
   lightText: {
-    color: Colors.light.text
+    color: Colors.light.text,
   },
   darkText: {
-    color: Colors.dark.text
-  }
+    color: Colors.dark.text,
+  },
 });
