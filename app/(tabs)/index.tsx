@@ -120,7 +120,7 @@ export default function index() {
             <FontAwesome
               name='trash-o'
               size={24}
-              color='red'
+              color={colorScheme == "dark" ? '#D63031' : "#BA2F16"}
               onPress={() => deletePost(item.id)}
             />
           ) : null}
