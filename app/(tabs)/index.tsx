@@ -36,6 +36,8 @@ export default function index() {
   const scrollRef = useRef<any>();
   const colorScheme = useColorScheme();
   const appColor = Appearance.getColorScheme();
+  const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
+  const CONTENT_OFFSET_THRESHOLD = 5;
 
   // Darkmode style change
   const themeErrorStyle = useMemo(
@@ -54,15 +56,6 @@ export default function index() {
     () => (colorScheme === "light" ? styles.lightButton : styles.darkButton),
     [colorScheme]
   );
-
-  // Display refresh screen
-  const refresh = useCallback(() => {
-    setRefreshing(true);
-    // Get changes
-    refetch().finally(() => {
-      setRefreshing(false);
-    });
-  }, []);
 
   const deletePost = (id: number) => {
     Alert.alert("Beitrag wirklich löschen?", "", [
@@ -95,11 +88,24 @@ export default function index() {
     };
   };
 
+  // // Display refresh screen
+// Update News on either reloading or pressing "Aktualisieren" button
   const updateNews = useCallback(() => {
-    scrollRef.current?.scrollToOffset({ offset: 0, animated: true });
-    refresh();
-    applyUpdates();
+    setRefreshing(true);
+
+    if(contentVerticalOffset > CONTENT_OFFSET_THRESHOLD) {
+        scrollRef.current?.scrollToOffset({offset: 0, animated: false });
+    }
+
+    refetch().then(() => {
+      applyUpdates().finally(() => {
+        setRefreshing(false);  // Beendet den Refreshing-Zustand, nachdem alles abgeschlossen ist
+      });
+    }).catch(() => {
+      setRefreshing(false);  // Setzt den Refreshing-Zustand zurück, falls refetch fehlschlägt
+    });
   }, [applyUpdates]);
+
 
   const renderItems = ({ item }: { item: Post }) => {
     return (
@@ -194,8 +200,11 @@ export default function index() {
             renderItem={renderItems}
             estimatedItemSize={118}
             keyExtractor={(item) => item.id.toString()}
-            onRefresh={refresh}
+            onRefresh={updateNews}
             refreshing={refreshing}
+            onScroll={(event) => {
+              setContentVerticalOffset(event.nativeEvent.contentOffset.y);
+            }}
           />
         )}
       </View>
