@@ -204,8 +204,8 @@ export default function renderText() {
           {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD && (
             <Feather
               name='arrow-up-circle'
-              size={28}
-              color={colorScheme == "dark" ? "#45CE30" : "#019031"}
+              size={35}
+              color={colorScheme == "dark" ? "#45CE30" : "#009432"}
               style={styles.toTopButton}
               onPress={() => {
                 flashListRef.current.scrollToOffset(true, 0);
@@ -226,7 +226,6 @@ export default function renderText() {
                     body: { ...themeTextStyle, fontSize: 20, lineHeight: 40 },
                     heading1: { color: "purple" },
                     code_block: { color: "black", fontSize: 14 },
-                    
                   }}
                 >
                   {item}

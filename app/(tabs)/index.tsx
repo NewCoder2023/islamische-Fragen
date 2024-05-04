@@ -201,7 +201,7 @@ export default function index() {
                 <Feather
                   name='arrow-up-circle'
                   size={35}
-                  color={colorScheme == "dark" ? "#45CE30" : "#019031"}
+                  color={colorScheme == "dark" ? "#45CE30" : "#009432"}
                 />
               </Pressable>
             )}
