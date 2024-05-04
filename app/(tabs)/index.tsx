@@ -98,11 +98,10 @@ export default function index() {
     }
 
     refetch().then(() => {
-      applyUpdates().finally(() => {
-        setRefreshing(false);  // Beendet den Refreshing-Zustand, nachdem alles abgeschlossen ist
-      });
+      applyUpdates()
+      setRefreshing(false);  
     }).catch(() => {
-      setRefreshing(false);  // Setzt den Refreshing-Zustand zurück, falls refetch fehlschlägt
+      setRefreshing(false);  
     });
   }, [applyUpdates]);
 
