@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  Pressable,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, Pressable, Alert, ActivityIndicator } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
@@ -23,7 +18,7 @@ import { Appearance } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 interface Post {
-  id: number; 
+  id: number;
   title?: string;
   content?: string;
   imagePath?: string;
@@ -31,7 +26,8 @@ interface Post {
 
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
-  const { posts, fetchError, refetch, updateAvailable, applyUpdates } = fetchNews();
+  const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
+    fetchNews();
   const { isLoading } = useIsUpLoading();
   const { isLoggedIn } = useAuthStore();
   const scrollRef = useRef<any>();
@@ -41,18 +37,6 @@ export default function index() {
   const CONTENT_OFFSET_THRESHOLD_NEW_UPDATE = 5;
   const CONTENT_OFFSET_THRESHOLD_UP = 300;
 
-
-//   //  {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD && (
-//     <Feather
-//     name='arrow-up-circle'
-//     size={28}
-//     color={colorScheme == "dark" ? "#45CE30" : "#019031"}
-//     style={styles.toTopButton}
-//     onPress={() => {
-//       flashListRef.current.scrollToOffset(true, 0);
-//     }}
-//   />
-// )}
   // Darkmode style change
   const themeErrorStyle = useMemo(
     () =>
@@ -102,23 +86,23 @@ export default function index() {
     };
   };
 
-  // // Display refresh screen
-// Update News on either reloading or pressing "Aktualisieren" button
+  // Update News on either reloading or pressing "Aktualisieren" button
   const updateNews = useCallback(() => {
     setRefreshing(true);
 
-    if(contentVerticalOffset > CONTENT_OFFSET_THRESHOLD_NEW_UPDATE) {
-        scrollRef.current?.scrollToOffset({offset: 0, animated: false });
+    if (contentVerticalOffset > CONTENT_OFFSET_THRESHOLD_NEW_UPDATE) {
+      scrollRef.current?.scrollToOffset({ offset: 0, animated: false });
     }
 
-    refetch().then(() => {
-      applyUpdates()
-      setRefreshing(false);  
-    }).catch(() => {
-      setRefreshing(false);  
-    });
+    refetch()
+      .then(() => {
+        applyUpdates();
+        setRefreshing(false);
+      })
+      .catch(() => {
+        setRefreshing(false);
+      });
   }, [applyUpdates]);
-
 
   const renderItems = ({ item }: { item: Post }) => {
     return (
@@ -134,7 +118,7 @@ export default function index() {
             <FontAwesome
               name='trash-o'
               size={24}
-              color={colorScheme == "dark" ? '#D63031' : "#BA2F16"}
+              color={colorScheme == "dark" ? "#D63031" : "#BA2F16"}
               onPress={() => deletePost(item.id)}
             />
           ) : null}
@@ -192,10 +176,10 @@ export default function index() {
             </Pressable>
           </View>
         )}
-        {posts.length == 0 ? (
+        {posts.length == 0 && !fetchError ? (
           <View style={styles.renderError}>
             <Text style={styles.emptyText}>
-              Es gibt derzeit noch keine Neugikeiten!
+              Es gibt derzeit noch keine {"\n"} Neugikeiten!
             </Text>
           </View>
         ) : null}
@@ -207,30 +191,33 @@ export default function index() {
           </View>
         ) : (
           <View style={styles.FlashContainer}>
-          {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD_UP && (
-            <Feather
-              name='arrow-up-circle'
-              size={35}
-              color={colorScheme == "dark" ? "#45CE30" : "#019031"}
-              style={styles.toTopButton}
-              onPress={() => {
-                scrollRef.current.scrollToOffset(true, 0);
+            {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD_UP && (
+              <Pressable
+                style={styles.toTopButton}
+                onPress={() => {
+                  scrollRef.current.scrollToOffset(true, 0);
+                }}
+              >
+                <Feather
+                  name='arrow-up-circle'
+                  size={35}
+                  color={colorScheme == "dark" ? "#45CE30" : "#019031"}
+                />
+              </Pressable>
+            )}
+            <FlashList
+              ref={scrollRef}
+              data={posts}
+              extraData={[appColor, isLoggedIn]}
+              renderItem={renderItems}
+              estimatedItemSize={118}
+              keyExtractor={(item) => item.id.toString()}
+              onRefresh={updateNews}
+              refreshing={refreshing}
+              onScroll={(event) => {
+                setContentVerticalOffset(event.nativeEvent.contentOffset.y);
               }}
             />
-          )}
-          <FlashList
-            ref={scrollRef}
-            data={posts}
-            extraData={[appColor, isLoggedIn]}
-            renderItem={renderItems}
-            estimatedItemSize={118}
-            keyExtractor={(item) => item.id.toString()}
-            onRefresh={updateNews}
-            refreshing={refreshing}
-            onScroll={(event) => {
-              setContentVerticalOffset(event.nativeEvent.contentOffset.y);
-            }}
-          />
           </View>
         )}
       </View>
@@ -310,7 +297,8 @@ const styles = StyleSheet.create({
   },
   toTopButton: {
     position: "absolute",
-    top: 300,
+    backgroundColor: "transparent",
+    top: 200,
     right: 10,
     zIndex: 1,
   },
@@ -339,7 +327,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   emptyText: {
-    fontSize: 20,
+    fontSize: 25,
+    lineHeight: 35,
     textAlign: "center",
     fontWeight: "bold",
   },
@@ -382,4 +371,3 @@ const styles = StyleSheet.create({
     color: Colors.dark.adButton,
   },
 });
-
