@@ -42,7 +42,7 @@ export default function renderText() {
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
   const CONTENT_OFFSET_THRESHOLD = 300;
 
-  const flashListRef = useRef(null);
+  const flashListRef = useRef<any>(null);
 
   const Separator = () => {
     return <View style={styles.separator} />;

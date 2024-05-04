@@ -20,6 +20,7 @@ import { useRef, useMemo } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Appearance } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
 interface Post {
   id: number; 
@@ -37,8 +38,21 @@ export default function index() {
   const colorScheme = useColorScheme();
   const appColor = Appearance.getColorScheme();
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
-  const CONTENT_OFFSET_THRESHOLD = 5;
+  const CONTENT_OFFSET_THRESHOLD_NEW_UPDATE = 5;
+  const CONTENT_OFFSET_THRESHOLD_UP = 300;
 
+
+//   //  {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD && (
+//     <Feather
+//     name='arrow-up-circle'
+//     size={28}
+//     color={colorScheme == "dark" ? "#45CE30" : "#019031"}
+//     style={styles.toTopButton}
+//     onPress={() => {
+//       flashListRef.current.scrollToOffset(true, 0);
+//     }}
+//   />
+// )}
   // Darkmode style change
   const themeErrorStyle = useMemo(
     () =>
@@ -93,7 +107,7 @@ export default function index() {
   const updateNews = useCallback(() => {
     setRefreshing(true);
 
-    if(contentVerticalOffset > CONTENT_OFFSET_THRESHOLD) {
+    if(contentVerticalOffset > CONTENT_OFFSET_THRESHOLD_NEW_UPDATE) {
         scrollRef.current?.scrollToOffset({offset: 0, animated: false });
     }
 
@@ -192,10 +206,22 @@ export default function index() {
             </Text>
           </View>
         ) : (
+          <View style={styles.FlashContainer}>
+          {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD_UP && (
+            <Feather
+              name='arrow-up-circle'
+              size={35}
+              color={colorScheme == "dark" ? "#45CE30" : "#019031"}
+              style={styles.toTopButton}
+              onPress={() => {
+                scrollRef.current.scrollToOffset(true, 0);
+              }}
+            />
+          )}
           <FlashList
             ref={scrollRef}
             data={posts}
-            extraData={appColor}
+            extraData={[appColor, isLoggedIn]}
             renderItem={renderItems}
             estimatedItemSize={118}
             keyExtractor={(item) => item.id.toString()}
@@ -205,6 +231,7 @@ export default function index() {
               setContentVerticalOffset(event.nativeEvent.contentOffset.y);
             }}
           />
+          </View>
         )}
       </View>
     </SafeAreaView>
@@ -281,6 +308,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 28,
   },
+  toTopButton: {
+    position: "absolute",
+    top: 300,
+    right: 10,
+    zIndex: 1,
+  },
   newsImageContainer: {
     flex: 1,
     marginTop: 20,
@@ -291,7 +324,6 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 0.8,
   },
-
   renderError: {
     flex: 1,
     marginTop: 20,
@@ -302,6 +334,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     fontWeight: "bold",
+  },
+  FlashContainer: {
+    flex: 1,
   },
   emptyText: {
     fontSize: 20,
@@ -347,3 +382,4 @@ const styles = StyleSheet.create({
     color: Colors.dark.adButton,
   },
 });
+
