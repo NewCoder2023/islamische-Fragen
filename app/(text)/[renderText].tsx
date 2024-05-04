@@ -125,7 +125,7 @@ export default function renderText() {
   const textContentPerPage = useMemo(() => {
     if (!text && !downloadedText) return [];
     const content = downloadedText || text;
-    return content.split("\n\n").filter((t) => t.trim() !== "");
+    return content.split("\n\n\n").filter((t) => t.trim() !== "");
   }, [text, downloadedText]);
 
   const download = async () => {
@@ -226,7 +226,7 @@ export default function renderText() {
                     body: { ...themeTextStyle, fontSize: 20, lineHeight: 40 },
                     heading1: { color: "purple" },
                     code_block: { color: "black", fontSize: 14 },
-                    em: { textAlign: "center" },
+                    
                   }}
                 >
                   {item}

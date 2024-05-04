@@ -5,7 +5,11 @@ import Toast from "react-native-toast-message";
 
 const LOGIN_STATUS_KEY = "isLoggedIn";
 
-export const useAuthStore = create((set) => {
+interface authStoreValue {
+  isLoggedIn: boolean
+}
+
+export const useAuthStore = create<authStoreValue>((set) => {
   const initializeStore = async () => {
     try {
       const loggedIn = await AsyncStorage.getItem(LOGIN_STATUS_KEY);

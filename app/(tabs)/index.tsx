@@ -3,7 +3,6 @@ import {
   Pressable,
   Alert,
   ActivityIndicator,
-  FlatList,
 } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
@@ -22,22 +21,23 @@ import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Appearance } from "react-native";
 
+interface Post {
+  id: number; 
+  title?: string;
+  content?: string;
+  imagePath?: string;
+}
+
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
-
-  const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
-    fetchNews();
-
-  const { isLoading, startLoading, finishLoading } = useIsUpLoading();
-
+  const { posts, fetchError, refetch, updateAvailable, applyUpdates } = fetchNews();
+  const { isLoading } = useIsUpLoading();
   const { isLoggedIn } = useAuthStore();
-
-  const scrollRef = useRef();
-
+  const scrollRef = useRef<any>();
   const colorScheme = useColorScheme();
-
   const appColor = Appearance.getColorScheme();
 
+  // Darkmode style change
   const themeErrorStyle = useMemo(
     () =>
       colorScheme === "light" ? styles.lightThemeError : styles.darkThemeError,
@@ -64,7 +64,7 @@ export default function index() {
     });
   }, []);
 
-  const deletePost = (id) => {
+  const deletePost = (id: number) => {
     Alert.alert("Beitrag wirklich löschen?", "", [
       {
         text: "Abbrechen",
@@ -77,7 +77,7 @@ export default function index() {
       },
     ]);
 
-    const removePost = async (id) => {
+    const removePost = async (id: number) => {
       const { error } = await supabase.from("News").delete().eq("id", id);
 
       if (error) {
@@ -101,7 +101,7 @@ export default function index() {
     applyUpdates();
   }, [applyUpdates]);
 
-  const renderItems = ({ item }) => {
+  const renderItems = ({ item }: { item: Post }) => {
     return (
       <View style={[styles.newsContainer, themeContainerStyle]}>
         <View style={styles.newsHeader}>

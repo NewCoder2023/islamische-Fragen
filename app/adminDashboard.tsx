@@ -164,7 +164,6 @@ export default function adminDashboard() {
             placeholder='Title (optional)'
             editable
             onSubmitEditing={Keyboard.dismiss}
-            focus
           />
 
           <TextInput
