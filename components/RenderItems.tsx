@@ -25,7 +25,7 @@ export default function RenderItems({ items, fetchError, table }) {
   const themeErrorStyle =
     colorScheme === "light" ? styles.lightError : styles.darkError;
 
-    const appColor = Appearance.getColorScheme();
+  const appColor = Appearance.getColorScheme();
   return (
     <View style={styles.container}>
       {fetchError && (
@@ -57,7 +57,11 @@ export default function RenderItems({ items, fetchError, table }) {
                 <Pressable>
                   <View style={[styles.renderItem, themeContainerStyle]}>
                     <Text style={styles.itemText}>{item.title.trim()}</Text>
-                    <EvilIcons name='arrow-right' size={30} color='black' />
+                    <EvilIcons
+                      name='arrow-right'
+                      size={30}
+                      color={colorScheme == "light" ? "black" : "white"}
+                    />
                   </View>
                 </Pressable>
               </Link>
@@ -65,7 +69,6 @@ export default function RenderItems({ items, fetchError, table }) {
           />
         </View>
       )}
-      
     </View>
   );
 }
@@ -73,27 +76,29 @@ export default function RenderItems({ items, fetchError, table }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 10,
   },
 
   itemsContainer: {
     flex: 1,
   },
-
   FlashListItems: {
     paddingTop: 15,
   },
   renderItem: {
+    flex: 1,
     flexDirection: "row",
     padding: 20,
     borderWidth: 0.2,
+    alignItems: "center",
   },
-
   itemText: {
     flex: 1,
     fontSize: 16,
     fontWeight: "bold",
+    paddingRight: 20,
+    lineHeight: 30,
   },
   renderError: {
     marginTop: 20,

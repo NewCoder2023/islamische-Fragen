@@ -1,4 +1,9 @@
-import { StyleSheet } from "react-native";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Pressable,
+} from "react-native";
 import { Text, View, SafeAreaView } from "components/Themed";
 import { TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
@@ -6,6 +11,7 @@ import Colors from "constants/Colors";
 import { useColorScheme } from "react-native";
 import { useState } from "react";
 import ItemSearch from "components/ItemSearch";
+import { Feather } from "@expo/vector-icons";
 
 export default function TabOneScreen() {
   const [search, setSearch] = useState("");
@@ -19,28 +25,39 @@ export default function TabOneScreen() {
     colorScheme === "light" ? styles.lightInputText : styles.darkInputText;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={[styles.searchContainer, themeContainerStyle]}>
-        <AntDesign
-          name='search1'
-          size={20}
-          color='grey'
-          style={styles.searchIcon}
-        />
-        <Text style={styles.border}>|</Text>
-        <TextInput
-          style={[styles.searchField, themeInputText]}
-          placeholder='Suche'
-          keyboardType='default'
-          editable
-          value={search}
-          onChangeText={setSearch}
-        />
-      </View>
-      <View style={styles.renderSearchContainer}>
-        <ItemSearch search={search} />
-      </View>
-    </SafeAreaView>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <SafeAreaView style={styles.container}>
+        <View style={[styles.searchContainer, themeContainerStyle]}>
+          <AntDesign
+            name='search1'
+            size={20}
+            color='grey'
+            style={styles.searchIcon}
+          />
+          <Text style={styles.border}>|</Text>
+          <TextInput
+            style={[styles.searchField, themeInputText]}
+            placeholder='Suche'
+            keyboardType='default'
+            editable
+            value={search}
+            onChangeText={setSearch}
+          />
+          {search && (
+            <Pressable onPress={() => setSearch("")}>
+              <Feather
+                name='x-circle'
+                size={20}
+                style={[styles.deleteIcon, themeInputText]}
+              />
+            </Pressable>
+          )}
+        </View>
+        <View style={styles.renderSearchContainer}>
+          <ItemSearch search={search} />
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -58,6 +75,10 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     paddingLeft: 12,
+    paddingVertical: 10,
+  },
+  deleteIcon: {
+    paddingRight: 10,
     paddingVertical: 10,
   },
   border: {

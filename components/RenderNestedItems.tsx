@@ -57,7 +57,11 @@ export default function RenderNestedItems({ items, fetchError, table }) {
                 <Pressable>
                   <View style={[styles.renderItem, themeContainerStyle]}>
                     <Text style={styles.itemText}>{item.title.trim()}</Text>
-                    <EvilIcons name='arrow-right' size={30} color='black' />
+                    <EvilIcons
+                      name='arrow-right'
+                      size={30}
+                      color={colorScheme == "light" ? "black" : "white"}
+                    />
                   </View>
                 </Pressable>
               </Link>
@@ -65,7 +69,6 @@ export default function RenderNestedItems({ items, fetchError, table }) {
           />
         </View>
       )}
-      
     </View>
   );
 }
@@ -88,12 +91,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 20,
     borderWidth: 0.2,
+    alignItems: "center",
   },
-
   itemText: {
     flex: 1,
     fontSize: 16,
     fontWeight: "bold",
+    paddingRight: 20,
+    lineHeight: 30,
   },
   renderError: {
     marginTop: 20,

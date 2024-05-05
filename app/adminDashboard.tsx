@@ -1,7 +1,7 @@
 import { Keyboard, StyleSheet } from "react-native";
-import { View, SafeAreaView, Text } from "components/Themed";
+import { View, Text } from "components/Themed";
 import Colors from "constants/Colors";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TextInput, Pressable, TouchableWithoutFeedback } from "react-native";
 import { supabase } from "@/utils/supabase";
 import * as ImagePicker from "expo-image-picker";

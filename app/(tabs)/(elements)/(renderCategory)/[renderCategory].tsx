@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    flex: 0.2,
+    flex: 0.25,
   },
   itemContainer: {
-    flex: 0.8,
+    flex: 0.75,
   },
 });

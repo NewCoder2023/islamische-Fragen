@@ -44,10 +44,6 @@ export default function renderText() {
 
   const flashListRef = useRef<any>(null);
 
-  const Separator = () => {
-    return <View style={styles.separator} />;
-  };
-
   useLayoutEffect(() => {
     const loadFavorites = async () => {
       const fav = await getFavorites();
@@ -135,7 +131,7 @@ export default function renderText() {
         await AsyncStorage.removeItem(key);
         Toast.show({
           type: "success",
-          text1: "Text erfolgreich aus dem Speicher entfernt!",
+          text1: "Text wurde aus dem Speicher entfernt!",
         });
         setIsDownloaded((prev) => !prev);
       } else {
