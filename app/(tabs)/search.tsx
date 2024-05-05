@@ -25,7 +25,10 @@ export default function TabOneScreen() {
     colorScheme === "light" ? styles.lightInputText : styles.darkInputText;
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback
+      onPress={() => Keyboard.dismiss()}
+      accessible={false}
+    >
       <SafeAreaView style={styles.container}>
         <View style={[styles.searchContainer, themeContainerStyle]}>
           <AntDesign
@@ -42,6 +45,7 @@ export default function TabOneScreen() {
             editable
             value={search}
             onChangeText={setSearch}
+            onBlur={Keyboard.dismiss}
           />
           {search && (
             <Pressable onPress={() => setSearch("")}>

@@ -185,7 +185,7 @@ export default function renderText() {
           headerTitle: title,
         }}
       />
-      {fetchError && (
+      {fetchError && !isDownloaded && (
         <View style={styles.renderError}>
           <Text style={styles.errorText}>{fetchError}</Text>
         </View>
