@@ -219,15 +219,32 @@ export default function renderText() {
               <View style={[styles.textContainer, themeContainerStyle]}>
                 <Markdown
                   style={{
-                    body: { ...themeTextStyle, fontSize: 20, lineHeight: 40 },
+                    body: {
+                      ...themeTextStyle,
+                      fontSize: 20,
+                      lineHeight: 40,
+                    },
                     heading1: { fontSize: 25, lineHeight: 40 },
                     heading2: {
                       ...themeTextStyle,
-                      fontSize: 25,
+                      fontSize: 30,
                       lineHeight: 40,
                       textAlign: "center",
                     },
                     heading3: {
+                      ...themeTextStyle,
+                      fontSize: 30,
+                      lineHeight: 40,
+                      fontWeight: "bold",
+                    },
+                    heading4: {
+                      ...themeTextStyle,
+                      fontSize: 30,
+                      lineHeight: 40,
+                      textAlign: "center",
+                      fontWeight: "bold",
+                    },
+                    heading5: {
                       ...themeTextStyle,
                       fontSize: 20,
                       lineHeight: 40,

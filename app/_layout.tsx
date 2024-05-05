@@ -79,6 +79,13 @@ function RootLayoutNav() {
             headerShown: true,
           }}
         />
+        <Stack.Screen
+          name='impressum'
+          options={{
+            headerShown: true,
+            headerTitle: "Impressum",
+          }}
+        />
       </Stack>
       <Toast />
     </ThemeProvider>
