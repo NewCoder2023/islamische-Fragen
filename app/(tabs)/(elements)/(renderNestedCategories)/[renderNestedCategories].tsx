@@ -17,17 +17,8 @@ export default function renderCategory() {
   return (
     <View style={styles.container}>
       {/* Change header Title */}
-      <View style={styles.headerContainer}>
-        <Stack.Screen options={{ headerTitle: category }} />
-        <RenderCategoryInformation category={category} />
-      </View>
-      <View style={styles.itemContainer}>
-        <RenderNestedItems
-          items={items}
-          fetchError={fetchError}
-          table={table}
-        />
-      </View>
+      <Stack.Screen options={{ headerTitle: category }} />
+      <RenderNestedItems items={items} fetchError={fetchError} table={table} />
     </View>
   );
 }
@@ -35,11 +26,5 @@ export default function renderCategory() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  headerContainer: {
-    flex: 0.2,
-  },
-  itemContainer: {
-    flex: 0.8,
   },
 });

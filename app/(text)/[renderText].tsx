@@ -224,8 +224,19 @@ export default function renderText() {
                 <Markdown
                   style={{
                     body: { ...themeTextStyle, fontSize: 20, lineHeight: 40 },
-                    heading1: { color: "purple" },
-                    code_block: { color: "black", fontSize: 14 },
+                    heading1: { fontSize: 25, lineHeight: 40 },
+                    heading2: {
+                      ...themeTextStyle,
+                      fontSize: 25,
+                      lineHeight: 40,
+                      textAlign: "center",
+                    },
+                    heading3: {
+                      ...themeTextStyle,
+                      fontSize: 20,
+                      lineHeight: 40,
+                      textAlign: "center",
+                    },
                   }}
                 >
                   {item}
