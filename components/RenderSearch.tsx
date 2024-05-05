@@ -41,7 +41,11 @@ export default function RenderSearch({ items, table }) {
               <Pressable>
                 <View style={[styles.renderItem, themeContainerStyle]}>
                   <Text style={styles.itemText}>{item.title.trim()}</Text>
-                  <EvilIcons name='arrow-right' size={30} color='black' />
+                  <EvilIcons
+                    name='arrow-right'
+                    size={30}
+                    color={colorScheme == "light" ? "black" : "white"}
+                  />
                 </View>
               </Pressable>
             </Link>
@@ -68,10 +72,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 20,
     borderWidth: 0.2,
+    alignItems: "center",
   },
 
   itemText: {
     flex: 1,
+    paddingRight: 20,
+    lineHeight: 25,
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -82,4 +89,3 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.contrast,
   },
 });
-

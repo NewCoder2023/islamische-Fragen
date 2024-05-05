@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     paddingRight: 20,
-    lineHeight: 30,
+    lineHeight: 25,
   },
   renderError: {
     marginTop: 20,
