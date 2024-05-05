@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   deleteIcon: {
-    paddingRight: 10,
+    paddingRight: 11,
     paddingVertical: 10,
   },
   border: {
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   searchField: {
     flex: 1,
-    paddingRight: 20,
+    paddingRight: 10,
     paddingLeft: 5,
     paddingVertical: 10,
   },
