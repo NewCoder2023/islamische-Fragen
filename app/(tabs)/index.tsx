@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Pressable,
-  Alert,
-  ActivityIndicator,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Pressable, Alert, ActivityIndicator } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
@@ -16,13 +10,12 @@ import Toast from "react-native-toast-message";
 import { Link } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useRef, useMemo } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Appearance } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { FlatList } from "react-native";
 
 interface Post {
   id: number;
@@ -33,8 +26,14 @@ interface Post {
 
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
-  const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
-    fetchNews();
+  const {
+    posts,
+    fetchError,
+    refetch,
+    updateAvailable,
+    applyUpdates,
+    isFetching,
+  } = fetchNews();
   const { isLoading } = useIsUpLoading();
   const { isLoggedIn } = useAuthStore();
   const scrollRef = useRef<any>();
@@ -100,13 +99,12 @@ export default function index() {
     if (contentVerticalOffset > CONTENT_OFFSET_THRESHOLD_NEW_UPDATE) {
       scrollRef.current?.scrollToOffset({ offset: 0, animated: false });
     }
-
     refetch()
-      .then(() => {
-        applyUpdates();
-        setRefreshing(false);
+      .then(() => applyUpdates())
+      .catch((error) => {
+        // Log error or set error state here
       })
-      .catch(() => {
+      .finally(() => {
         setRefreshing(false);
       });
   }, [applyUpdates]);

@@ -1,31 +1,45 @@
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
+interface NewsItem {
+  id: number;
+  title: string;
+  content: string;
+  created_at: Date;
+  // weitere Felder je nach Schema Ihrer News-Tabelle
+}
+
+
 export default function fetchNews() {
   const [fetchError, setFetchError] = useState<string>("");
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<NewsItem[]>([]);
   const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const fetchItems = async () => {
-    const { data, error } = await supabase
-      .from("News")
-      .select("*")
-      .order("id", { ascending: false });
-
-    // Error checking
-
-    if (error) {
+    try {
+      setIsFetching(true);
+      const { data, error } = await supabase
+        .from("News")
+        .select("*")
+        .order("id", { ascending: false });
+        if (data) {
+          setPosts(data as NewsItem[]); 
+        } else {
+          setPosts([]); 
+        }
+        setFetchError("");
+    } catch (error) {
       setFetchError(
         "Neuigkeiten konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internetverbindung!"
       );
       setPosts([]);
-    }
-
-    if (data) {
-      setPosts(data);
-      setFetchError("");
+    } finally {
+      setIsFetching(false);
+    
     }
   };
+
   useEffect(() => {
     fetchItems();
 
@@ -62,5 +76,6 @@ export default function fetchNews() {
     refetch: fetchItems,
     updateAvailable,
     applyUpdates,
+    isFetching,
   };
 }
