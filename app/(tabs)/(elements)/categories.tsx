@@ -1,7 +1,6 @@
 import { StyleSheet, Platform, ImageBackground } from "react-native";
 import { View } from "components/Themed";
 import CategoryLinks from "components/CategoryLinks";
-import { LinearGradient } from "expo-linear-gradient";
 
 export default function Category() {
   return (

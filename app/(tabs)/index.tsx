@@ -142,6 +142,7 @@ export default function index() {
                 source={{
                   uri: item.imagePath,
                 }}
+                recyclingKey={item.id.toString()}
               />
             </View>
           )}
@@ -190,6 +191,7 @@ export default function index() {
             </Text>
           </View>
         ) : null}
+
         {fetchError ? (
           <View style={styles.renderError}>
             <Text style={[styles.errorText, themeErrorStyle]}>
