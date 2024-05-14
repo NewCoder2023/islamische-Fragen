@@ -1,3 +1,4 @@
+//dasboard-neu:
 import { Keyboard, StyleSheet } from "react-native";
 import { View, Text } from "components/Themed";
 import Colors from "constants/Colors";
@@ -30,17 +31,11 @@ export default function adminDashboard() {
       .insert({ title: title, content: content, imagePaths: imageUrls });
 
     if (error) {
-      Toast.show({
-        type: "error",
-        text1: "Fehler beim Erstellen eines Beitrags!",
-        text2: "Versuch es später nochmal!",
-      });
-    } else {
-      Toast.show({
-        type: "success",
-        text1: "Beitrag erfolgreich erstellt!",
-      });
       setContent("");
+      return false;
+    } else {
+      setContent("");
+      return true;
     }
   };
 
@@ -58,25 +53,16 @@ export default function adminDashboard() {
       });
 
     if (error) {
-      Toast.show({
-        type: "error",
-        text1: "Fehler beim Erstellen eines Beitrags!",
-        text2: "Versuch es später nochmal!",
-      });
-      return null;
+      return false;
     } else {
-      const { data } = supabase.storage
+      const { data: urlData } = supabase.storage
         .from("News_bucket")
         .getPublicUrl(fileName);
 
-      if (!data) {
-        return null;
+      if (!urlData) {
+        return false;
       } else {
-        Toast.show({
-          type: "success",
-          text1: "Beitrag erfolgreich erstellt!",
-        });
-        return data.publicUrl;
+        return urlData.publicUrl;
       }
     }
   };
@@ -89,15 +75,29 @@ export default function adminDashboard() {
       });
       return;
     }
-    router.navigate("/");
     startLoading();
+    router.navigate("/");
+
     const uploadedImageUrls = await Promise.all(
       images.map((image) => uploadImage(image))
     );
 
     const validImageUrls = uploadedImageUrls.filter((url) => url != null);
 
-    await uploadText(validImageUrls);
+    const textUploaded = await uploadText(validImageUrls);
+
+    if (uploadedImageUrls && textUploaded) {
+      Toast.show({
+        type: "success",
+        text1: "Beitrag erfolgreich hochgeladen!",
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Fehler beim erstellen des Beitrags!",
+        text2: "Versuchen Sie es später nochmal!"
+      });
+    }
     finishLoading();
   };
 
@@ -232,6 +232,7 @@ const styles = StyleSheet.create({
   imagesContainer: {
     flex: 0.18,
     marginBottom: 20,
+    marginTop: 15,
   },
 
   imagesScrollViewContent: {

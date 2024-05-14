@@ -1,5 +1,6 @@
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
+import { useAuthStore } from "./authStore";
 
 interface NewsItem {
   id: number;
@@ -15,6 +16,7 @@ export default function fetchNews() {
   const [posts, setPosts] = useState<NewsItem[]>([]);
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const { isLoggedIn } = useAuthStore();
 
   const fetchItems = async () => {
     try {
@@ -49,14 +51,25 @@ export default function fetchNews() {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "News" },
         (payload) => {
-          setUpdateAvailable(true);
+          if (isLoggedIn) {
+            fetchItems();
+            setUpdateAvailable(false);
+          } else {
+            setUpdateAvailable(true);
+          }
+          
         }
       )
       .on(
         "postgres_changes",
         { event: "DELETE", schema: "public", table: "News" },
         (payload) => {
-          setUpdateAvailable(true);
+          if (isLoggedIn) {
+            fetchItems();
+            setUpdateAvailable(false);
+          } else {
+            setUpdateAvailable(true);
+          }
         }
       )
       .subscribe();
@@ -64,7 +77,7 @@ export default function fetchNews() {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [isLoggedIn]);
 
   const applyUpdates = () => {
     setUpdateAvailable(false);

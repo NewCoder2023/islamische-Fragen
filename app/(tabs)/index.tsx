@@ -11,7 +11,7 @@ import { Link } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useCallback, useState } from "react";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, memo } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Appearance } from "react-native";
@@ -111,6 +111,7 @@ export default function index() {
       });
   }, [applyUpdates]);
 
+
   const renderItems = ({ item }: { item: Post }) => {
     return (
       <View style={[styles.newsContainer, themeContainerStyle]}>
@@ -135,17 +136,17 @@ export default function index() {
           {item.content && (
             <Text style={styles.newsContentText}>{item.content}</Text>
           )}
-          {item.imagePaths && (
+          {item.imagePaths && item.imagePaths.length > 0 ? (
             <FlatList
               horizontal
               style={styles.FlatListImageStyle}
               pagingEnabled
               disableIntervalMomentum
-              decelerationRate="fast"
+              decelerationRate='fast'
+              keyExtractor={(item, index) => `${item}-${index}`}
               snapToInterval={screenWidth - 40} // Set this to the width of your images or adjusted width
               snapToAlignment={"start"}
               data={item.imagePaths}
-              initialNumToRender={1}
               renderItem={({ item, index }) => (
                 <Image
                   style={styles.newsImage}
@@ -156,7 +157,7 @@ export default function index() {
                 />
               )}
             />
-          )}
+          ) : null}
         </View>
       </View>
     );
