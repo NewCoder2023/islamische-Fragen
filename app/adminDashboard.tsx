@@ -12,21 +12,22 @@ import { router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import { useIsUpLoading } from "components/uploadingStore";
 import { useColorScheme } from "react-native";
+import { ScrollView } from "react-native";
 
 export default function adminDashboard() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
 
   const { startLoading, finishLoading } = useIsUpLoading();
   const colorScheme = useColorScheme();
   const themeInputStyle =
     colorScheme === "light" ? styles.lightInput : styles.darkInput;
 
-  const uploadText = async (imagePath?: string) => {
+  const uploadText = async (imageUrls) => {
     const { error } = await supabase
       .from("News")
-      .insert({ title: title, content: content, imagePath: imagePath });
+      .insert({ title: title, content: content, imagePaths: imageUrls });
 
     if (error) {
       Toast.show({
@@ -81,40 +82,23 @@ export default function adminDashboard() {
   };
 
   const submitPost = async () => {
-    if (content === "" && !image) {
+    if (images.length === 0 && !content.trim()) {
       Toast.show({
         type: "error",
         text1: "Ein leerer Beitrag kann nicht erstellt werden!",
       });
       return;
-    } else {
-      startLoading();
-      router.navigate("/");
-      try {
-        if (image) {
-          const imageUrl = await uploadImage(image);
-          if (imageUrl) {
-            await uploadText(imageUrl);
-          }
-        } else {
-          await uploadText();
-        }
-        setContent("");
-        router.navigate("/");
-        Toast.show({
-          type: "success",
-          text1: "Beitrag erfolgreich erstellt!",
-        });
-      } catch (error) {
-        console.log("Error uploading post:", error);
-        Toast.show({
-          type: "error",
-          text1: "Fehler beim Erstellen eines Beitrags!",
-          text2: "Versuch es später nochmal!",
-        });
-      }
-      finishLoading();
     }
+    router.navigate("/");
+    startLoading();
+    const uploadedImageUrls = await Promise.all(
+      images.map((image) => uploadImage(image))
+    );
+
+    const validImageUrls = uploadedImageUrls.filter((url) => url != null);
+
+    await uploadText(validImageUrls);
+    finishLoading();
   };
 
   const pickImage = async () => {
@@ -122,76 +106,86 @@ export default function adminDashboard() {
 
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
       quality: 1,
       base64: true,
+      allowsMultipleSelection: true,
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImages(result.assets.map((asset) => asset.uri));
     }
   };
 
-  const deleteImage = () => {
-    setImage(null);
+  const deleteImage = (uri) => {
+    setImages((currentImages) =>
+      currentImages.filter((image) => image !== uri)
+    );
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        {/* Submit button */}
-        <Stack.Screen
-          options={{
-            headerRight: () => (
-              <View style={styles.headerButtons}>
-                <Pressable onPress={pickImage}>
-                  <FontAwesome name='image' size={24} color='green' />
-                </Pressable>
+    <View style={styles.container}>
+      {/* Submit button */}
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <View style={styles.headerButtons}>
+              <Pressable onPress={pickImage}>
+                <FontAwesome name='image' size={24} color='green' />
+              </Pressable>
 
-                <Pressable onPress={submitPost}>
-                  <Text style={styles.submitButtonText}>Erstellen</Text>
-                </Pressable>
-              </View>
-            ),
-          }}
+              <Pressable onPress={submitPost}>
+                <Text style={styles.submitButtonText}>Erstellen</Text>
+              </Pressable>
+            </View>
+          ),
+        }}
+      />
+      <View style={styles.inputFieldsContainer}>
+        <TextInput
+          style={[styles.headerInput, themeInputStyle]}
+          onChangeText={setTitle}
+          value={title}
+          placeholder='Title (optional)'
+          editable
+          onSubmitEditing={Keyboard.dismiss}
         />
-        <View style={styles.inputFieldsContainer}>
-          <TextInput
-            style={[styles.headerInput, themeInputStyle]}
-            onChangeText={setTitle}
-            value={title}
-            placeholder='Title (optional)'
-            editable
-            onSubmitEditing={Keyboard.dismiss}
-          />
 
-          <TextInput
-            style={[styles.ContentInput, themeInputStyle]}
-            onChangeText={setContent}
-            value={content}
-            placeholder='Beitrag'
-            multiline
-            editable
-            autoCapitalize='none'
-            onSubmitEditing={Keyboard.dismiss}
-          />
-        </View>
-        <View style={styles.imagesContainer}>
-          {image && (
-            <Pressable style={styles.deleteImage} onPress={deleteImage}>
-              <FontAwesome name='remove' size={21} color='red' />
-            </Pressable>
-          )}
-          <Image
-            key={image}
-            style={styles.image}
-            source={{ uri: image }}
-            contentFit='cover'
-          />
-        </View>
+        <TextInput
+          style={[styles.ContentInput, themeInputStyle]}
+          onChangeText={setContent}
+          value={content}
+          placeholder='Beitrag'
+          multiline
+          editable
+          autoCapitalize='none'
+          onSubmitEditing={Keyboard.dismiss}
+        />
       </View>
-    </TouchableWithoutFeedback>
+
+      <View style={styles.imagesContainer}>
+        <ScrollView
+          contentContainerStyle={styles.imagesScrollViewContent}
+          horizontal
+        >
+          {images.map((img, index) => (
+            <View key={index.toString()} style={styles.images}>
+              <Pressable
+                style={styles.deleteImage}
+                onPress={() => deleteImage(img)}
+              >
+                <FontAwesome name='remove' size={21} color='red' />
+              </Pressable>
+
+              <Image
+                style={styles.image}
+                source={{ uri: img }}
+                contentFit='cover'
+              />
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    </View>
   );
 }
 
@@ -237,17 +231,23 @@ const styles = StyleSheet.create({
   },
   imagesContainer: {
     flex: 0.18,
-    flexDirection: "column",
-    alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 20,
+  },
+
+  imagesScrollViewContent: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingEnd: 20,
+  },
+  images: {
+    flex: 1,
   },
   image: {
     width: 100,
     height: 100,
   },
   deleteImage: {
-    //marginTop: 5,
-    marginLeft: 110,
+    marginLeft: 100,
   },
   lightInput: {
     color: Colors.light.text,

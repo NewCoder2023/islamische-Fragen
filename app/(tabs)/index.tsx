@@ -16,12 +16,14 @@ import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Appearance } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { FlatList } from "react-native";
+import { Dimensions } from "react-native";
 
 interface Post {
   id: number;
   title?: string;
   content?: string;
-  imagePath?: string;
+  imagePaths?: string;
 }
 
 export default function index() {
@@ -133,16 +135,25 @@ export default function index() {
           {item.content && (
             <Text style={styles.newsContentText}>{item.content}</Text>
           )}
-          {item.imagePath && (
-            <View style={styles.newsImageContainer}>
-              <Image
-                style={styles.newsImage}
-                source={{
-                  uri: item.imagePath,
-                }}
-                recyclingKey={item.id.toString()}
-              />
-            </View>
+          {item.imagePaths && (
+            <FlatList
+              horizontal
+              style={styles.FlatListImageStyle}
+              pagingEnabled
+              snapToInterval={screenWidth - 40} // Set this to the width of your images or adjusted width
+              snapToAlignment={"start"}
+              data={item.imagePaths}
+              initialNumToRender={1}
+              renderItem={({ item, index }) => (
+                <Image
+                  style={styles.newsImage}
+                  source={{
+                    uri: item,
+                  }}
+                  recyclingKey={`${item}-${index}`}
+                />
+              )}
+            />
           )}
         </View>
       </View>
@@ -231,6 +242,7 @@ export default function index() {
     </SafeAreaView>
   );
 }
+const screenWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -309,15 +321,17 @@ const styles = StyleSheet.create({
     right: 10,
     zIndex: 1,
   },
-  newsImageContainer: {
-    flex: 1,
+  FlatListImageStyle: {
     marginTop: 20,
+    marginBottom: 10,
     backgroundColor: "transparent",
+    paddingLeft: 3.5,
   },
   newsImage: {
-    width: "100%", // Beispielbreite in einer reaktionsfähigen Einheit
-    height: undefined,
+    width: screenWidth - 50,
+    height: "auto",
     aspectRatio: 0.8,
+    marginRight: 10,
   },
   renderError: {
     flex: 1,
