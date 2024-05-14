@@ -1,25 +1,29 @@
-import { StyleSheet, Pressable, Alert, ActivityIndicator } from "react-native";
 import { View, SafeAreaView, Text } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
 import fetchNews from "components/fetchNews";
-import { useColorScheme } from "react-native";
 import { useAuthStore } from "components/authStore";
 import { supabase } from "@/utils/supabase";
 import Toast from "react-native-toast-message";
 import { Link } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { useCallback, useState } from "react";
-import { useRef, useMemo, memo } from "react";
+import { useCallback, useState, useRef, useMemo } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
-import { Appearance } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { FlatList } from "react-native";
-import { Dimensions } from "react-native";
-import { ScrollView } from "react-native";
-import { RefreshControl } from "react-native";
+import {
+  StyleSheet,
+  Pressable,
+  Alert,
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  RefreshControl,
+  Appearance,
+  useColorScheme,
+} from "react-native";
 
 interface Post {
   id: number;

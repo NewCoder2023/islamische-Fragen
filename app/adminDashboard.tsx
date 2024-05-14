@@ -95,7 +95,7 @@ export default function adminDashboard() {
       Toast.show({
         type: "error",
         text1: "Fehler beim erstellen des Beitrags!",
-        text2: "Versuchen Sie es später nochmal!"
+        text2: "Versuchen Sie es später nochmal!",
       });
     }
     finishLoading();
@@ -123,70 +123,74 @@ export default function adminDashboard() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.container}>
-      {/* Submit button */}
-      <Stack.Screen
-        options={{
-          headerRight: () => (
-            <View style={styles.headerButtons}>
-              <Pressable onPress={pickImage}>
-                <FontAwesome name='image' size={24} color='green' />
-              </Pressable>
+    <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        {/* Submit button */}
+        <Stack.Screen
+          options={{
+            headerRight: () => (
+              <View style={styles.headerButtons}>
+                <Pressable onPress={pickImage}>
+                  <FontAwesome name='image' size={24} color='green' />
+                </Pressable>
 
-              <Pressable onPress={submitPost}>
-                <Text style={styles.submitButtonText}>Erstellen</Text>
-              </Pressable>
-            </View>
-          ),
-        }}
-      />
-      <View style={styles.inputFieldsContainer}>
-        <TextInput
-          style={[styles.headerInput, themeInputStyle]}
-          onChangeText={setTitle}
-          value={title}
-          placeholder='Title (optional)'
-          editable
-          onSubmitEditing={Keyboard.dismiss}
+                <Pressable onPress={submitPost}>
+                  <Text style={styles.submitButtonText}>Erstellen</Text>
+                </Pressable>
+              </View>
+            ),
+          }}
         />
+        <View style={styles.inputFieldsContainer}>
+          <TextInput
+            style={[styles.headerInput, themeInputStyle]}
+            onChangeText={setTitle}
+            value={title}
+            placeholder='Title (optional)'
+            editable
+            onSubmitEditing={Keyboard.dismiss}
+          />
 
-        <TextInput
-          style={[styles.ContentInput, themeInputStyle]}
-          onChangeText={setContent}
-          value={content}
-          placeholder='Beitrag'
-          multiline
-          editable
-          autoCapitalize='none'
-          onSubmitEditing={Keyboard.dismiss}
-        />
-      </View>
+          <TextInput
+            style={[styles.ContentInput, themeInputStyle]}
+            onChangeText={setContent}
+            value={content}
+            placeholder='Beitrag'
+            multiline
+            editable
+            autoCapitalize='none'
+            onSubmitEditing={Keyboard.dismiss}
+          />
+        </View>
 
-      <View style={styles.imagesContainer}>
-        <ScrollView
-          contentContainerStyle={styles.imagesScrollViewContent}
-          horizontal
-        >
-          {images.map((img, index) => (
-            <View key={index.toString()} style={styles.images}>
-              <Pressable
-                style={styles.deleteImage}
-                onPress={() => deleteImage(img)}
+        <View style={styles.imagesContainer}>
+          <ScrollView
+            contentContainerStyle={styles.imagesScrollViewContent}
+            horizontal
+          >
+            {images.map((img, index) => (
+              <View
+                key={index.toString()}
+                style={styles.images}
+                onStartShouldSetResponder={() => true}
               >
-                <FontAwesome name='remove' size={21} color='red' />
-              </Pressable>
+                <Pressable
+                  style={styles.deleteImage}
+                  onPress={() => deleteImage(img)}
+                >
+                  <FontAwesome name='remove' size={21} color='red' />
+                </Pressable>
 
-              <Image
-                style={styles.image}
-                source={{ uri: img }}
-                contentFit='cover'
-              />
-            </View>
-          ))}
-        </ScrollView>
+                <Image
+                  style={styles.image}
+                  source={{ uri: img }}
+                  contentFit='cover'
+                />
+              </View>
+            ))}
+          </ScrollView>
+        </View>
       </View>
-    </View>
     </TouchableWithoutFeedback>
   );
 }
