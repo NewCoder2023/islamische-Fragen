@@ -111,7 +111,6 @@ export default function index() {
       });
   }, [applyUpdates]);
 
-
   const renderItems = ({ item }: { item: Post }) => {
     return (
       <View style={[styles.newsContainer, themeContainerStyle]}>
@@ -136,28 +135,63 @@ export default function index() {
           {item.content && (
             <Text style={styles.newsContentText}>{item.content}</Text>
           )}
-          {item.imagePaths && item.imagePaths.length > 0 ? (
-            <FlatList
-              horizontal
-              style={styles.FlatListImageStyle}
-              pagingEnabled
-              disableIntervalMomentum
-              decelerationRate='fast'
-              keyExtractor={(item, index) => `${item}-${index}`}
-              snapToInterval={screenWidth - 40} // Set this to the width of your images or adjusted width
-              snapToAlignment={"start"}
-              data={item.imagePaths}
-              renderItem={({ item, index }) => (
-                <Image
-                  style={styles.newsImage}
-                  source={{
-                    uri: item,
-                  }}
-                  recyclingKey={`${item}-${index}`}
-                />
-              )}
-            />
-          ) : null}
+          {item.imagePaths && item.imagePaths.length > 0
+            ? (() => {
+                const repeatCount = item.imagePaths
+                  ? item.imagePaths.length
+                  : 0;
+
+                const characterCurrent = (
+                  <FontAwesome name='circle' size={10} color='black' />
+                );
+                const characterNext = (
+                  <FontAwesome name='circle-o' size={10} color='black' />
+                );
+
+                let displayImageCounter = new Array(repeatCount).fill(
+                  characterNext
+                );
+                return (
+                  <FlatList
+                    horizontal
+                    style={styles.FlatListImageStyle}
+                    pagingEnabled
+                    disableIntervalMomentum
+                    decelerationRate='fast'
+                    keyExtractor={(item, index) => `${item}-${index}`}
+                    snapToInterval={screenWidth - 40} // Set this to the width of your images or adjusted width
+                    snapToAlignment={"start"}
+                    data={item.imagePaths}
+                    renderItem={({ item, index }) => {
+                      displayImageCounter.fill(characterNext);
+                      displayImageCounter[index] = characterCurrent;
+
+                      return (
+                        <View style={styles.ImageContainer}>
+                          <Image
+                            style={styles.newsImage}
+                            source={{
+                              uri: item,
+                            }}
+                            recyclingKey={`${item}-${index}`}
+                          />
+                          <View style={styles.ImageContainerFooter}>
+                            {displayImageCounter.map((icon, index) => (
+                              <Text
+                                key={index}
+                                style={styles.ImageContainerFooterIcons}
+                              >
+                                {icon}
+                              </Text>
+                            ))}
+                          </View>
+                        </View>
+                      );
+                    }}
+                  />
+                );
+              })()
+            : null}
         </View>
       </View>
     );
@@ -329,6 +363,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: "transparent",
     paddingLeft: 3.5,
+  },
+  ImageContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+  },
+  ImageContainerFooter: {
+    marginTop: 10,
+    padding: 5,
+    flexDirection: "row",
+    borderRadius: 30,
+  },
+  ImageContainerFooterIcons: {
+    padding: 5,
   },
   newsImage: {
     width: screenWidth - 50,
