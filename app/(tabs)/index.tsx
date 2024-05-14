@@ -111,7 +111,7 @@ export default function index() {
       });
   }, [applyUpdates]);
 
-  const renderItems = ({ item }: { item: Post }) => {
+  const renderItemsFlashList = ({ item }: { item: Post }) => {
     return (
       <View style={[styles.newsContainer, themeContainerStyle]}>
         <View style={styles.newsHeader}>
@@ -135,65 +135,74 @@ export default function index() {
           {item.content && (
             <Text style={styles.newsContentText}>{item.content}</Text>
           )}
-          {item.imagePaths && item.imagePaths.length > 0
-            ? (() => {
-                const repeatCount = item.imagePaths
-                  ? item.imagePaths.length
-                  : 0;
+          {item.imagePaths && item.imagePaths.length == 1 ? (
+            <View style={styles.ImageContainer}>
+              <Image
+                style={styles.newsImageSingel}
+                source={{
+                  uri: item.imagePaths[0],
+                }}
+                recyclingKey={`${item}-${index}`}
+              />
+            </View>
+          ) : item.imagePaths && item.imagePaths.length > 1 ? (
+            (() => {
+              const repeatCount = item.imagePaths ? item.imagePaths.length : 0;
 
-                const characterCurrent = (
-                  <FontAwesome name='circle' size={10} color='black' />
-                );
-                const characterNext = (
-                  <FontAwesome name='circle-o' size={10} color='black' />
-                );
+              const characterCurrent = (
+                <FontAwesome name='circle' size={10} color='black' />
+              );
+              const characterNext = (
+                <FontAwesome name='circle-o' size={10} color='black' />
+              );
 
-                let displayImageCounter = new Array(repeatCount).fill(
-                  characterNext
-                );
-                return (
-                  <FlatList
-                    horizontal
-                    style={styles.FlatListImageStyle}
-                    pagingEnabled
-                    disableIntervalMomentum
-                    decelerationRate='fast'
-                    keyExtractor={(item, index) => `${item}-${index}`}
-                    snapToInterval={screenWidth - 40} // Set this to the width of your images or adjusted width
-                    snapToAlignment={"start"}
-                    data={item.imagePaths}
-                    renderItem={({ item, index }) => {
-                      displayImageCounter.fill(characterNext);
-                      displayImageCounter[index] = characterCurrent;
+              let displayImageCounter = new Array(repeatCount).fill(
+                characterNext
+              );
+              return (
+                <FlatList
+                  horizontal
+                  style={styles.FlatListImageStyle}
+                  pagingEnabled
+                  disableIntervalMomentum
+                  showsHorizontalScrollIndicator={false}
+                  decelerationRate='fast'
+                  keyExtractor={(item, index) => `${item}-${index}`}
+                  snapToInterval={screenWidth - 40} // Set this to the width of your images or adjusted width
+                  snapToAlignment={"start"}
+                  data={item.imagePaths}
+                  renderItem={({ item, index }) => {
+                    displayImageCounter.fill(characterNext);
+                    displayImageCounter[index] = characterCurrent;
 
-                      return (
-                        <View style={styles.ImageContainer}>
-                          <Image
-                            style={styles.newsImage}
-                            source={{
-                              uri: item,
-                            }}
-                            recyclingKey={`${item}-${index}`}
-                          />
-                          {repeatCount > 1 ? (
-                            <View style={styles.ImageContainerFooter}>
-                              {displayImageCounter.map((icon, index) => (
-                                <Text
-                                  key={index}
-                                  style={styles.ImageContainerFooterIcons}
-                                >
-                                  {icon}
-                                </Text>
-                              ))}
-                            </View>
-                          ) : null}
-                        </View>
-                      );
-                    }}
-                  />
-                );
-              })()
-            : null}
+                    return (
+                      <View style={styles.ImageContainer}>
+                        <Image
+                          style={styles.newsImageSeveral}
+                          source={{
+                            uri: item,
+                          }}
+                          recyclingKey={`${item}-${index}`}
+                        />
+                        {repeatCount > 1 ? (
+                          <View style={styles.ImageContainerFooter}>
+                            {displayImageCounter.map((icon, index) => (
+                              <Text
+                                key={index}
+                                style={styles.ImageContainerFooterIcons}
+                              >
+                                {icon}
+                              </Text>
+                            ))}
+                          </View>
+                        ) : null}
+                      </View>
+                    );
+                  }}
+                />
+              );
+            })()
+          ) : null}
         </View>
       </View>
     );
@@ -266,7 +275,7 @@ export default function index() {
               ref={scrollRef}
               data={posts}
               extraData={[appColor, isLoggedIn]}
-              renderItem={renderItems}
+              renderItem={renderItemsFlashList}
               estimatedItemSize={118}
               keyExtractor={(item) => item.id.toString()}
               onRefresh={updateNews}
@@ -372,8 +381,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent",
   },
+
   ImageContainerFooter: {
-    marginTop: 10,
+    marginTop: 15,
     padding: 5,
     flexDirection: "row",
     borderRadius: 30,
@@ -381,11 +391,16 @@ const styles = StyleSheet.create({
   ImageContainerFooterIcons: {
     padding: 5,
   },
-  newsImage: {
+  newsImageSeveral: {
     width: screenWidth - 50,
     height: "auto",
     aspectRatio: 0.8,
     marginRight: 10,
+  },
+  newsImageSingel: {
+    width: screenWidth - 50,
+    height: "auto",
+    aspectRatio: 0.8,
   },
   renderError: {
     flex: 1,

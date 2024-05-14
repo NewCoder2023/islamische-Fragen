@@ -123,6 +123,7 @@ export default function adminDashboard() {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       {/* Submit button */}
       <Stack.Screen
@@ -186,6 +187,7 @@ export default function adminDashboard() {
         </ScrollView>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 
