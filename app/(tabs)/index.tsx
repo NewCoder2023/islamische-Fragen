@@ -18,6 +18,8 @@ import { Appearance } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { FlatList } from "react-native";
 import { Dimensions } from "react-native";
+import { ScrollView } from "react-native";
+import { RefreshControl } from "react-native";
 
 interface Post {
   id: number;
@@ -224,7 +226,6 @@ export default function index() {
           </Link>
         ) : null}
       </View>
-
       <View style={styles.mainContainer}>
         {isLoading ? (
           <View style={styles.activityContainer}>
@@ -242,11 +243,16 @@ export default function index() {
           </View>
         )}
         {posts.length == 0 && !fetchError ? (
-          <View style={styles.renderError}>
+          <ScrollView
+            style={styles.renderError}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={updateNews} />
+            }
+          >
             <Text style={styles.emptyText}>
               Es gibt derzeit noch keine {"\n"} Neugikeiten!
             </Text>
-          </View>
+          </ScrollView>
         ) : null}
 
         {fetchError ? (
