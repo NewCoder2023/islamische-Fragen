@@ -140,6 +140,8 @@ export default function index() {
               horizontal
               style={styles.FlatListImageStyle}
               pagingEnabled
+              disableIntervalMomentum
+              decelerationRate="fast"
               snapToInterval={screenWidth - 40} // Set this to the width of your images or adjusted width
               snapToAlignment={"start"}
               data={item.imagePaths}
