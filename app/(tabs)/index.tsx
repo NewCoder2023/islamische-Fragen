@@ -175,16 +175,18 @@ export default function index() {
                             }}
                             recyclingKey={`${item}-${index}`}
                           />
-                          <View style={styles.ImageContainerFooter}>
-                            {displayImageCounter.map((icon, index) => (
-                              <Text
-                                key={index}
-                                style={styles.ImageContainerFooterIcons}
-                              >
-                                {icon}
-                              </Text>
-                            ))}
-                          </View>
+                          {repeatCount > 1 ? (
+                            <View style={styles.ImageContainerFooter}>
+                              {displayImageCounter.map((icon, index) => (
+                                <Text
+                                  key={index}
+                                  style={styles.ImageContainerFooterIcons}
+                                >
+                                  {icon}
+                                </Text>
+                              ))}
+                            </View>
+                          ) : null}
                         </View>
                       );
                     }}
