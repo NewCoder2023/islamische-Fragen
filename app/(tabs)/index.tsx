@@ -1,4 +1,4 @@
-import { View, Text } from "components/Themed";
+import { View, Text, SafeAreaView } from "components/Themed";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
 import fetchNews from "components/fetchNews";
@@ -13,7 +13,7 @@ import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Feather } from "@expo/vector-icons";
 import { FlatList } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import {
   StyleSheet,
   Pressable,

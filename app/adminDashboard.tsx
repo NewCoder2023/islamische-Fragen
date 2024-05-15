@@ -22,8 +22,14 @@ export default function adminDashboard() {
 
   const { startLoading, finishLoading } = useIsUpLoading();
   const colorScheme = useColorScheme();
+
   const themeInputStyle =
     colorScheme === "light" ? styles.lightInput : styles.darkInput;
+    
+    // For Android
+    const placeholderTextColor =
+    colorScheme === "light" ? Colors.light.text : Colors.dark.text;
+
 
   const uploadText = async (imageUrls) => {
     const { error } = await supabase
@@ -147,6 +153,7 @@ export default function adminDashboard() {
             onChangeText={setTitle}
             value={title}
             placeholder='Title (optional)'
+            placeholderTextColor={placeholderTextColor}
             editable
             onSubmitEditing={Keyboard.dismiss}
           />
@@ -156,6 +163,7 @@ export default function adminDashboard() {
             onChangeText={setContent}
             value={content}
             placeholder='Beitrag'
+            placeholderTextColor={placeholderTextColor}
             multiline
             editable
             autoCapitalize='none'

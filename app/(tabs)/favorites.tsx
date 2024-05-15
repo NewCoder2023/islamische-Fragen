@@ -25,8 +25,8 @@ export default function favourites() {
 
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-  const themeErrorStyle =
-    colorScheme === "light" ? styles.lightError : styles.darkError;
+  const themeEmptyStyle =
+    colorScheme === "light" ? styles.lightEmpty : styles.darkEmpty;
 
   useEffect(() => {
     const getFavorites = async () => {
@@ -72,7 +72,7 @@ export default function favourites() {
         </View>
       ) : (
         <View style={[styles.noFavoritesContainer, themeContainerStyle]}>
-          <Text style={[styles.noFavoritesText, themeErrorStyle]}>
+          <Text style={[styles.noFavoritesText, themeEmptyStyle]}>
             Du hast noch keine Favoriten. {"\n"} {"\n"} Wenn dir etwas gefällt,
             klicke oben auf den Stern!
           </Text>
@@ -108,10 +108,10 @@ const styles = StyleSheet.create({
   darkContainer: {
     backgroundColor: Colors.dark.contrast,
   },
-  lightError: {
+  lightEmpty: {
     color: Colors.light.error,
   },
-  darkError: {
+  darkEmpty: {
     color: Colors.light.error,
   },
 });

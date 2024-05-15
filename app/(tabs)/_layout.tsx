@@ -8,13 +8,14 @@ import { Link } from "expo-router";
 import { Pressable } from "react-native";
 import { useAuthStore } from "components/authStore";
 import { Entypo } from "@expo/vector-icons";
+import { Platform } from "react-native";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return <FontAwesome size={25} style={{ marginBottom: -20 }} {...props} />;
+  return <FontAwesome size={30} style={ Platform.OS == "ios" ? {marginBottom: -20 } : {marginBottom: -10 }} {...props} />;
 }
 
 export default function TabLayout() {

@@ -33,7 +33,6 @@ export default function Categories() {
                 style={styles.elementIcon}
                 source={require("assets/images/bittgebete.png")}
                 contentFit='cover'
-                transition={1000}
               />
             </View>
           </Pressable>

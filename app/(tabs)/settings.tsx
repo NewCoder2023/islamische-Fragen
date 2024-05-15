@@ -14,7 +14,6 @@ export default function settings() {
     const changeColor = isDarkMode ? "light" : "dark";
     Appearance.setColorScheme(changeColor);
     setIsDarkMode(!isDarkMode);
-   
   };
 
   return (

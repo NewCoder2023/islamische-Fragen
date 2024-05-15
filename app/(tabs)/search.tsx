@@ -4,7 +4,7 @@ import {
   Keyboard,
   Pressable,
 } from "react-native";
-import { Text, View } from "components/Themed";
+import { View, Text, SafeAreaView } from "components/Themed";
 import { TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "constants/Colors";
@@ -12,7 +12,7 @@ import { useColorScheme } from "react-native";
 import { useState } from "react";
 import ItemSearch from "components/ItemSearch";
 import { Feather } from "@expo/vector-icons";
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 export default function TabOneScreen() {
   const [search, setSearch] = useState("");
@@ -24,6 +24,9 @@ export default function TabOneScreen() {
 
   const themeInputText =
     colorScheme === "light" ? styles.lightInputText : styles.darkInputText;
+
+    const placeholderTextColor =
+    colorScheme === "light" ? Colors.light.text : Colors.dark.text;
 
   return (
     <TouchableWithoutFeedback
@@ -42,6 +45,7 @@ export default function TabOneScreen() {
           <TextInput
             style={[styles.searchField, themeInputText]}
             placeholder='Suche'
+            placeholderTextColor={placeholderTextColor}
             keyboardType='default'
             editable
             value={search}
@@ -72,6 +76,8 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 20,
     marginHorizontal: 15,
     borderWidth: 2,
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     paddingLeft: 12,
-    paddingVertical: 10,
+  
   },
   deleteIcon: {
     paddingRight: 11,
@@ -90,7 +96,7 @@ const styles = StyleSheet.create({
     color: Colors.light.border,
     fontSize: 25,
     paddingLeft: 3,
-    paddingBottom: 4,
+    paddingBottom: 5,
     fontWeight: "100",
     alignSelf: "center",
   },
