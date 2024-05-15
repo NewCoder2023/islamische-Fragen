@@ -144,6 +144,7 @@ export default function index() {
           {item.imagePaths && item.imagePaths.length == 1 ? (
             <View style={styles.ImageContainer}>
               <Image
+                contentFit='cover'
                 style={styles.newsImageSingel}
                 source={{
                   uri: item.imagePaths[0],
@@ -184,6 +185,7 @@ export default function index() {
                     return (
                       <View style={styles.ImageContainer}>
                         <Image
+                          contentFit='cover'
                           style={styles.newsImageSeveral}
                           source={{
                             uri: item,
@@ -380,16 +382,17 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   FlatListImageStyle: {
-    marginTop: 20,
-    marginBottom: 10,
     backgroundColor: "transparent",
     paddingLeft: 3.5,
   },
   ImageContainer: {
+    marginTop: 20,
+    marginBottom: 10,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "transparent",
+   
   },
 
   ImageContainerFooter: {
