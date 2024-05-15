@@ -30,7 +30,7 @@ export default function TabOneScreen() {
       onPress={() => Keyboard.dismiss()}
       accessible={false}
     >
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
         <View style={[styles.searchContainer, themeContainerStyle]}>
           <AntDesign
             name='search1'

@@ -13,7 +13,7 @@ import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Feather } from "@expo/vector-icons";
 import { FlatList } from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   StyleSheet,
   Pressable,
@@ -218,7 +218,7 @@ export default function index() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Neuigkeiten</Text>
         {isLoggedIn ? (
@@ -308,7 +308,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
   headerContainer: {
     flexDirection: "row",
     flex: 0.1,
