@@ -148,7 +148,7 @@ export default function index() {
                 source={{
                   uri: item.imagePaths[0],
                 }}
-                recyclingKey={`${item}-${index}`}
+                recyclingKey={`${item.imagePaths[0]}-${index}`}
               />
             </View>
           ) : item.imagePaths && item.imagePaths.length > 1 ? (
@@ -404,8 +404,8 @@ const styles = StyleSheet.create({
   newsImageSeveral: {
     width: screenWidth - 50,
     height: "auto",
-    aspectRatio: 0.8,
     marginRight: 10,
+    aspectRatio: 0.8,
   },
   newsImageSingel: {
     width: screenWidth - 50,

@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
   },
   imagesContainer: {
     flex: 0.18,
-    marginBottom: 20,
+    marginBottom: 25,
     marginTop: 15,
   },
 
