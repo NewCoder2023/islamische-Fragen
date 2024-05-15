@@ -7,8 +7,6 @@ import { useClientOnlyValue } from "components/useClientOnlyValue";
 import { Link } from "expo-router";
 import { Pressable } from "react-native";
 import { useAuthStore } from "components/authStore";
-import { useEffect } from "react";
-import { Text } from "components/Themed";
 import { Entypo } from "@expo/vector-icons";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/

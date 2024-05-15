@@ -53,7 +53,6 @@ export default function renderText() {
       try {
         const jsonValue = await AsyncStorage.getItem(key);
         if (jsonValue) {
-          console.log(jsonValue);
           setDownloadedText(JSON.parse(jsonValue));
           setIsDownloaded(true);
         } else {

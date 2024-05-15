@@ -4,7 +4,7 @@ import {
   Keyboard,
   Pressable,
 } from "react-native";
-import { Text, View, SafeAreaView } from "components/Themed";
+import { Text, View } from "components/Themed";
 import { TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "constants/Colors";
@@ -12,6 +12,7 @@ import { useColorScheme } from "react-native";
 import { useState } from "react";
 import ItemSearch from "components/ItemSearch";
 import { Feather } from "@expo/vector-icons";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TabOneScreen() {
   const [search, setSearch] = useState("");
