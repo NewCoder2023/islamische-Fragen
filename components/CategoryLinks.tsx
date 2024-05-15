@@ -54,7 +54,6 @@ export default function Categories() {
                 style={styles.elementIcon}
                 source={require("assets/images/aschura.png")}
                 contentFit='cover'
-                transition={1000}
               />
             </View>
           </Pressable>
@@ -76,7 +75,6 @@ export default function Categories() {
                 style={styles.elementIcon}
                 source={require("assets/images/munajat.png")}
                 contentFit='cover'
-                transition={1000}
               />
             </View>
           </Pressable>
@@ -98,7 +96,6 @@ export default function Categories() {
                 style={styles.elementIcon}
                 source={require("assets/images/gebete.png")}
                 contentFit='cover'
-                transition={1000}
               />
             </View>
           </Pressable>
@@ -120,7 +117,6 @@ export default function Categories() {
                 style={styles.elementIcon}
                 source={require("assets/images/ziyarat.png")}
                 contentFit='cover'
-                transition={1000}
               />
             </View>
           </Pressable>
@@ -142,7 +138,6 @@ export default function Categories() {
                 style={styles.elementIcon}
                 source={require("assets/images/imamMahdi.png")}
                 contentFit='cover'
-                transition={1000}
               />
             </View>
           </Pressable>
@@ -164,7 +159,6 @@ export default function Categories() {
                 style={styles.elementIcon}
                 source={require("assets/images/tasbihat.png")}
                 contentFit='cover'
-                transition={1000}
               />
             </View>
           </Pressable>
@@ -186,7 +180,6 @@ export default function Categories() {
                 style={styles.elementIcon}
                 source={require("assets/images/salawat.png")}
                 contentFit='cover'
-                transition={1000}
               />
             </View>
           </Pressable>
@@ -208,7 +201,6 @@ export default function Categories() {
                 style={styles.elementIcon}
                 source={require("assets/images/heiligeMonate.png")}
                 contentFit='cover'
-                transition={1000}
               />
             </View>
           </Pressable>
