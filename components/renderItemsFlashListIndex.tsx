@@ -7,6 +7,7 @@ import { deletePosts } from "components/deletePosts";
 import { Dimensions } from "react-native";
 import Colors from "constants/Colors";
 import { StyleSheet } from "react-native";
+import ImageCount from "./ImageCount";
 
 interface RenderItemsFlashListProps {
   item: any;
@@ -101,18 +102,9 @@ export const RenderItemsFlashList = ({
                         source={{ uri: item }}
                         recyclingKey={`${item}-${index}`}
                       />
-                      {repeatCount > 1 ? (
-                        <View style={styles.ImageContainerFooter}>
-                          {displayImageCounter.map((icon, index) => (
-                            <Text
-                              key={index}
-                              style={styles.ImageContainerFooterIcons}
-                            >
-                              {icon}
-                            </Text>
-                          ))}
-                        </View>
-                      ) : null}
+                      {repeatCount > 1 && (
+                        <ImageCount displayImageCounter={displayImageCounter} />
+                      )}
                     </View>
                   );
                 }}
