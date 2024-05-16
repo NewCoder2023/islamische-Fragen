@@ -1,23 +1,17 @@
 import { View, Text, SafeAreaView } from "components/Themed";
-import { Image } from "expo-image";
 import Colors from "constants/Colors";
 import fetchNews from "components/fetchNews";
 import { useAuthStore } from "components/authStore";
-import { supabase } from "@/utils/supabase";
-import Toast from "react-native-toast-message";
 import { Link } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
 import { useCallback, useState, useRef, useMemo } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Feather } from "@expo/vector-icons";
-import { FlatList } from "react-native";
-
+import { RenderItemsFlashList } from "components/renderItemsFlashListIndex";
 import {
   StyleSheet,
   Pressable,
-  Alert,
   ActivityIndicator,
   Dimensions,
   ScrollView,
@@ -26,23 +20,11 @@ import {
   useColorScheme,
 } from "react-native";
 
-interface Post {
-  id: number;
-  title?: string;
-  content?: string;
-  imagePaths?: string;
-}
 
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
-  const {
-    posts,
-    fetchError,
-    refetch,
-    updateAvailable,
-    applyUpdates,
-    isFetching,
-  } = fetchNews();
+  const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
+    fetchNews();
   const { isLoading } = useIsUpLoading();
   const { isLoggedIn } = useAuthStore();
   const scrollRef = useRef<any>();
@@ -70,37 +52,6 @@ export default function index() {
     [colorScheme]
   );
 
-  const deletePost = (id: number) => {
-    Alert.alert("Beitrag wirklich löschen?", "", [
-      {
-        text: "Abbrechen",
-        style: "cancel",
-        onPress: () => console.log("Ask me later pressed"),
-      },
-      {
-        text: "Ja",
-        onPress: () => removePost(id),
-      },
-    ]);
-
-    const removePost = async (id: number) => {
-      const { error } = await supabase.from("News").delete().eq("id", id);
-
-      if (error) {
-        Toast.show({
-          type: "error",
-          text1: "Fehler beim löschen eines Beitrags!",
-          text2: "Versuch es später nochmal!",
-        });
-      } else {
-        Toast.show({
-          type: "success",
-          text1: "Beitrag erfolgreich gelöscht!",
-        });
-      }
-    };
-  };
-
   // Update News on either reloading or pressing "Aktualisieren" button
   const updateNews = useCallback(() => {
     setRefreshing(true);
@@ -111,111 +62,12 @@ export default function index() {
     refetch()
       .then(() => applyUpdates())
       .catch((error) => {
-        // Log error or set error state here
+        console.log(error);
       })
       .finally(() => {
         setRefreshing(false);
       });
   }, [applyUpdates]);
-
-  const renderItemsFlashList = ({ item }: { item: Post }) => {
-    return (
-      <View style={[styles.newsContainer, themeContainerStyle]}>
-        <View style={styles.newsHeader}>
-          <Image
-            style={styles.newsImageMaher}
-            source={require("assets/images/indexIconMaher.png")}
-            contentFit='contain'
-          />
-          <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
-          {isLoggedIn ? (
-            <FontAwesome
-              name='trash-o'
-              size={24}
-              color={colorScheme == "dark" ? "#D63031" : "#BA2F16"}
-              onPress={() => deletePost(item.id)}
-            />
-          ) : null}
-        </View>
-        <View style={styles.newsContentTextContainer}>
-          {item.title && <Text style={styles.newsTitleText}>{item.title}</Text>}
-          {item.content && (
-            <Text style={styles.newsContentText}>{item.content}</Text>
-          )}
-          {item.imagePaths && item.imagePaths.length == 1 ? (
-            <View style={styles.ImageContainer}>
-              <Image
-                contentFit='cover'
-                style={styles.newsImageSingel}
-                source={{
-                  uri: item.imagePaths[0],
-                }}
-                recyclingKey={`${item.imagePaths[0]}-${index}`}
-              />
-            </View>
-          ) : item.imagePaths && item.imagePaths.length > 1 ? (
-            (() => {
-              const repeatCount = item.imagePaths ? item.imagePaths.length : 0;
-
-              const characterCurrent = (
-                <FontAwesome name='circle' size={10} color='black' />
-              );
-              const characterNext = (
-                <FontAwesome name='circle-o' size={10} color='black' />
-              );
-
-              let displayImageCounter = new Array(repeatCount).fill(
-                characterNext
-              );
-              return (
-                <FlatList
-                  horizontal
-                  style={styles.FlatListImageStyle}
-                  pagingEnabled
-                  disableIntervalMomentum
-                  showsHorizontalScrollIndicator={false}
-                  decelerationRate='fast'
-                  keyExtractor={(item, index) => `${item}-${index}`}
-                  snapToInterval={screenWidth - 40} // Set this to the width of your images or adjusted width
-                  snapToAlignment={"start"}
-                  data={item.imagePaths}
-                  renderItem={({ item, index }) => {
-                    displayImageCounter.fill(characterNext);
-                    displayImageCounter[index] = characterCurrent;
-
-                    return (
-                      <View style={styles.ImageContainer}>
-                        <Image
-                          contentFit='cover'
-                          style={styles.newsImageSeveral}
-                          source={{
-                            uri: item,
-                          }}
-                          recyclingKey={`${item}-${index}`}
-                        />
-                        {repeatCount > 1 ? (
-                          <View style={styles.ImageContainerFooter}>
-                            {displayImageCounter.map((icon, index) => (
-                              <Text
-                                key={index}
-                                style={styles.ImageContainerFooterIcons}
-                              >
-                                {icon}
-                              </Text>
-                            ))}
-                          </View>
-                        ) : null}
-                      </View>
-                    );
-                  }}
-                />
-              );
-            })()
-          ) : null}
-        </View>
-      </View>
-    );
-  };
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
@@ -288,7 +140,14 @@ export default function index() {
               ref={scrollRef}
               data={posts}
               extraData={[appColor, isLoggedIn]}
-              renderItem={renderItemsFlashList}
+              renderItem={({ item }) => (
+                <RenderItemsFlashList
+                  item={item}
+                  isLoggedIn={isLoggedIn}
+                  themeContainerStyle={themeContainerStyle}
+                  colorScheme={colorScheme}
+                />
+              )}
               estimatedItemSize={118}
               keyExtractor={(item) => item.id.toString()}
               onRefresh={updateNews}

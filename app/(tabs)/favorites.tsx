@@ -25,8 +25,6 @@ export default function favourites() {
 
   const themeContainerStyle =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-  const themeEmptyStyle =
-    colorScheme === "light" ? styles.lightEmpty : styles.darkEmpty;
 
   useEffect(() => {
     const getFavorites = async () => {
@@ -71,10 +69,10 @@ export default function favourites() {
           <RenderFavorites items={favorites} />
         </View>
       ) : (
-        <View style={[styles.noFavoritesContainer, themeContainerStyle]}>
-          <Text style={[styles.noFavoritesText, themeEmptyStyle]}>
-            Du hast noch keine Favoriten. {"\n"} {"\n"} Wenn dir etwas gefällt,
-            klicke oben auf den Stern!
+        <View style={styles.noFavoritesContainer}>
+          <Text style={styles.noFavoritesText}>
+            Du hast noch keine Favoriten! {"\n"} {"\n"} Wenn dir etwas gefällt,
+            klicke oben auf den Stern.
           </Text>
         </View>
       )}
@@ -92,26 +90,19 @@ const styles = StyleSheet.create({
 
   noFavoritesContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
     paddingLeft: 12,
     paddingRight: 12,
+    marginTop: 45,
   },
   noFavoritesText: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 24,
     textAlign: "center",
+    fontWeight: "bold",
   },
   lightContainer: {
     backgroundColor: Colors.light.white,
   },
   darkContainer: {
     backgroundColor: Colors.dark.contrast,
-  },
-  lightEmpty: {
-    color: Colors.light.error,
-  },
-  darkEmpty: {
-    color: Colors.light.error,
   },
 });

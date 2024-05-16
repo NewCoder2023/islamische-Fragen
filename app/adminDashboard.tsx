@@ -111,7 +111,7 @@ export default function adminDashboard() {
     Keyboard.dismiss();
 
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
       base64: true,
       allowsMultipleSelection: true,
