@@ -69,25 +69,27 @@ export default function index() {
             </Pressable>
           </View>
         )}
-        {posts.length == 0 && !fetchError ? (
-          <ScrollView
-            style={styles.renderError}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={updateNews} />
-            }
-          >
-            <Text style={styles.emptyText}>
-              Es gibt derzeit noch keine {"\n"} Neugikeiten!
-            </Text>
-          </ScrollView>
-        ) : null}
-
         {fetchError ? (
           <View style={styles.renderError}>
             <Text style={[styles.errorText, themeStyles.error]}>
               {fetchError}
             </Text>
           </View>
+        ) : posts.length == 0 && !fetchError ? (
+          <ScrollView
+            style={styles.noNewsScrollView}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={updateNews} />
+            }
+          >
+            <HeaderFlashListIndex
+              isLoggedIn={isLoggedIn}
+              themeStyles={themeStyles}
+            />
+            <Text style={styles.emptyText}>
+              Es gibt derzeit noch keine {"\n"} Neugikeiten!
+            </Text>
+          </ScrollView>
         ) : (
           <View style={styles.FlashContainer}>
             {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD_UP && (
@@ -244,6 +246,13 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
   },
+  noNewsScrollView: {
+    flex: 1,
+    flexDirection: "column",
+    marginTop: 20,
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
   errorText: {
     fontSize: 20,
     textAlign: "center",
@@ -257,6 +266,7 @@ const styles = StyleSheet.create({
     lineHeight: 35,
     textAlign: "center",
     fontWeight: "bold",
+    marginTop: 30
   },
   updateContainer: {
     width: "100%",

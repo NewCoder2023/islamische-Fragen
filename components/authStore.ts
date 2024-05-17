@@ -2,6 +2,7 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
+import { router } from "expo-router";
 
 const LOGIN_STATUS_KEY = "isLoggedIn";
 
@@ -49,6 +50,7 @@ export const useAuthStore = create<authStoreValue>((set) => {
             onPress: async () => {
               set({ isLoggedIn: false });
               await AsyncStorage.removeItem(LOGIN_STATUS_KEY);
+              router.navigate("/");
               Toast.show({
                 type: "success",
                 text1: "Erfolgreich ausgeloggt!",

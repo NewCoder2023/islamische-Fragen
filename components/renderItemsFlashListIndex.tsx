@@ -28,7 +28,7 @@ export const RenderItemsFlashList = ({
   // Get the current index of image for setting the icon
   const handleScroll = (event: any) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const index = Math.round(contentOffsetX / (screenWidth - 40)); 
+    const index = Math.round(contentOffsetX / (screenWidth - 40));
     setCurrentIndex(index);
   };
 
@@ -99,7 +99,7 @@ export const RenderItemsFlashList = ({
                   showsHorizontalScrollIndicator={false}
                   decelerationRate='fast'
                   keyExtractor={(item, index) => `${item}-${index}`}
-                  snapToInterval={screenWidth - 40} 
+                  snapToInterval={screenWidth - 40}
                   snapToAlignment={"start"}
                   data={item.imagePaths}
                   renderItem={({ item, index }) => (
@@ -113,7 +113,7 @@ export const RenderItemsFlashList = ({
                     </View>
                   )}
                   onScroll={handleScroll}
-                  scrollEventThrottle={16} 
+                  scrollEventThrottle={16}
                 />
                 {repeatCount > 1 && (
                   <ImageCount displayImageCounter={displayImageCounter} />
@@ -254,8 +254,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 0,
     margin: 0,
-    backgroundColor: "transparent"
-
+    backgroundColor: "transparent",
   },
   emptyText: {
     fontSize: 25,
@@ -302,4 +301,3 @@ const styles = StyleSheet.create({
     color: Colors.dark.adButton,
   },
 });
-

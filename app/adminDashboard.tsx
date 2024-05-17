@@ -252,7 +252,6 @@ const styles = StyleSheet.create({
   imagesScrollViewContent: {
     paddingLeft: 15,
     paddingRight: 15,
-    paddingEnd: 20,
   },
   images: {
     flex: 1,

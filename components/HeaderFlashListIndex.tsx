@@ -5,8 +5,7 @@ import { Link } from "expo-router";
 import { Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const HeaderFlashListIndex = ({isLoggedIn, themeStyles}: any) => {
-
+const HeaderFlashListIndex = ({ isLoggedIn, themeStyles }: any) => {
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.headerTitle}>Neuigkeiten</Text>
