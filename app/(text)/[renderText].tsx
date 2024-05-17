@@ -1,6 +1,6 @@
 import { View, Text } from "components/Themed";
 import { StyleSheet, Pressable, Appearance } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
 import Colors from "constants/Colors";
@@ -41,6 +41,7 @@ export default function renderText() {
   const appColor = Appearance.getColorScheme();
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
   const CONTENT_OFFSET_THRESHOLD = 300;
+  const [bookmarks, setBookmarks] = useState({});
 
   const flashListRef = useRef<any>(null);
 
@@ -62,8 +63,23 @@ export default function renderText() {
         console.log(e);
       }
     };
+
+    const getBookmarks = async () => {
+      try {
+        const savedBookmarks = await AsyncStorage.getItem("Bookmarks");
+        if (savedBookmarks) {
+          setBookmarks(JSON.parse(savedBookmarks));
+        } else {
+          setBookmarks({});
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
     loadDownloadedText();
     loadFavorites();
+    getBookmarks();
   }, [id, table]);
 
   const changeFavourite = async () => {
@@ -150,6 +166,15 @@ export default function renderText() {
     }
   };
 
+  const handlePress = async (index) => {
+    
+    const updatedBookmarks = { ...bookmarks, [index]: !bookmarks[index] };
+    setBookmarks(updatedBookmarks);
+
+
+    await AsyncStorage.setItem("Bookmarks", JSON.stringify(updatedBookmarks));
+  };
+
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -209,52 +234,60 @@ export default function renderText() {
           )}
           <FlashList
             data={textContentPerPage}
-            extraData={appColor}
+            extraData={[appColor, bookmarks]}
             ref={flashListRef}
             onScroll={(event) => {
               setContentVerticalOffset(event.nativeEvent.contentOffset.y);
             }}
             renderItem={({ item, index }) => (
-              <View style={[styles.textContainer, themeContainerStyle]}>
-                <Markdown
-                  style={{
-                    body: {
-                      ...themeTextStyle,
-                      fontSize: 20,
-                      lineHeight: 40,
-                    },
-                    heading1: { fontSize: 25, lineHeight: 40 },
-                    heading2: {
-                      ...themeTextStyle,
-                      fontSize: 30,
-                      lineHeight: 40,
-                      textAlign: "center",
-                    },
-                    heading3: {
-                      ...themeTextStyle,
-                      fontSize: 30,
-                      lineHeight: 40,
-                      fontWeight: "bold",
-                    },
-                    heading4: {
-                      ...themeTextStyle,
-                      fontSize: 30,
-                      lineHeight: 40,
-                      textAlign: "center",
-                      fontWeight: "bold",
-                    },
-                    heading5: {
-                      ...themeTextStyle,
-                      fontSize: 20,
-                      lineHeight: 40,
-                      textAlign: "center",
-                    },
-                  }}
-                >
-                  {item}
-                </Markdown>
-                <Text style={styles.index}>{index + 1}</Text>
-              </View>
+              <Pressable
+                onLongPress={() => handlePress(index)}
+                style={{
+                  backgroundColor: bookmarks[index] ? "green" : "transparent",
+                }}
+              >
+                <View style={[styles.textContainer, themeContainerStyle]}>
+                  <Markdown
+                    style={{
+                      body: {
+                        ...themeTextStyle,
+                        fontSize: 20,
+                        lineHeight: 40,
+                      },
+                      heading1: { fontSize: 25, lineHeight: 40 },
+                      heading2: {
+                        ...themeTextStyle,
+                        fontSize: 30,
+                        lineHeight: 40,
+                        textAlign: "center",
+                      },
+                      heading3: {
+                        ...themeTextStyle,
+                        fontSize: 30,
+                        lineHeight: 40,
+                        fontWeight: "bold",
+                      },
+                      heading4: {
+                        ...themeTextStyle,
+                        fontSize: 30,
+                        lineHeight: 40,
+                        textAlign: "center",
+                        fontWeight: "bold",
+                      },
+                      heading5: {
+                        ...themeTextStyle,
+                        fontSize: 20,
+                        lineHeight: 40,
+                        textAlign: "center",
+                      },
+                    }}
+                  >
+                    {item}
+                  </Markdown>
+
+                  <Text style={styles.index}>{index + 1}</Text>
+                </View>
+              </Pressable>
             )}
             estimatedItemSize={100}
           />
