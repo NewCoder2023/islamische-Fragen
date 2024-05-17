@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { Text, View } from "./Themed";
 import React from "react";
 
 interface imageCounterProps {
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
     padding: 5,
     flexDirection: "row",
     borderRadius: 30,
+    marginBottom: 5,
   },
   ImageContainerFooterIcons: {
     padding: 5,

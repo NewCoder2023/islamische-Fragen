@@ -8,7 +8,7 @@ import { Dimensions } from "react-native";
 import Colors from "constants/Colors";
 import { StyleSheet } from "react-native";
 import ImageCount from "./ImageCount";
-
+import { useState } from "react";
 interface RenderItemsFlashListProps {
   item: any;
   isLoggedIn: boolean;
@@ -23,6 +23,14 @@ export const RenderItemsFlashList = ({
   colorScheme,
 }: RenderItemsFlashListProps) => {
   const screenWidth = Dimensions.get("window").width;
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Get the current index of image for setting the icon
+  const handleScroll = (event: any) => {
+    const contentOffsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(contentOffsetX / (screenWidth - 40)); 
+    setCurrentIndex(index);
+  };
 
   return (
     <View style={[styles.newsContainer, themeContainerStyle]}>
@@ -75,26 +83,26 @@ export const RenderItemsFlashList = ({
               />
             );
 
+            // Set Array with the icons based on index
             let displayImageCounter = new Array(repeatCount).fill(
               characterNext
             );
-            return (
-              <FlatList
-                horizontal
-                style={styles.FlatListImageStyle}
-                pagingEnabled
-                disableIntervalMomentum
-                showsHorizontalScrollIndicator={false}
-                decelerationRate='fast'
-                keyExtractor={(item, index) => `${item}-${index}`}
-                snapToInterval={screenWidth - 40} // Set this to the width of your images or adjusted width
-                snapToAlignment={"start"}
-                data={item.imagePaths}
-                renderItem={({ item, index }) => {
-                  displayImageCounter.fill(characterNext);
-                  displayImageCounter[index] = characterCurrent;
+            displayImageCounter[currentIndex] = characterCurrent;
 
-                  return (
+            return (
+              <View style={styles.FlatListContainer}>
+                <FlatList
+                  horizontal
+                  style={styles.FlatListImageStyle}
+                  pagingEnabled
+                  disableIntervalMomentum
+                  showsHorizontalScrollIndicator={false}
+                  decelerationRate='fast'
+                  keyExtractor={(item, index) => `${item}-${index}`}
+                  snapToInterval={screenWidth - 40} 
+                  snapToAlignment={"start"}
+                  data={item.imagePaths}
+                  renderItem={({ item, index }) => (
                     <View style={styles.ImageContainer}>
                       <Image
                         contentFit='cover'
@@ -102,13 +110,15 @@ export const RenderItemsFlashList = ({
                         source={{ uri: item }}
                         recyclingKey={`${item}-${index}`}
                       />
-                      {repeatCount > 1 && (
-                        <ImageCount displayImageCounter={displayImageCounter} />
-                      )}
                     </View>
-                  );
-                }}
-              />
+                  )}
+                  onScroll={handleScroll}
+                  scrollEventThrottle={16} 
+                />
+                {repeatCount > 1 && (
+                  <ImageCount displayImageCounter={displayImageCounter} />
+                )}
+              </View>
             );
           })()
         ) : null}
@@ -195,6 +205,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   FlatListImageStyle: {
+    flex: 1,
     backgroundColor: "transparent",
     paddingLeft: 3.5,
   },
@@ -238,8 +249,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
   },
-  FlashContainer: {
+  FlatListContainer: {
     flex: 1,
+    alignItems: "center",
+    padding: 0,
+    margin: 0,
+    backgroundColor: "transparent"
+
   },
   emptyText: {
     fontSize: 25,
