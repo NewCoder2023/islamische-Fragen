@@ -2,8 +2,6 @@ import { View, Text, SafeAreaView } from "components/Themed";
 import Colors from "constants/Colors";
 import fetchNews from "components/fetchNews";
 import { useAuthStore } from "components/authStore";
-import { Link } from "expo-router";
-import { MaterialIcons } from "@expo/vector-icons";
 import { useCallback, useState, useRef, useMemo } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
@@ -20,6 +18,8 @@ import {
   useColorScheme,
 } from "react-native";
 import { coustomTheme } from "components/coustomTheme";
+import HeaderFlashListIndex from "components/HeaderFlashListIndex";
+
 
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
@@ -54,20 +54,6 @@ export default function index() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>Neuigkeiten</Text>
-        {isLoggedIn ? (
-          <Link href='/adminDashboard' asChild>
-            <Pressable>
-              <MaterialIcons
-                name='add-circle-outline'
-                size={34}
-                style={themeStyles.button}
-              />
-            </Pressable>
-          </Link>
-        ) : null}
-      </View>
       <View style={styles.mainContainer}>
         {isLoading ? (
           <View style={styles.activityContainer}>
@@ -123,6 +109,7 @@ export default function index() {
               ref={scrollRef}
               data={posts}
               extraData={[appColor, isLoggedIn]}
+              ListHeaderComponent={<HeaderFlashListIndex isLoggedIn={isLoggedIn} color={themeStyles.button} />}
               renderItem={({ item }) => (
                 <RenderItemsFlashList
                   item={item}
@@ -150,21 +137,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  headerContainer: {
-    flexDirection: "row",
-    flex: 0.1,
-    marginTop: 20,
-    marginHorizontal: 14,
-  },
-  headerTitle: {
-    flex: 1,
-    fontSize: 30,
-    fontWeight: "bold",
-  },
   activityContainer: {
     flexDirection: "column",
     gap: 10,
-    marginBottom: 15,
+    marginTop: 50,
+    marginBottom: 10,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -172,7 +149,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   mainContainer: {
-    flex: 0.9,
+    flex: 1,
+    marginBottom: 10
   },
   newsContainer: {
     marginTop: 5,
@@ -315,3 +293,4 @@ const styles = StyleSheet.create({
     color: Colors.dark.adButton,
   },
 });
+

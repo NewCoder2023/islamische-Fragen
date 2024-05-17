@@ -1,28 +1,27 @@
-import { View, Text } from "components/Themed";
-import { StyleSheet, Pressable, Appearance } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
-import fetchText from "components/fetchText";
-import Colors from "constants/Colors";
-import { Stack } from "expo-router";
-import { AntDesign } from "@expo/vector-icons";
+import { useState, useEffect } from "react";
 import Toast from "react-native-toast-message";
-import { useColorScheme } from "react-native";
-import { useIsChanging } from "components/favStore";
-import Markdown from "react-native-markdown-display";
-import { FlashList } from "@shopify/flash-list";
-import { storeFavorites, getFavorites } from "components/manageFavorites";
-import { useMemo } from "react";
-import { Feather } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRef } from "react";
-import useBookmarks from "components/useBookmarks";
-import useFavorites from "components/useFavorites"; // Import the custom hook
 
 export default function useDownload(key: string, text: string) {
   const [isDownloaded, setIsDownloaded] = useState(false);
   const [downloadedText, setDownloadedText] = useState("");
+
+  // Load all Text from Storage
+  useEffect(() => {
+    loadDownloadedText();
+  }, [key]);
+
+  // If current text is in storage update it to make sure changes are in storage
+  const updateDownload = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(key);
+      if (jsonValue) {
+        await AsyncStorage.setItem(key, JSON.stringify(text));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const loadDownloadedText = async () => {
     try {
@@ -65,5 +64,11 @@ export default function useDownload(key: string, text: string) {
       console.log(e);
     }
   };
-  return { isDownloaded, downloadedText, loadDownloadedText, toggleDownload };
+  return {
+    isDownloaded,
+    downloadedText,
+    loadDownloadedText,
+    toggleDownload,
+    updateDownload,
+  };
 }

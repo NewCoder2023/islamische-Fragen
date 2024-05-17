@@ -42,13 +42,19 @@ export default function renderText() {
   const CONTENT_OFFSET_THRESHOLD = 300;
 
   const { bookmarks, toggleBookmark } = useBookmarks(key);
-  const { favorites, toggleFavorite, isInFavorites } = useFavorites();
-  const { isDownloaded, downloadedText, loadDownloadedText, toggleDownload } =
-    useDownload(key, text);
+  const { toggleFavorite, isInFavorites } = useFavorites();
+  const {
+    updateDownload,
+    isDownloaded,
+    downloadedText,
+    loadDownloadedText,
+    toggleDownload,
+  } = useDownload(key, text);
 
   const flashListRef = useRef<any>(null);
 
   useLayoutEffect(() => {
+    updateDownload();
     loadDownloadedText();
   }, [id, table]);
 
@@ -235,5 +241,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.light.error,
     textAlign: "center",
-  }
+  },
 });

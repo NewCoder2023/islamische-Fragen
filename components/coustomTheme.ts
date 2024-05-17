@@ -1,5 +1,6 @@
 import Colors from "constants/Colors";
 
+
 export const lightTheme = {
   container: {
     backgroundColor: Colors.light.white,
@@ -30,6 +31,8 @@ export const darkTheme = {
   },
 };
 
-export const coustomTheme = (colorScheme) => {
+type ColorScheme = "light" | "dark" | undefined | null;
+
+export const coustomTheme = (colorScheme: ColorScheme) => {
   return colorScheme === "light" ? lightTheme : darkTheme;
 };
