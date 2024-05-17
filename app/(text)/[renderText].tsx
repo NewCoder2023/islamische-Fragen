@@ -18,6 +18,7 @@ import { useRef } from "react";
 import useBookmarks from "components/useBookmarks";
 import useFavorites from "components/useFavorites";
 import useDownload from "components/useDownload";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -40,7 +41,7 @@ export default function renderText() {
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
   const CONTENT_OFFSET_THRESHOLD = 300;
 
-  const { bookmarks, toggleBookmark } = useBookmarks();
+  const { bookmarks, toggleBookmark } = useBookmarks(key);
   const { favorites, toggleFavorite, isInFavorites } = useFavorites();
   const { isDownloaded, downloadedText, loadDownloadedText, toggleDownload } =
     useDownload(key, text);
