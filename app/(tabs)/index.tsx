@@ -20,7 +20,6 @@ import {
 import { coustomTheme } from "components/coustomTheme";
 import HeaderFlashListIndex from "components/HeaderFlashListIndex";
 
-
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
   const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
@@ -109,7 +108,12 @@ export default function index() {
               ref={scrollRef}
               data={posts}
               extraData={[appColor, isLoggedIn]}
-              ListHeaderComponent={<HeaderFlashListIndex isLoggedIn={isLoggedIn} color={themeStyles.button} />}
+              ListHeaderComponent={
+                <HeaderFlashListIndex
+                  isLoggedIn={isLoggedIn}
+                  themeStyles={themeStyles}
+                />
+              }
               renderItem={({ item }) => (
                 <RenderItemsFlashList
                   item={item}
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    marginBottom: 10
+    marginBottom: 10,
   },
   newsContainer: {
     marginTop: 5,
@@ -293,4 +297,3 @@ const styles = StyleSheet.create({
     color: Colors.dark.adButton,
   },
 });
-

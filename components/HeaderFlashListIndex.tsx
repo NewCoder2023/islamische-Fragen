@@ -5,7 +5,8 @@ import { Link } from "expo-router";
 import { Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const HeaderFlashListIndex = (isLoggedIn: any, color: any) => {
+const HeaderFlashListIndex = ({isLoggedIn, themeStyles}: any) => {
+
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.headerTitle}>Neuigkeiten</Text>
@@ -15,7 +16,7 @@ const HeaderFlashListIndex = (isLoggedIn: any, color: any) => {
             <MaterialIcons
               name='add-circle-outline'
               size={34}
-              color={color}
+              style={themeStyles.button}
             />
           </Pressable>
         </Link>
