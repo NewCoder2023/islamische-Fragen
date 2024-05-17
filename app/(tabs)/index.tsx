@@ -19,7 +19,7 @@ import {
   Appearance,
   useColorScheme,
 } from "react-native";
-
+import { coustomTheme } from "components/coustomTheme";
 
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
@@ -33,24 +33,7 @@ export default function index() {
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
   const CONTENT_OFFSET_THRESHOLD_NEW_UPDATE = 5;
   const CONTENT_OFFSET_THRESHOLD_UP = 300;
-
-  // Darkmode style change
-  const themeErrorStyle = useMemo(
-    () =>
-      colorScheme === "light" ? styles.lightThemeError : styles.darkThemeError,
-    [colorScheme]
-  );
-
-  const themeContainerStyle = useMemo(
-    () =>
-      colorScheme === "light" ? styles.lightContainer : styles.darkContainer,
-    [colorScheme]
-  );
-
-  const themeButtonStyle = useMemo(
-    () => (colorScheme === "light" ? styles.lightButton : styles.darkButton),
-    [colorScheme]
-  );
+  const themeStyles = coustomTheme(colorScheme);
 
   // Update News on either reloading or pressing "Aktualisieren" button
   const updateNews = useCallback(() => {
@@ -79,7 +62,7 @@ export default function index() {
               <MaterialIcons
                 name='add-circle-outline'
                 size={34}
-                style={themeButtonStyle}
+                style={themeStyles.button}
               />
             </Pressable>
           </Link>
@@ -116,7 +99,7 @@ export default function index() {
 
         {fetchError ? (
           <View style={styles.renderError}>
-            <Text style={[styles.errorText, themeErrorStyle]}>
+            <Text style={[styles.errorText, themeStyles.error]}>
               {fetchError}
             </Text>
           </View>
@@ -144,7 +127,7 @@ export default function index() {
                 <RenderItemsFlashList
                   item={item}
                   isLoggedIn={isLoggedIn}
-                  themeContainerStyle={themeContainerStyle}
+                  themeContainerStyle={themeStyles.container}
                   colorScheme={colorScheme}
                 />
               )}

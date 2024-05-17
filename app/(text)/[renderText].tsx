@@ -18,7 +18,7 @@ import { useRef } from "react";
 import useBookmarks from "components/useBookmarks";
 import useFavorites from "components/useFavorites";
 import useDownload from "components/useDownload";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { coustomTheme } from "components/coustomTheme";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -53,11 +53,7 @@ export default function renderText() {
   }, [id, table]);
 
   const colorScheme = useColorScheme();
-  const themeContainerStyle =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-
-  const themeTextStyle =
-    colorScheme === "light" ? styles.lightText : styles.darkText;
+  const themeStyles = coustomTheme(colorScheme);
 
   const textContentPerPage = useMemo(() => {
     if (!text && !downloadedText) return [];
@@ -141,36 +137,36 @@ export default function renderText() {
                   styles.bookmark,
                 ]}
               >
-                <View style={[styles.textContainer, themeContainerStyle]}>
+                <View style={[styles.textContainer, themeStyles.container]}>
                   <Markdown
                     style={{
                       body: {
-                        ...themeTextStyle,
+                        ...themeStyles.text,
                         fontSize: 20,
                         lineHeight: 40,
                       },
                       heading1: { fontSize: 25, lineHeight: 40 },
                       heading2: {
-                        ...themeTextStyle,
+                        ...themeStyles.text,
                         fontSize: 30,
                         lineHeight: 40,
                         textAlign: "center",
                       },
                       heading3: {
-                        ...themeTextStyle,
+                        ...themeStyles.text,
                         fontSize: 30,
                         lineHeight: 40,
                         fontWeight: "bold",
                       },
                       heading4: {
-                        ...themeTextStyle,
+                        ...themeStyles.text,
                         fontSize: 30,
                         lineHeight: 40,
                         textAlign: "center",
                         fontWeight: "bold",
                       },
                       heading5: {
-                        ...themeTextStyle,
+                        ...themeStyles.text,
                         fontSize: 20,
                         lineHeight: 40,
                         textAlign: "center",
@@ -223,7 +219,6 @@ const styles = StyleSheet.create({
     right: 10,
     zIndex: 1,
   },
-  text: {},
   index: {
     marginTop: 10,
     textAlign: "center",
@@ -240,17 +235,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.light.error,
     textAlign: "center",
-  },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
-  lightText: {
-    color: Colors.light.text,
-  },
-  darkText: {
-    color: Colors.dark.text,
-  },
+  }
 });
