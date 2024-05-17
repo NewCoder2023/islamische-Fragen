@@ -1,12 +1,11 @@
 import { View, Text } from "components/Themed";
 import { StyleSheet, Pressable, Appearance } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
 import Colors from "constants/Colors";
 import { Stack } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
-import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
 import { useIsChanging } from "components/favStore";
 import Markdown from "react-native-markdown-display";
@@ -15,8 +14,10 @@ import { storeFavorites, getFavorites } from "components/manageFavorites";
 import { useMemo } from "react";
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRef } from "react";
+import useBookmarks from "components/useBookmarks";
+import useFavorites from "components/useFavorites";
+import useDownload from "components/useDownload";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -32,99 +33,23 @@ export default function renderText() {
     isFavorite: boolean;
   }
 
-  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const { text, fetchError } = fetchText(id, table);
-  const { change } = useIsChanging();
-  const [isDownloaded, setIsDownloaded] = useState(false);
-  const [downloadedText, setDownloadedText] = useState("");
+
   const key = `text-${id}-${table}`;
   const appColor = Appearance.getColorScheme();
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
   const CONTENT_OFFSET_THRESHOLD = 300;
-  const [bookmarks, setBookmarks] = useState({});
+
+  const { bookmarks, toggleBookmark } = useBookmarks();
+  const { favorites, toggleFavorite, isInFavorites } = useFavorites();
+  const { isDownloaded, downloadedText, loadDownloadedText, toggleDownload } =
+    useDownload(key, text);
 
   const flashListRef = useRef<any>(null);
 
   useLayoutEffect(() => {
-    const loadFavorites = async () => {
-      const fav = await getFavorites();
-      setFavorites(fav);
-    };
-    const loadDownloadedText = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem(key);
-        if (jsonValue) {
-          setDownloadedText(JSON.parse(jsonValue));
-          setIsDownloaded(true);
-        } else {
-          setIsDownloaded(false);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    const getBookmarks = async () => {
-      try {
-        const savedBookmarks = await AsyncStorage.getItem("Bookmarks");
-        if (savedBookmarks) {
-          setBookmarks(JSON.parse(savedBookmarks));
-        } else {
-          setBookmarks({});
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
     loadDownloadedText();
-    loadFavorites();
-    getBookmarks();
   }, [id, table]);
-
-  const changeFavourite = async () => {
-    if (
-      favorites.some(
-        (item) => item.table == table && item.id == id && item.isFavorite
-      )
-    ) {
-      Toast.show({
-        type: "error",
-        text1: "Von Favoriten entfernt!",
-      });
-
-      const newFavorites = favorites.map((item) =>
-        item.table == table && item.id == id
-          ? { ...item, isFavorite: false }
-          : item
-      );
-      setFavorites(newFavorites);
-      await storeFavorites(newFavorites, change);
-    } else {
-      Toast.show({
-        type: "success",
-        text1: "Zu Favoriten hinzugefügt!",
-      });
-
-      const newFavorites = [
-        ...favorites,
-        {
-          id: id,
-          title: title,
-          table: table,
-          isFavorite: true,
-        },
-      ];
-      setFavorites(newFavorites);
-      await storeFavorites(newFavorites, change);
-    }
-  };
-
-  const isInFavorites = useMemo(() => {
-    return favorites.some(
-      (item) => item.table === table && item.id === id && item.isFavorite
-    );
-  }, [favorites, table, id]);
 
   const colorScheme = useColorScheme();
   const themeContainerStyle =
@@ -139,41 +64,6 @@ export default function renderText() {
     return content.split("\n\n\n").filter((t) => t.trim() !== "");
   }, [text, downloadedText]);
 
-  const download = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem(key);
-      if (jsonValue) {
-        await AsyncStorage.removeItem(key);
-        Toast.show({
-          type: "success",
-          text1: "Text wurde aus dem Speicher entfernt!",
-        });
-        setIsDownloaded((prev) => !prev);
-      } else {
-        await AsyncStorage.setItem(key, JSON.stringify(text));
-        Toast.show({
-          type: "success",
-          text1: "Text wird heruntergeladen!",
-        });
-        setIsDownloaded((prev) => !prev);
-      }
-    } catch (e) {
-      Toast.show({
-        type: "error",
-        text1: "Fehler, bitte versuchen Sie es später erneut!",
-      });
-      console.log(e);
-    }
-  };
-
-  const addToBookmark = async (index) => {
-    
-    const updatedBookmarks = { ...bookmarks, [index]: !bookmarks[index] };
-    setBookmarks(updatedBookmarks);
-
-    await AsyncStorage.setItem("Bookmarks", JSON.stringify(updatedBookmarks));
-  };
-
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -186,22 +76,22 @@ export default function renderText() {
                   name='file-remove-outline'
                   size={24}
                   color={colorScheme == "dark" ? "white" : "black"}
-                  onPress={download}
+                  onPress={toggleDownload}
                 />
               ) : (
                 <Feather
                   name='download'
                   size={24}
                   color={colorScheme == "dark" ? "white" : "black"}
-                  onPress={download}
+                  onPress={toggleDownload}
                 />
               )}
 
               <AntDesign
-                name={isInFavorites ? "star" : "staro"}
+                name={isInFavorites(id, table) ? "star" : "staro"}
                 size={24}
                 color={Colors.light.star}
-                onPress={changeFavourite}
+                onPress={() => toggleFavorite(id, table, title)}
               />
             </View>
           ),
@@ -240,10 +130,15 @@ export default function renderText() {
             }}
             renderItem={({ item, index }) => (
               <Pressable
-                onLongPress={() => addToBookmark(index)}
-                style={[{
-                  backgroundColor: bookmarks[index] ? "lightgreen" : "transparent",
-                }, styles.bookmark]}
+                onLongPress={() => toggleBookmark(index)}
+                style={[
+                  {
+                    backgroundColor: bookmarks[index]
+                      ? "lightgreen"
+                      : "transparent",
+                  },
+                  styles.bookmark,
+                ]}
               >
                 <View style={[styles.textContainer, themeContainerStyle]}>
                   <Markdown
@@ -320,7 +215,6 @@ const styles = StyleSheet.create({
   },
   bookmark: {
     paddingTop: 7,
-  
   },
   toTopButton: {
     position: "absolute",
