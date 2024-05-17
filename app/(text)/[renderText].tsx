@@ -166,11 +166,10 @@ export default function renderText() {
     }
   };
 
-  const handlePress = async (index) => {
+  const addToBookmark = async (index) => {
     
     const updatedBookmarks = { ...bookmarks, [index]: !bookmarks[index] };
     setBookmarks(updatedBookmarks);
-
 
     await AsyncStorage.setItem("Bookmarks", JSON.stringify(updatedBookmarks));
   };
@@ -241,10 +240,10 @@ export default function renderText() {
             }}
             renderItem={({ item, index }) => (
               <Pressable
-                onLongPress={() => handlePress(index)}
-                style={{
-                  backgroundColor: bookmarks[index] ? "green" : "transparent",
-                }}
+                onLongPress={() => addToBookmark(index)}
+                style={[{
+                  backgroundColor: bookmarks[index] ? "lightgreen" : "transparent",
+                }, styles.bookmark]}
               >
                 <View style={[styles.textContainer, themeContainerStyle]}>
                   <Markdown
@@ -314,10 +313,14 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    marginBottom: 10,
+    marginBottom: 7,
     marginHorizontal: 15,
     padding: 20,
     borderRadius: 10,
+  },
+  bookmark: {
+    paddingTop: 7,
+  
   },
   toTopButton: {
     position: "absolute",
