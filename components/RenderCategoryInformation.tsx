@@ -1,25 +1,27 @@
 import { View, Text } from "components/Themed";
 import { StyleSheet } from "react-native";
 import React from "react";
-import Colors from "constants/Colors";
 import { useColorScheme } from "react-native";
 import fetchCategoryInformation from "./fetchCategoryInformation";
 import { ScrollView } from "react-native";
+import { coustomTheme } from "./coustomTheme";
 
-export default function RenderCategoryInformation({ category }) {
+interface RenderCategoryInformationProps {
+  category: string;
+}
+
+const RenderCategoryInformation: React.FC<RenderCategoryInformationProps> = ({
+  category,
+}) => {
   const colorScheme = useColorScheme();
 
-  const themeContainerStyle =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-
-  const themeErrorStyle =
-    colorScheme === "light" ? styles.lightError : styles.darkError;
+  const themeStyles = coustomTheme(colorScheme);
 
   const { text, fetchError } = fetchCategoryInformation(category);
   return (
-    <View style={[styles.container, themeContainerStyle]}>
+    <View style={[styles.container, themeStyles.container]}>
       {fetchError && (
-        <Text style={[styles.errorText, themeErrorStyle]} selectable>
+        <Text style={[styles.errorText, themeStyles.error]} selectable>
           {fetchError}
         </Text>
       )}
@@ -30,7 +32,7 @@ export default function RenderCategoryInformation({ category }) {
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -55,17 +57,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     fontWeight: "bold",
-  },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
-  lightError: {
-    color: Colors.light.error,
-  },
-  darkError: {
-    color: Colors.dark.error,
   },
 });

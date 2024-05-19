@@ -8,23 +8,29 @@ export default function fetchCategoryInformation(table: string) {
   // Encode title because () in title causes problems
   useEffect(() => {
     const fetchItems = async () => {
-      const { data, error } = await supabase
-        .from("CategoryInformation")
-        .select("*")
-        .eq("table", table)
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from("CategoryInformation")
+          .select("*")
+          .eq("table", table)
+          .single();
 
-      // Error checking
+        // Error checking
 
-      if (error) {
-        setFetchError("Fehler, überprüfen Sie bitte Ihre Internet Verbindung!");
+        if (error) {
+          setFetchError(
+            "Fehler, überprüfen Sie bitte Ihre Internet Verbindung!"
+          );
 
-        setText("");
-      }
+          setText("");
+        }
 
-      if (data) {
-        setText(data.information);
-        setFetchError("");
+        if (data) {
+          setText(data.information);
+          setFetchError("");
+        }
+      } catch (e) {
+        console.log(e);
       }
     };
 

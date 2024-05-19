@@ -1,4 +1,3 @@
-import Colors from "constants/Colors";
 import { Text, View } from "components/Themed";
 import { Pressable, StyleSheet } from "react-native";
 import React from "react";
@@ -6,8 +5,8 @@ import { Link } from "expo-router";
 import { useColorScheme } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { Feather } from "@expo/vector-icons";
-
 import { Appearance } from "react-native";
+import { coustomTheme } from "./coustomTheme";
 
 export default function RenderFavorites({ items }) {
   const encodeTitle = (title: string) => {
@@ -20,11 +19,7 @@ export default function RenderFavorites({ items }) {
   };
 
   const colorScheme = useColorScheme();
-
-  const themeContainerStyle =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-  const themeErrorStyle =
-    colorScheme === "light" ? styles.lightError : styles.darkError;
+  const themeStyles = coustomTheme(colorScheme);
 
   const appColor = Appearance.getColorScheme();
 
@@ -43,7 +38,7 @@ export default function RenderFavorites({ items }) {
       asChild
     >
       <Pressable>
-        <View style={[styles.renderItem, themeContainerStyle]}>
+        <View style={[styles.renderItem, themeStyles.container]}>
           <Text style={styles.itemText}>{item.title.trim()}</Text>
           <Feather
             name='arrow-right-circle'
@@ -107,17 +102,5 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 20,
     textAlign: "center",
-  },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
-  lightError: {
-    color: Colors.light.error,
-  },
-  darkError: {
-    color: Colors.dark.error,
   },
 });

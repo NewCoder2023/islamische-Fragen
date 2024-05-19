@@ -1,78 +1,20 @@
 import Colors from "constants/Colors";
 import { Text, View } from "components/Themed";
-import { FlatList, StyleSheet } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
-import { supabase } from "@/utils/supabase";
+import { StyleSheet } from "react-native";
+import React from "react";
 import RenderSearch from "./RenderSearch";
-import { useColorScheme } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { Appearance } from "react-native";
-
-const fetchAllTables = async () => {
-  const { data, error } = await supabase.from("AllTables").select("tableName");
-
-  if (error) {
-    console.error("Error fetching tables:", error.message);
-    return [];
-  }
-  return data;
-};
+import useSearchItems from "./useSearchItems";
 
 const appColor = Appearance.getColorScheme();
 
-const ItemSearch = ({ search }) => {
-  const [searchResults, setSearchResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+interface ItemSearchProps {
+  search: string;
+}
 
-  useLayoutEffect(() => {
-    if (search === "") {
-      setSearchResults([]);
-      setIsLoading(false);
-      return;
-    }
-
-    const searchTables = async () => {
-      const tables = await fetchAllTables();
-
-      const results = await Promise.all(
-        tables.map(async (table) => {
-          const { data, error } = await supabase
-            .from(table.tableName)
-            .select("*")
-            .ilike("title", `%${search}%`);
-
-          if (error) {
-            console.error(
-              `Error searching in ${table.tableName}:`,
-              error.message
-            );
-            return null;
-          }
-
-          if (data && data.length > 0) {
-            return {
-              table: table.tableName,
-              items: data,
-            };
-          }
-
-          return null;
-        })
-      );
-
-      const filteredResults = results.filter((result) => result !== null);
-
-      setSearchResults(filteredResults);
-      setIsLoading(false);
-    };
-
-    setIsLoading(true);
-    searchTables();
-  }, [search]);
-
-  const colorScheme = useColorScheme();
-  const themeContainerStyle =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+const ItemSearch: React.FC<ItemSearchProps> = ({ search }) => {
+  const { searchResults, isLoading } = useSearchItems(search);
 
   return (
     <View style={styles.container}>
@@ -121,12 +63,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
-  },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
   },
   loadingContainer: {
     flex: 1,
