@@ -10,7 +10,6 @@ interface NewsItem {
   // weitere Felder je nach Schema Ihrer News-Tabelle
 }
 
-
 export default function fetchNews() {
   const [fetchError, setFetchError] = useState<string>("");
   const [posts, setPosts] = useState<NewsItem[]>([]);
@@ -25,12 +24,19 @@ export default function fetchNews() {
         .from("News")
         .select("*")
         .order("id", { ascending: false });
-        if (data) {
-          setPosts(data as NewsItem[]); 
-        } else {
-          setPosts([]); 
-        }
+
+      if (error) {
+        throw Error;
+      }
+     
+      if (data) {
+        setPosts(data as NewsItem[]);
         setFetchError("");
+      } else {
+        setPosts([]);
+      }
+
+     
     } catch (error) {
       setFetchError(
         "Neuigkeiten konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internetverbindung!"
@@ -38,7 +44,6 @@ export default function fetchNews() {
       setPosts([]);
     } finally {
       setIsFetching(false);
-    
     }
   };
 
@@ -57,7 +62,6 @@ export default function fetchNews() {
           } else {
             setUpdateAvailable(true);
           }
-          
         }
       )
       .on(

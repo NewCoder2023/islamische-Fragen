@@ -70,11 +70,18 @@ export default function index() {
           </View>
         )}
         {fetchError ? (
-          <View style={styles.renderError}>
+          <ScrollView
+          style={styles.fetchErrorScrollView}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={updateNews} />
+          }
+        >
+         
             <Text style={[styles.errorText, themeStyles.error]}>
               {fetchError}
             </Text>
-          </View>
+
+          </ScrollView>
         ) : posts.length == 0 && !fetchError ? (
           <ScrollView
             style={styles.noNewsScrollView}
@@ -219,7 +226,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent",
   },
-
   ImageContainerFooter: {
     marginTop: 15,
     padding: 5,
@@ -242,7 +248,7 @@ const styles = StyleSheet.create({
   },
   renderError: {
     flex: 1,
-    marginTop: 20,
+    marginTop: 60,
     paddingLeft: 12,
     paddingRight: 12,
   },
@@ -250,6 +256,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     marginTop: 20,
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  fetchErrorScrollView: {
+    flex: 1,
+    marginTop: 60,
     paddingLeft: 12,
     paddingRight: 12,
   },
@@ -266,7 +278,7 @@ const styles = StyleSheet.create({
     lineHeight: 35,
     textAlign: "center",
     fontWeight: "bold",
-    marginTop: 30
+    marginTop: 30,
   },
   updateContainer: {
     width: "100%",
@@ -287,23 +299,5 @@ const styles = StyleSheet.create({
     padding: 6,
     fontWeight: "bold",
     color: Colors.light.black,
-  },
-  lightThemeError: {
-    color: Colors.light.error,
-  },
-  darkThemeError: {
-    color: Colors.light.error,
-  },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
-  lightButton: {
-    color: Colors.light.adButton,
-  },
-  darkButton: {
-    color: Colors.dark.adButton,
   },
 });
