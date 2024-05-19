@@ -1,214 +1,64 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { Text, View } from "./Themed";
-import { Link } from "expo-router";
+import { Link, LinkProps } from "expo-router";
 import { Pressable } from "react-native";
 import Colors from "constants/Colors";
 import { Image } from "expo-image";
-import { Platform } from "react-native";
 import { useColorScheme } from "react-native";
+import { coustomTheme } from "./coustomTheme";
 
 export default function Categories() {
   const colorScheme = useColorScheme();
+  const themeStyles = coustomTheme(colorScheme);
 
-  const themeContainerStyle =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+  type RouteParams = {
+    category: string;
+  };
+
+  const categories = [
+    { name: "Bittgebete", image: require("assets/images/bittgebete.png"), path: "(renderNestedCategories)/[renderNestedCategories]" },
+    { name: "Aschura", image: require("assets/images/aschura.png"), path: "(renderCategory)/[renderCategory]" },
+    { name: "Munajat", image: require("assets/images/munajat.png"), path: "(renderCategory)/[renderCategory]" },
+    { name: "Gebete", image: require("assets/images/gebete.png"), path: "(renderCategory)/[renderCategory]" },
+    { name: "Ziyarat", image: require("assets/images/ziyarat.png"), path: "(renderCategory)/[renderCategory]" },
+    { name: "Imam Mahdi", image: require("assets/images/imamMahdi.png"), path: "(renderCategory)/[renderCategory]" },
+    { name: "Tasbihat", image: require("assets/images/tasbihat.png"), path: "(renderCategory)/[renderCategory]" },
+    { name: "Salawat", image: require("assets/images/salawat.png"), path: "(renderCategory)/[renderCategory]" },
+    { name: "Heilige Monate", image: require("assets/images/heiligeMonate.png"), path: "(renderNestedCategories)/[renderNestedCategories]" },
+  ];
 
   return (
     <View>
       <View style={styles.container}>
-        <Link
-          href={{
-            pathname: "(renderNestedCategories)/[renderNestedCategories]",
-            params: {
-              category: "Bittgebete",
-            },
-          }}
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Bittgebete</Text>
-              <Image
-                style={styles.elementIcon}
-                source={require("assets/images/bittgebete.png")}
-                contentFit='cover'
-              />
-            </View>
-          </Pressable>
-        </Link>
-
-        <Link
-          href={{
-            pathname: "(renderCategory)/[renderCategory]",
-            params: {
-              category: "Aschura",
-            },
-          }}
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Aschura</Text>
-              <Image
-                style={styles.elementIcon}
-                source={require("assets/images/aschura.png")}
-                contentFit='cover'
-              />
-            </View>
-          </Pressable>
-        </Link>
-
-        <Link
-          href={{
-            pathname: "(renderCategory)/[renderCategory]",
-            params: {
-              category: "Munajat",
-            },
-          }}
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Munajat</Text>
-              <Image
-                style={styles.elementIcon}
-                source={require("assets/images/munajat.png")}
-                contentFit='cover'
-              />
-            </View>
-          </Pressable>
-        </Link>
-
-        <Link
-          href={{
-            pathname: "(renderCategory)/[renderCategory]",
-            params: {
-              category: "Gebete",
-            },
-          }}
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Gebete</Text>
-              <Image
-                style={styles.elementIcon}
-                source={require("assets/images/gebete.png")}
-                contentFit='cover'
-              />
-            </View>
-          </Pressable>
-        </Link>
-
-        <Link
-          href={{
-            pathname: "(renderCategory)/[renderCategory]",
-            params: {
-              category: "Ziyarat",
-            },
-          }}
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Ziyarat</Text>
-              <Image
-                style={styles.elementIcon}
-                source={require("assets/images/ziyarat.png")}
-                contentFit='cover'
-              />
-            </View>
-          </Pressable>
-        </Link>
-
-        <Link
-          href={{
-            pathname: "(renderCategory)/[renderCategory]",
-            params: {
-              category: "Imam Mahdi",
-            },
-          }}
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Imam Mahdi</Text>
-              <Image
-                style={styles.elementIcon}
-                source={require("assets/images/imamMahdi.png")}
-                contentFit='cover'
-              />
-            </View>
-          </Pressable>
-        </Link>
-
-        <Link
-          href={{
-            pathname: "(renderCategory)/[renderCategory]",
-            params: {
-              category: "Tasbihat",
-            },
-          }}
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Tashibat</Text>
-              <Image
-                style={styles.elementIcon}
-                source={require("assets/images/tasbihat.png")}
-                contentFit='cover'
-              />
-            </View>
-          </Pressable>
-        </Link>
-
-        <Link
-          href={{
-            pathname: "(renderCategory)/[renderCategory]",
-            params: {
-              category: "Salawat",
-            },
-          }}
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Salawat</Text>
-              <Image
-                style={styles.elementIcon}
-                source={require("assets/images/salawat.png")}
-                contentFit='cover'
-              />
-            </View>
-          </Pressable>
-        </Link>
-
-        <Link
-          href={{
-            pathname: "(renderNestedCategories)/[renderNestedCategories]",
-            params: {
-              category: "Heilige Monate",
-            },
-          }}
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeContainerStyle]}>
-              <Text style={styles.elementText}>Heilige Monate</Text>
-              <Image
-                style={styles.elementIcon}
-                source={require("assets/images/heiligeMonate.png")}
-                contentFit='cover'
-              />
-            </View>
-          </Pressable>
-        </Link>
+        {categories.map((category, index) => (
+          <Link
+            key={index}
+            href={{
+              pathname: category.path,
+              params: {
+                category: category.name,
+              },
+            } as any}
+            asChild
+          >
+            <Pressable>
+              <View style={[styles.element, themeStyles.container]}>
+                <Text style={styles.elementText}>{category.name}</Text>
+                <Image
+                  style={styles.elementIcon}
+                  source={category.image}
+                  contentFit='cover'
+                />
+              </View>
+            </Pressable>
+          </Link>
+        ))}
       </View>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

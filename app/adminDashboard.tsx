@@ -2,131 +2,28 @@
 import { Keyboard, StyleSheet } from "react-native";
 import { View, Text } from "components/Themed";
 import Colors from "constants/Colors";
-import { useState } from "react";
 import { TextInput, Pressable, TouchableWithoutFeedback } from "react-native";
-import { supabase } from "@/utils/supabase";
-import * as ImagePicker from "expo-image-picker";
 import { Image } from "expo-image";
 import { Stack } from "expo-router";
-import Toast from "react-native-toast-message";
-import { router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
-import { useIsUpLoading } from "components/uploadingStore";
 import { useColorScheme } from "react-native";
 import { ScrollView } from "react-native";
-
+import { useUploadImages } from "components/useUploadImages";
+import { coustomTheme } from "components/coustomTheme";
 export default function adminDashboard() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [images, setImages] = useState([]);
-
-  const { startLoading, finishLoading } = useIsUpLoading();
   const colorScheme = useColorScheme();
+  const themeStyles = coustomTheme(colorScheme);
 
-  const themeInputStyle =
-    colorScheme === "light" ? styles.lightInput : styles.darkInput;
-    
-    // For Android
-    const placeholderTextColor =
-    colorScheme === "light" ? Colors.light.text : Colors.dark.text;
-
-
-  const uploadText = async (imageUrls) => {
-    const { error } = await supabase
-      .from("News")
-      .insert({ title: title, content: content, imagePaths: imageUrls });
-
-    if (error) {
-      setContent("");
-      return false;
-    } else {
-      setContent("");
-      return true;
-    }
-  };
-
-  const uploadImage = async (uri) => {
-    const response = await fetch(uri);
-    const arrayBuffer = await response.arrayBuffer();
-    const fileExt = uri.split(".").pop();
-    const fileName = `images/${Date.now()}.${fileExt}`;
-
-    const { data, error } = await supabase.storage
-      .from("News_bucket")
-      .upload(fileName, arrayBuffer, {
-        cacheControl: "3600",
-        upsert: false,
-      });
-
-    if (error) {
-      return false;
-    } else {
-      const { data: urlData } = supabase.storage
-        .from("News_bucket")
-        .getPublicUrl(fileName);
-
-      if (!urlData) {
-        return false;
-      } else {
-        return urlData.publicUrl;
-      }
-    }
-  };
-
-  const submitPost = async () => {
-    if (images.length === 0 && !content.trim()) {
-      Toast.show({
-        type: "error",
-        text1: "Ein leerer Beitrag kann nicht erstellt werden!",
-      });
-      return;
-    }
-    startLoading();
-    router.navigate("/");
-
-    const uploadedImageUrls = await Promise.all(
-      images.map((image) => uploadImage(image))
-    );
-
-    const validImageUrls = uploadedImageUrls.filter((url) => url != null);
-
-    const textUploaded = await uploadText(validImageUrls);
-
-    if (uploadedImageUrls && textUploaded) {
-      Toast.show({
-        type: "success",
-        text1: "Beitrag erfolgreich hochgeladen!",
-      });
-    } else {
-      Toast.show({
-        type: "error",
-        text1: "Fehler beim erstellen des Beitrags!",
-        text2: "Versuchen Sie es später nochmal!",
-      });
-    }
-    finishLoading();
-  };
-
-  const pickImage = async () => {
-    Keyboard.dismiss();
-
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-      base64: true,
-      allowsMultipleSelection: true,
-    });
-
-    if (!result.canceled) {
-      setImages(result.assets.map((asset) => asset.uri));
-    }
-  };
-
-  const deleteImage = (uri) => {
-    setImages((currentImages) =>
-      currentImages.filter((image) => image !== uri)
-    );
-  };
+  const {
+    title,
+    setTitle,
+    content,
+    setContent,
+    images,
+    submitPost,
+    pickImage,
+    deleteImage,
+  } = useUploadImages();
 
   return (
     <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
@@ -149,21 +46,21 @@ export default function adminDashboard() {
         />
         <View style={styles.inputFieldsContainer}>
           <TextInput
-            style={[styles.headerInput, themeInputStyle]}
+            style={[styles.headerInput, themeStyles.text]}
             onChangeText={setTitle}
             value={title}
             placeholder='Title (optional)'
-            placeholderTextColor={placeholderTextColor}
+            placeholderTextColor={themeStyles.text.color}
             editable
             onSubmitEditing={Keyboard.dismiss}
           />
 
           <TextInput
-            style={[styles.ContentInput, themeInputStyle]}
+            style={[styles.ContentInput, themeStyles.text]}
             onChangeText={setContent}
             value={content}
             placeholder='Beitrag'
-            placeholderTextColor={placeholderTextColor}
+            placeholderTextColor={themeStyles.text.color}
             multiline
             editable
             autoCapitalize='none'
@@ -262,11 +159,5 @@ const styles = StyleSheet.create({
   },
   deleteImage: {
     marginLeft: 100,
-  },
-  lightInput: {
-    color: Colors.light.text,
-  },
-  darkInput: {
-    color: Colors.dark.text,
   },
 });

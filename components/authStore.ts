@@ -8,6 +8,8 @@ const LOGIN_STATUS_KEY = "isLoggedIn";
 
 interface authStoreValue {
   isLoggedIn: boolean
+  login: () => Promise<void>;
+  logout: () => void;
 }
 
 export const useAuthStore = create<authStoreValue>((set) => {

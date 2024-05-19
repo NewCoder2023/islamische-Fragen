@@ -1,6 +1,5 @@
 import Colors from "constants/Colors";
 
-
 export const lightTheme = {
   container: {
     backgroundColor: Colors.light.white,
@@ -13,6 +12,9 @@ export const lightTheme = {
   },
   button: {
     color: Colors.light.adButton,
+  },
+  background: {
+    backgroundColor: Colors.light.background,
   },
 };
 
@@ -28,6 +30,9 @@ export const darkTheme = {
   },
   button: {
     color: Colors.dark.adButton,
+  },
+  background: {
+    backgroundColor: Colors.dark.background,
   },
 };
 

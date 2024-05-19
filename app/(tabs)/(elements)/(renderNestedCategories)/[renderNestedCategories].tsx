@@ -1,10 +1,9 @@
-import { View, Text } from "components/Themed";
+import { View } from "components/Themed";
 import { StyleSheet } from "react-native";
 import React from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchTable from "components/fetchTable";
 import { Stack } from "expo-router";
-import RenderCategoryInformation from "components/RenderCategoryInformation";
 import RenderNestedItems from "components/RenderNestedItems";
 
 export default function renderCategory() {

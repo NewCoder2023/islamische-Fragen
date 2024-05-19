@@ -4,6 +4,8 @@ import { StyleSheet } from "react-native";
 import Markdown from "react-native-markdown-display";
 import { useColorScheme } from "react-native";
 import Colors from "constants/Colors";
+import { coustomTheme } from "components/coustomTheme";
+import { useTheme } from "@react-navigation/native";
 
 export default function impressum() {
   const impressum = `
@@ -42,19 +44,15 @@ Bund für islamische Bildung e.V.
 
   const colorScheme = useColorScheme();
 
-  const themedViewStyle =
-    colorScheme == "dark" ? styles.darkScrollView : styles.lightScrollVire;
-
-  const themeTextStyle =
-    colorScheme == "dark" ? styles.darkText : styles.lightText;
+  const themeStyles = coustomTheme(colorScheme);
 
   return (
-    <View style={[styles.container, themedViewStyle]}>
+    <View style={[styles.container, themeStyles.background]}>
       <ScrollView style={styles.textContainer}>
         <Markdown
           style={{
             body: {
-              ...themeTextStyle,
+              ...themeStyles.text,
               fontSize: 18,
               lineHeight: 40,
             },

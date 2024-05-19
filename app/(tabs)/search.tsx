@@ -12,21 +12,13 @@ import { useColorScheme } from "react-native";
 import { useState } from "react";
 import ItemSearch from "components/ItemSearch";
 import { Feather } from "@expo/vector-icons";
-
+import { coustomTheme } from "components/coustomTheme";
 
 export default function TabOneScreen() {
   const [search, setSearch] = useState("");
 
   const colorScheme = useColorScheme();
-
-  const themeContainerStyle =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-
-  const themeInputText =
-    colorScheme === "light" ? styles.lightInputText : styles.darkInputText;
-
-    const placeholderTextColor =
-    colorScheme === "light" ? Colors.light.text : Colors.dark.text;
+  const themeStyles = coustomTheme(colorScheme);
 
   return (
     <TouchableWithoutFeedback
@@ -34,7 +26,7 @@ export default function TabOneScreen() {
       accessible={false}
     >
       <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-        <View style={[styles.searchContainer, themeContainerStyle]}>
+        <View style={[styles.searchContainer, themeStyles.container]}>
           <AntDesign
             name='search1'
             size={20}
@@ -43,9 +35,9 @@ export default function TabOneScreen() {
           />
           <Text style={styles.border}>|</Text>
           <TextInput
-            style={[styles.searchField, themeInputText]}
+            style={[styles.searchField, themeStyles.text]}
             placeholder='Suche'
-            placeholderTextColor={placeholderTextColor}
+            placeholderTextColor={themeStyles.text.color}
             keyboardType='default'
             editable
             value={search}
@@ -57,7 +49,7 @@ export default function TabOneScreen() {
               <Feather
                 name='x-circle'
                 size={20}
-                style={[styles.deleteIcon, themeInputText]}
+                style={[styles.deleteIcon, themeStyles.text]}
               />
             </Pressable>
           )}
@@ -86,7 +78,6 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     paddingLeft: 12,
-  
   },
   deleteIcon: {
     paddingRight: 11,

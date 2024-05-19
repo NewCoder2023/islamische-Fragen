@@ -35,12 +35,10 @@ export default function renderText() {
   }
 
   const { text, fetchError } = fetchText(id, table);
-
   const key = `text-${id}-${table}`;
   const appColor = Appearance.getColorScheme();
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
   const CONTENT_OFFSET_THRESHOLD = 300;
-
   const { bookmarks, toggleBookmark } = useBookmarks(key);
   const { toggleFavorite, isInFavorites } = useFavorites();
   const {

@@ -30,7 +30,7 @@ export default function Modal() {
     });
 
     if (error) {
-      setError("Email oder Passwort falsch!");
+      setError("Email oder Passwort sind falsch!");
       return;
     } else {
       Toast.show({
