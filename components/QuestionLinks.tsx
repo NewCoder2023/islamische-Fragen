@@ -15,32 +15,32 @@ export default function Categories() {
   const categories = [
     {
       name: "Rechtsfragen",
-      image: require("assets/images/bittgebete.png"),
+      image: require("assets/images/rechtsfragen.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
       name: "Glaubensfragen",
-      image: require("assets/images/aschura.png"),
+      image: require("assets/images/glaubensfragen.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
       name: "Quranische Fragen",
-      image: require("assets/images/munajat.png"),
+      image: require("assets/images/quran.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
       name: "Ethische Fragen",
-      image: require("assets/images/gebete.png"),
+      image: require("assets/images/ethischeFragen.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
       name: "Historische Fragen",
-      image: require("assets/images/ziyarat.png"),
+      image: require("assets/images/historischeFragen.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
       name: "Ratschläge",
-      image: require("assets/images/imamMahdi.png"),
+      image: require("assets/images/ratschlaege.png"),
       path: "(renderCategory)/[renderCategory]",
     },
   ];
@@ -116,8 +116,9 @@ const styles = StyleSheet.create({
     }),
   },
   ask: {
-  
-    width: "100%"
+    width: "100%",
+    height: 60,
+    padding: 20
   },
 
   elementIcon: {
