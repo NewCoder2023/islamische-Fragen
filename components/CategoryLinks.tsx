@@ -12,20 +12,52 @@ export default function Categories() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
 
-  type RouteParams = {
-    category: string;
-  };
-
   const categories = [
-    { name: "Bittgebete", image: require("assets/images/bittgebete.png"), path: "(renderNestedCategories)/[renderNestedCategories]" },
-    { name: "Aschura", image: require("assets/images/aschura.png"), path: "(renderCategory)/[renderCategory]" },
-    { name: "Munajat", image: require("assets/images/munajat.png"), path: "(renderCategory)/[renderCategory]" },
-    { name: "Gebete", image: require("assets/images/gebete.png"), path: "(renderCategory)/[renderCategory]" },
-    { name: "Ziyarat", image: require("assets/images/ziyarat.png"), path: "(renderCategory)/[renderCategory]" },
-    { name: "Imam Mahdi", image: require("assets/images/imamMahdi.png"), path: "(renderCategory)/[renderCategory]" },
-    { name: "Tasbihat", image: require("assets/images/tasbihat.png"), path: "(renderCategory)/[renderCategory]" },
-    { name: "Salawat", image: require("assets/images/salawat.png"), path: "(renderCategory)/[renderCategory]" },
-    { name: "Heilige Monate", image: require("assets/images/heiligeMonate.png"), path: "(renderNestedCategories)/[renderNestedCategories]" },
+    {
+      name: "Bittgebete",
+      image: require("assets/images/bittgebete.png"),
+      path: "(renderNestedCategories)/[renderNestedCategories]",
+    },
+    {
+      name: "Aschura",
+      image: require("assets/images/aschura.png"),
+      path: "(renderCategory)/[renderCategory]",
+    },
+    {
+      name: "Munajat",
+      image: require("assets/images/munajat.png"),
+      path: "(renderCategory)/[renderCategory]",
+    },
+    {
+      name: "Gebete",
+      image: require("assets/images/gebete.png"),
+      path: "(renderCategory)/[renderCategory]",
+    },
+    {
+      name: "Ziyarat",
+      image: require("assets/images/ziyarat.png"),
+      path: "(renderCategory)/[renderCategory]",
+    },
+    {
+      name: "Imam Mahdi",
+      image: require("assets/images/imamMahdi.png"),
+      path: "(renderCategory)/[renderCategory]",
+    },
+    {
+      name: "Tasbihat",
+      image: require("assets/images/tasbihat.png"),
+      path: "(renderCategory)/[renderCategory]",
+    },
+    {
+      name: "Salawat",
+      image: require("assets/images/salawat.png"),
+      path: "(renderCategory)/[renderCategory]",
+    },
+    {
+      name: "Heilige Monate",
+      image: require("assets/images/heiligeMonate.png"),
+      path: "(renderNestedCategories)/[renderNestedCategories]",
+    },
   ];
 
   return (
@@ -34,12 +66,14 @@ export default function Categories() {
         {categories.map((category, index) => (
           <Link
             key={index}
-            href={{
-              pathname: category.path,
-              params: {
-                category: category.name,
-              },
-            } as any}
+            href={
+              {
+                pathname: category.path,
+                params: {
+                  category: category.name,
+                },
+              } as any
+            }
             asChild
           >
             <Pressable>
@@ -58,7 +92,6 @@ export default function Categories() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

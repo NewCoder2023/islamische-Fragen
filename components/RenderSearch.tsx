@@ -6,7 +6,18 @@ import { EvilIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useColorScheme } from "react-native";
 
-export default function RenderSearch({ items, table }) {
+interface Item {
+  id: number;
+  title: string;
+  table: string;
+}
+
+interface RenderSearchProps {
+  items: Item[];
+  table: string;
+}
+
+const RenderSearch: React.FC<RenderSearchProps> = ({ items, table }) => {
   const colorScheme = useColorScheme();
 
   const themeContainerStyle =
@@ -54,7 +65,7 @@ export default function RenderSearch({ items, table }) {
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -89,3 +100,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.contrast,
   },
 });
+
+export default RenderSearch;
