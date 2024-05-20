@@ -9,6 +9,7 @@ import { Pressable } from "react-native";
 import { useAuthStore } from "components/authStore";
 import { Entypo } from "@expo/vector-icons";
 import { Platform } from "react-native";
+import { Image } from "expo-image";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -51,7 +52,8 @@ export default function TabLayout() {
         options={{
           title: "",
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name='question' color={color} />,
+         // tabBarIcon: ({ color }) => <Image source={require("assets/images/category.png")} style={{height: 28, width: 28, marginTop: 20}}/>,
+         tabBarIcon: ({ color }) => <TabBarIcon name='bars' color={color} />,
         }}
       />
 
