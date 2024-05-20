@@ -8,7 +8,13 @@ import { Stack } from "expo-router";
 import { useColorScheme } from "react-native";
 import { coustomTheme } from "components/coustomTheme";
 import { useState } from "react";
+import { Dropdown } from 'react-native-element-dropdown';
 
+const data = [
+  { label: "Männlich", value: "Männlich" },
+  { label: "Weiblich", value: "Weiblich" },
+  { label: "Diverse", value: "Diverse" },
+];
 export default function adminDashboard() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
@@ -19,6 +25,7 @@ export default function adminDashboard() {
   const [marja, setMarja] = useState<string>("");
   const [validateEmail, setValidateEmail] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
+  const [sex, setSex] = useState<string>("");
 
   return (
     <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
@@ -43,6 +50,21 @@ export default function adminDashboard() {
             value={name}
             placeholder='Name (optional)'
             keyboardType='default'
+          />
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            onChange={(item) => {
+              setSex(item.value);
+            }}
+            data={data}
+            search
+            maxHeight={300}
+            labelField='label'
+            valueField='value'
           />
           <TextInput
             style={[styles.input, styles.inputFirstname]}
@@ -113,6 +135,11 @@ const styles = StyleSheet.create({
   },
   inputName: {},
   inputFirstname: {},
+  dropdown: {},
+  placeholderStyle: {},
+  selectedTextStyle: {},
+  inputSearchStyle: {},
+  iconStyle: {},
   inputEmail: {},
   inputMarja: {},
   inputQuestion: {
