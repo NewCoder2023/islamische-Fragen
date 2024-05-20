@@ -1,5 +1,5 @@
 import { View, Text } from "components/Themed";
-import { StyleSheet, Pressable, Appearance } from "react-native";
+import { StyleSheet, Pressable, Appearance, Platform } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
@@ -148,31 +148,35 @@ export default function renderText() {
                         ...themeStyles.text,
                         fontSize: 20,
                         lineHeight: 40,
+                        fontFamily:
+                          Platform.OS == "ios" ? "Helvetica" : "Roboto",
                       },
-                      heading1: { fontSize: 25, lineHeight: 40 },
+                      heading1: {
+                        fontSize: 25,
+                      },
                       heading2: {
                         ...themeStyles.text,
                         fontSize: 30,
-                        lineHeight: 40,
                         textAlign: "center",
                       },
                       heading3: {
                         ...themeStyles.text,
                         fontSize: 30,
-                        lineHeight: 40,
                         fontWeight: "bold",
                       },
                       heading4: {
                         ...themeStyles.text,
                         fontSize: 30,
-                        lineHeight: 40,
                         textAlign: "center",
                         fontWeight: "bold",
                       },
                       heading5: {
                         ...themeStyles.text,
+                        fontSize: 30,
+                      },
+                      heading6: {
+                        ...themeStyles.text,
                         fontSize: 20,
-                        lineHeight: 40,
                         textAlign: "center",
                       },
                     }}
