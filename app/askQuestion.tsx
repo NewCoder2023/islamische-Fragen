@@ -8,13 +8,8 @@ import { Stack } from "expo-router";
 import { useColorScheme } from "react-native";
 import { coustomTheme } from "components/coustomTheme";
 import { useState } from "react";
-import { Dropdown } from 'react-native-element-dropdown';
+import Checkbox from "expo-checkbox";
 
-const data = [
-  { label: "Männlich", value: "Männlich" },
-  { label: "Weiblich", value: "Weiblich" },
-  { label: "Diverse", value: "Diverse" },
-];
 export default function adminDashboard() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
@@ -25,7 +20,17 @@ export default function adminDashboard() {
   const [marja, setMarja] = useState<string>("");
   const [validateEmail, setValidateEmail] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
-  const [sex, setSex] = useState<string>("");
+
+  const [gender, setgender] = useState<string | null>(null);
+
+  const genderOptions = [
+    { label: "Männlich", value: "Männlich" },
+    { label: "Weiblich ", value: "Weiblich" },
+    { label: "Diverse", value: "Diverse" },
+  ];
+  const handleCheckboxChange = (value: string) => {
+    setgender(value);
+  };
 
   return (
     <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
@@ -51,23 +56,21 @@ export default function adminDashboard() {
             placeholder='Name (optional)'
             keyboardType='default'
           />
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            onChange={(item) => {
-              setSex(item.value);
-            }}
-            data={data}
-            search
-            maxHeight={300}
-            labelField='label'
-            valueField='value'
-          />
+          <View style={styles.genderContainer}>
+            {genderOptions.map((option) => (
+              <View key={option.value} style={styles.gender}>
+                <Checkbox
+                  style={styles.genderCheckbox}
+                  value={gender === option.value}
+                  onValueChange={() => handleCheckboxChange(option.value)}
+                />
+                <Text style={styles.genderLable}>{option.label}</Text>
+              </View>
+            ))}
+          </View>
+
           <TextInput
-            style={[styles.input, styles.inputFirstname]}
+            style={[styles.input, styles.inputAge]}
             onChangeText={setAge}
             value={age}
             placeholder='Alter (pflicht)'
@@ -91,7 +94,7 @@ export default function adminDashboard() {
             style={[styles.input, styles.inputMarja]}
             onChangeText={setMarja}
             value={marja}
-            placeholder='Vorbild der Nachahmung (Marja) [nur bei Rechtsfragen]'
+            placeholder='Vorbild der Nachahmung (Marja)'
             keyboardType='default'
           />
           <TextInput
@@ -112,6 +115,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   headerButton: {
     backgroundColor: "transparent",
     marginRight: -5,
@@ -134,12 +138,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   inputName: {},
-  inputFirstname: {},
-  dropdown: {},
-  placeholderStyle: {},
-  selectedTextStyle: {},
-  inputSearchStyle: {},
-  iconStyle: {},
+  genderContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    justifyContent: "space-around",
+  },
+  gender: {
+    alignItems: "center",
+  },
+  genderLable: {
+    marginTop: 5,
+  },
+  genderCheckbox: {
+    borderRadius: 30,
+  },
+  inputAge: {},
   inputEmail: {},
   inputMarja: {},
   inputQuestion: {
@@ -147,11 +160,10 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     paddingHorizontal: 12,
     paddingTop: 8,
-    paddingBottom: 15,
+    paddingBottom: 20,
     borderWidth: 1,
     borderRadius: 20,
     fontSize: 16,
-    textAlignVertical: "top",
     lineHeight: 30,
   },
 });
