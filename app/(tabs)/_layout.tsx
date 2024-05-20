@@ -51,7 +51,7 @@ export default function TabLayout() {
         options={{
           title: "",
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name='book' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='question' color={color} />,
         }}
       />
 

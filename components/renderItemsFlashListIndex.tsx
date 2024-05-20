@@ -37,10 +37,10 @@ export const RenderItemsFlashList = ({
       <View style={styles.newsHeader}>
         <Image
           style={styles.newsImageMaher}
-          source={require("assets/images/indexIconMaher.png")}
+          source={require("assets/images/ask.png")}
           contentFit='contain'
         />
-        <Text style={styles.newsHeaderText}>Sayyid Maher El Ali</Text>
+        <Text style={styles.newsHeaderText}>Islam-Fragen</Text>
         {isLoggedIn ? (
           <FontAwesome
             name='trash-o'
