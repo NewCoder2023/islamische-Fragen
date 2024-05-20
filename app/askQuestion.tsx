@@ -17,10 +17,9 @@ export default function adminDashboard() {
   const [name, setName] = useState<string>("");
   const [age, setAge] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [marja, setMarja] = useState<string>("");
   const [validateEmail, setValidateEmail] = useState<string>("");
+  const [marja, setMarja] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
-
   const [gender, setgender] = useState<string | null>(null);
 
   const genderOptions = [
@@ -102,7 +101,7 @@ export default function adminDashboard() {
             onChangeText={setQuestion}
             value={question}
             placeholder='Frage'
-            multiline
+            multiline={true}
             keyboardType='default'
           />
         </ScrollView>
