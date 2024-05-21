@@ -55,7 +55,7 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen
-          name='categories'
+          name='index'
           options={{ headerShown: false, headerTitle: "" }}
         />
 

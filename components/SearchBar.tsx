@@ -85,7 +85,7 @@ import {
       flex: 1,
       paddingRight: 10,
       paddingLeft: 5,
-      paddingVertical: 10,
+      paddingVertical: 12,
     },
     lightBorder: {
       borderColor: Colors.light.borderColor

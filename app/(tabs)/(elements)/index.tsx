@@ -7,7 +7,7 @@ import { useColorScheme } from "react-native";
 import { Image } from "expo-image";
 import SearchBar from "components/SearchBar";
 
-export default function Category() {
+export default function index() {
   const colorscheme = useColorScheme();
   const themeStyles = coustomTheme(colorscheme);
 

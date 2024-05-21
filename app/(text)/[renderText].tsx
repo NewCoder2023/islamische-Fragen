@@ -1,5 +1,11 @@
 import { View, Text } from "components/Themed";
-import { StyleSheet, Pressable, Appearance, Platform } from "react-native";
+import {
+  StyleSheet,
+  Pressable,
+  Appearance,
+  Platform,
+  ScrollView,
+} from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import fetchText from "components/fetchText";
@@ -19,6 +25,8 @@ import useBookmarks from "components/useBookmarks";
 import useFavorites from "components/useFavorites";
 import useDownload from "components/useDownload";
 import { coustomTheme } from "components/coustomTheme";
+import { Image } from "expo-image";
+import Checkbox from "expo-checkbox";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -48,6 +56,7 @@ export default function renderText() {
     loadDownloadedText,
     toggleDownload,
   } = useDownload(key, answers);
+  const [marja, setMarja] = useState<string[]>(["sistani", "khamenei"]);
 
   const flashListRef = useRef<any>(null);
 
@@ -59,7 +68,27 @@ export default function renderText() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
 
-  console.log(answers);
+  const images = {
+    sistani: require("assets/images/sistani.png"),
+    khamenei: require("assets/images/khamenei.png"),
+  };
+
+  const marjaOptions = [
+    { label: "Sayyid Ali-as-Sistani", value: "sistani" },
+    { label: "Sayyid Ali Khamenei", value: "khamenei" },
+  ];
+
+  const handleCheckboxChange = (value: string) => {
+    setMarja((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+  };
+
+  const filteredAnswers = marja.length
+    ? answers.filter((answer) => marja.includes(answer.name))
+    : answers;
+
+  console.log(filteredAnswers);
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -99,58 +128,80 @@ export default function renderText() {
           <Text style={styles.errorText}>{fetchError || "Loading..."}</Text>
         </View>
       ) : (
-        answers.map((answer, index) => (
-          <View key={index} style={styles.answerContainer}>
-            <View style={styles.marjaContainer}>
-              <Text>{answer.marja}</Text>
-            </View>
-            <Markdown
-              style={{
-                body: {
-                  ...themeStyles.text,
-                  fontSize: 20,
-                  lineHeight: 40,
-                  fontFamily: Platform.OS === "ios" ? "Helvetica" : "Roboto",
-                },
-                heading1: {
-                  fontSize: 25,
-                },
-                heading2: {
-                  ...themeStyles.text,
-                  fontSize: 30,
-                  textAlign: "center",
-                },
-                heading3: {
-                  ...themeStyles.text,
-                  fontSize: 30,
-                  fontWeight: "bold",
-                },
-                heading4: {
-                  ...themeStyles.text,
-                  fontSize: 30,
-                  textAlign: "center",
-                  fontWeight: "bold",
-                },
-                heading5: {
-                  ...themeStyles.text,
-                  fontSize: 30,
-                },
-                heading6: {
-                  ...themeStyles.text,
-                  fontSize: 20,
-                  textAlign: "center",
-                },
-              }}
-            >
-              {answer.answer}
-            </Markdown>
+        <ScrollView style={styles.answerContainer}>
+          <View style={styles.marjaChoiceContainer}>
+            {marjaOptions.map((option) => (
+              <View key={option.value} style={styles.marjaChoice}>
+                <Checkbox
+                  style={styles.marjaCheckbox}
+                  value={marja.includes(option.value)}
+                  onValueChange={() => handleCheckboxChange(option.value)}
+                />
+                <Text style={styles.marjaLable}>{option.label}</Text>
+              </View>
+            ))}
           </View>
-        ))
+          {filteredAnswers.map((answer, index) => (
+            <View key={index} style={styles.answers}>
+              <View style={styles.headerContainer}>
+                <View style={styles.headerImage}>
+                  <Image
+                    source={images[answer.name]}
+                    style={styles.image}
+                    contentFit='cover'
+                  />
+                </View>
+                <View style={styles.headerText}>
+                  <Text style={styles.marjaText}>{answer.marja}</Text>
+                </View>
+              </View>
+              <Markdown
+                style={{
+                  body: {
+                    ...themeStyles.text,
+                    fontSize: 20,
+                    lineHeight: 40,
+                    fontFamily: Platform.OS === "ios" ? "Helvetica" : "Roboto",
+                  },
+                  heading1: {
+                    fontSize: 25,
+                  },
+                  heading2: {
+                    ...themeStyles.text,
+                    fontSize: 30,
+                    textAlign: "center",
+                  },
+                  heading3: {
+                    ...themeStyles.text,
+                    fontSize: 30,
+                    fontWeight: "bold",
+                  },
+                  heading4: {
+                    ...themeStyles.text,
+                    fontSize: 30,
+                    textAlign: "center",
+                    fontWeight: "bold",
+                  },
+                  heading5: {
+                    ...themeStyles.text,
+                    fontSize: 30,
+                  },
+                  heading6: {
+                    ...themeStyles.text,
+                    fontSize: 20,
+                    textAlign: "center",
+                  },
+                }}
+              >
+                {answer.answer}
+              </Markdown>
+            </View>
+          ))}
+        </ScrollView>
       )}
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -168,12 +219,51 @@ const styles = StyleSheet.create({
   },
   answerContainer: {
     flex: 1,
-    marginBottom: 7,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  answers: {
+    flex: 1,
+    marginBottom: 20,
     marginHorizontal: 15,
     padding: 20,
+    borderWidth: 1,
     borderRadius: 10,
   },
-  marjaContainer: {},
+
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    paddingBottom: 10,
+    borderBottomWidth: 2,
+  },
+  marjaChoiceContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    marginBottom: 20,
+    justifyContent: "space-around",
+  },
+  marjaChoice: {
+    alignItems: "center",
+  },
+  marjaCheckbox: {},
+  marjaLable: {
+    marginTop: 5,
+  },
+  headerImage: {},
+  image: {
+    width: 70,
+    height: 105,
+    borderRadius: 10,
+  },
+  headerText: {},
+  marjaText: {
+    fontSize: 20,
+
+    fontWeight: "bold",
+  },
+
   bookmark: {
     paddingTop: 7,
   },

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 interface Answer {
   marja: string;
   answer: string;
+  name: string
 }
 export default function fetchText(id: string, table: string) {
   const [fetchError, setFetchError] = useState<string>("");
@@ -31,8 +32,8 @@ export default function fetchText(id: string, table: string) {
 
       if (data) {
         setAnswers([
-          { marja: 'sistani', answer: data.answer_sistani || "" },
-          { marja: 'khamenei', answer: data.answer_khamenei || "" }
+          { marja: 'Sayyid Ali-as-Sistani ', answer: data.answer_sistani || "", name: "sistani" },
+          { marja: 'Sayyid Ali khamenei', answer: data.answer_khamenei || "", name: "khamenei" }
         ]);
         setFetchError("");
       }
