@@ -4,6 +4,8 @@ import QuestionLinks from "components/QuestionLinks";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { coustomTheme } from "components/coustomTheme";
 import { useColorScheme } from "react-native";
+import { Image } from "expo-image";
+import SearchBar from "components/SearchBar";
 
 export default function Category() {
   const colorscheme = useColorScheme();
@@ -12,10 +14,14 @@ export default function Category() {
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <View style={styles.headerContainer}>
-        <Text style={[styles.headerText, themeStyles.inverseText, styles.firstLine]}>Willkommen bei</Text>
-        <Text style={[styles.headerText, themeStyles.inverseText, styles.secondLine]}>Islam-Fragen</Text>
-        <Text style={[styles.headerText, themeStyles.inverseText]}>Ein Projekt vom </Text>
-        <Text style={[styles.headerText, themeStyles.inverseText]}>Bund für islamische Bildung</Text>
+        <Image
+          style={styles.backgroundImage}
+          source={require("assets/images/background2.svg")}
+          contentFit='fill'
+        />
+        <View style={styles.searchBar}>
+        <SearchBar />
+        </View>
       </View>
 
       <View style={styles.categoryContainer}>
@@ -33,28 +39,30 @@ const styles = StyleSheet.create({
     flex: 0.65,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#41acd2",
-    borderWidth: 1,
-    borderBottomLeftRadius: 120,
-    borderBottomRightRadius: 120
-    
   },
-  headerText: {
-    
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
   },
+  searchBar: {
+   width: "85%",
+   backgroundColor: "tranparent",
+    position: "absolute",
+    top: "70%"
+  },
+  headerText: {},
   firstLine: {
-    fontSize: 30
+    fontSize: 30,
   },
   secondLine: {
-    fontSize: 50
+    fontSize: 50,
   },
 
   searchField: {},
   categoryContainer: {
     flex: 0.35,
+    marginTop: 10,
     justifyContent: "flex-end",
     alignItems: "center",
-    marginBottom: 20
-
   },
 });

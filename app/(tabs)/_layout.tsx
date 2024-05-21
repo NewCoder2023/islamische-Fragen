@@ -58,7 +58,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name='index'
+        name='news'
         options={{
           title: "",
           tabBarIcon: ({ color }) => <TabBarIcon name='bars' color={color} />,
@@ -69,9 +69,10 @@ export default function TabLayout() {
         name='askQuestion'
         options={{
           title: "",
-          tabBarIcon: ({ color }) => <TabBarIcon name='question' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='question-circle' color={color} />,
         }}
       />
+      
       <Tabs.Screen
         name='favorites'
         options={{
@@ -80,6 +81,13 @@ export default function TabLayout() {
           headerShown: true,
           headerStyle: { backgroundColor: headerBackground },
           tabBarIcon: ({ color }) => <TabBarIcon name='star' color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name='info'
+        options={{
+          title: "",
+          tabBarIcon: ({ color }) => <TabBarIcon name='info-circle' color={color} />,
         }}
       />
       <Tabs.Screen

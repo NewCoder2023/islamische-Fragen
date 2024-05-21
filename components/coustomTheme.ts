@@ -17,7 +17,13 @@ export const lightTheme = {
     backgroundColor: Colors.light.background,
   },
   inverseText: {
-    color: Colors.light.background,
+    color: Colors.light.white,
+  },
+  categorieText: {
+    color: "#41acd2"
+  },
+  categorieBackground: {
+    backgroundColor: "#d5edf7"
   },
 };
 
@@ -38,7 +44,13 @@ export const darkTheme = {
     backgroundColor: Colors.dark.background,
   },
   inverseText: {
-    color: Colors.dark.background,
+    color: Colors.dark.black,
+  },
+  categorieText: {
+    color: "#d5edf7"
+  },
+  categorieBackground: {
+    backgroundColor: "# eff8fc"
   },
 };
 

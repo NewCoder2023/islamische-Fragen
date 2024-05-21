@@ -15,32 +15,32 @@ export default function Categories() {
   const categories = [
     {
       name: "Recht",
-      image: require("assets/images/rechtsfragen.png"),
+      image: require("assets/images/Recht.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
       name: "Glaube",
-      image: require("assets/images/glaubensfragen.png"),
+      image: require("assets/images/Glaube.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
       name: "Quran",
-      image: require("assets/images/quran.png"),
+      image: require("assets/images/Quran.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
       name: "Ethik",
-      image: require("assets/images/ethischeFragen.png"),
+      image: require("assets/images/Ethik.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
       name: "Historie",
-      image: require("assets/images/historischeFragen.png"),
+      image: require("assets/images/Historie.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
       name: "Ratschläge",
-      image: require("assets/images/ratschlaege.png"),
+      image: require("assets/images/Ratschlaege.png"),
       path: "(renderCategory)/[renderCategory]",
     },
   ];
@@ -61,13 +61,13 @@ export default function Categories() {
           asChild
         >
           <Pressable>
-            <View style={[styles.element, themeStyles.container]}>
-              <Text style={styles.elementText}>{category.name}</Text>
+            <View style={[styles.element, themeStyles.categorieBackground]}>
               <Image
                 style={styles.elementIcon}
                 source={category.image}
                 contentFit='cover'
               />
+              <Text style={[styles.elementText, themeStyles.categorieText]}>{category.name}</Text>
             </View>
           </Pressable>
         </Link>
@@ -84,14 +84,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
+
   element: {
-    width: 80,
-    height: 80,
+    width: 95,
+    height: 95,
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "green",
     margin: 10,
+    borderWidth: 1,
+    borderColor: "#eff8fc",
+    paddingHorizontal: 2,
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -110,8 +114,16 @@ const styles = StyleSheet.create({
     height: 40,
   },
   elementText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "bold",
-    paddingBottom: 10,
+    padding: 5,
+    width: "100%",
+    textAlign: "center",
+    marginTop: 5,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderRadius: 15
+    
+
   },
 });
