@@ -40,6 +40,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      initialRouteName='(elements)'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         // Disable the static render of the header on web
@@ -69,10 +70,12 @@ export default function TabLayout() {
         name='askQuestion'
         options={{
           title: "",
-          tabBarIcon: ({ color }) => <TabBarIcon name='question-circle' color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name='question-circle' color={color} />
+          ),
         }}
       />
-      
+
       <Tabs.Screen
         name='favorites'
         options={{
@@ -87,7 +90,9 @@ export default function TabLayout() {
         name='info'
         options={{
           title: "",
-          tabBarIcon: ({ color }) => <TabBarIcon name='info-circle' color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name='info-circle' color={color} />
+          ),
         }}
       />
       <Tabs.Screen

@@ -12,6 +12,7 @@ export default function Categories() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
 
+
   const categories = [
     {
       name: "Recht",
@@ -67,7 +68,11 @@ export default function Categories() {
                 source={category.image}
                 contentFit='cover'
               />
-              <Text style={[styles.elementText, themeStyles.categorieText]}>{category.name}</Text>
+              <View style={[styles.textContainer, themeStyles.border]}>
+                <Text style={[styles.elementText, themeStyles.categorieText]}>
+                  {category.name}
+                </Text>
+              </View>
             </View>
           </Pressable>
         </Link>
@@ -113,17 +118,18 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
   },
+  textContainer: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderRadius: 15,
+    marginTop: 8,
+  },
   elementText: {
     fontSize: 11,
     fontWeight: "bold",
     padding: 5,
     width: "100%",
     textAlign: "center",
-    marginTop: 5,
     paddingHorizontal: 10,
-    borderWidth: 1,
-    borderRadius: 15
-    
-
-  },
+  }
 });

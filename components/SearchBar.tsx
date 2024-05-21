@@ -21,7 +21,7 @@ import {
     const themeStyles = coustomTheme(colorScheme);
   
     return (
-      <View style={[styles.searchContainer, themeStyles.container]}>
+      <View style={[styles.searchContainer, themeStyles.container, themeStyles.border]}>
         <AntDesign
           name='search1'
           size={20}
@@ -31,7 +31,7 @@ import {
         <Text style={styles.border}>|</Text>
         <TextInput
           style={[styles.searchField, themeStyles.text]}
-          placeholder='Suche'
+          placeholder='Suche nach Antworten...'
           placeholderTextColor={themeStyles.text.color}
           keyboardType='default'
           editable
@@ -74,7 +74,7 @@ import {
       paddingVertical: 10,
     },
     border: {
-      color: Colors.light.border,
+      color: Colors.dark.border,
       fontSize: 25,
       paddingLeft: 3,
       paddingBottom: 5,
@@ -87,6 +87,11 @@ import {
       paddingLeft: 5,
       paddingVertical: 10,
     },
-  
+    lightBorder: {
+      borderColor: Colors.light.borderColor
+    },
+    darkBorder: {
+      borderColor: Colors.dark.borderColor
+    }
   });
   

@@ -12,7 +12,7 @@ export default function Category() {
   const themeStyles = coustomTheme(colorscheme);
 
   return (
-    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+    <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Image
           style={styles.backgroundImage}
@@ -20,14 +20,14 @@ export default function Category() {
           contentFit='fill'
         />
         <View style={styles.searchBar}>
-        <SearchBar />
+          <SearchBar />
         </View>
       </View>
 
       <View style={styles.categoryContainer}>
         <QuestionLinks />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -39,29 +39,25 @@ const styles = StyleSheet.create({
     flex: 0.65,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 10,
   },
   backgroundImage: {
     width: "100%",
     height: "100%",
   },
   searchBar: {
-   width: "85%",
-   backgroundColor: "tranparent",
+    width: "85%",
+    backgroundColor: "tranparent",
     position: "absolute",
-    top: "70%"
+    top: "70%",
   },
   headerText: {},
-  firstLine: {
-    fontSize: 30,
-  },
-  secondLine: {
-    fontSize: 50,
-  },
 
   searchField: {},
   categoryContainer: {
     flex: 0.35,
     marginTop: 10,
+    marginBottom: 10,
     justifyContent: "flex-end",
     alignItems: "center",
   },

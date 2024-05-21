@@ -25,6 +25,9 @@ export const lightTheme = {
   categorieBackground: {
     backgroundColor: "#d5edf7"
   },
+  border: {
+    borderColor: "#FFFFFF",
+    }
 };
 
 export const darkTheme = {
@@ -47,11 +50,14 @@ export const darkTheme = {
     color: Colors.dark.black,
   },
   categorieText: {
-    color: "#d5edf7"
+    color: "#000000"
   },
   categorieBackground: {
     backgroundColor: "# eff8fc"
   },
+  border: {
+  borderColor: "#000000",
+  }
 };
 
 type ColorScheme = "light" | "dark" | undefined | null;

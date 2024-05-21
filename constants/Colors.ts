@@ -16,6 +16,7 @@ export default {
     black: "#000000",
     link: "rgb(10, 132, 255)",
     adButton: "#000000",
+    borderColor: "#FFFFFF",
   },
   dark: {
     text: "#d0d0c0",
@@ -32,5 +33,6 @@ export default {
     link: "rgb(10, 132, 255)",
     contrast: "#34495e",
     adButton: "#d0d0c0",
+    borderColor: "#000000",
   },
 };
