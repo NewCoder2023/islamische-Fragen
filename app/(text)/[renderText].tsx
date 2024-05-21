@@ -79,9 +79,13 @@ export default function renderText() {
   ];
 
   const handleCheckboxChange = (value: string) => {
-    setMarja((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
-    );
+    setMarja((prev) => {
+      if (prev.includes(value)) {
+        return prev.length > 1 ? prev.filter((v) => v !== value) : prev;
+      } else {
+        return [...prev, value];
+      }
+    });
   };
 
   const filteredAnswers = marja.length
