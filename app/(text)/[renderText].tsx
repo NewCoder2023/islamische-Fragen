@@ -42,7 +42,7 @@ export default function renderText() {
     isFavorite: boolean;
   }
 
-  const { answers, fetchError } = fetchText(id, table);
+  const { question, answers, fetchError } = fetchText(id, table);
   const key = `text-${id}-${table}`;
   const appColor = Appearance.getColorScheme();
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
@@ -74,8 +74,8 @@ export default function renderText() {
   };
 
   const marjaOptions = [
-    { label: "Sayyid Ali-as-Sistani", value: "sistani" },
     { label: "Sayyid Ali Khamenei", value: "khamenei" },
+    { label: "Sayyid Ali-as-Sistani", value: "sistani" },
   ];
 
   const handleCheckboxChange = (value: string) => {
@@ -92,7 +92,6 @@ export default function renderText() {
     ? answers.filter((answer) => marja.includes(answer.name))
     : answers;
 
-  console.log(filteredAnswers);
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -133,6 +132,9 @@ export default function renderText() {
         </View>
       ) : (
         <ScrollView style={styles.answerContainer}>
+          <View style={styles.questionContainer}>
+            <Text style={styles.questionText}>{question}</Text>
+            </View>
           <View style={styles.marjaChoiceContainer}>
             {marjaOptions.map((option) => (
               <View key={option.value} style={styles.marjaChoice}>
@@ -226,6 +228,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+  questionContainer: {
+    margin: 10,
+    borderWidth: 1,
+    borderRadius: 20,
+    padding: 10
+  },
+  questionText: {
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "bold"
+  },
+
   answers: {
     flex: 1,
     marginBottom: 20,
@@ -244,16 +258,18 @@ const styles = StyleSheet.create({
   },
   marjaChoiceContainer: {
     flexDirection: "row",
-    marginTop: 20,
-    marginBottom: 20,
+    margin: 20,
     justifyContent: "space-around",
   },
   marjaChoice: {
+    flexDirection: "row",
     alignItems: "center",
+    marginBottom: 10,
   },
   marjaCheckbox: {},
   marjaLable: {
     marginTop: 5,
+    paddingLeft: 5
   },
   headerImage: {},
   image: {
