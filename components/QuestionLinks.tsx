@@ -15,12 +15,12 @@ export default function Categories() {
 
   const categories = [
     {
-      name: "Recht",
+      name: "Rechtsfragen",
       image: require("assets/images/Recht.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
-      name: "Glaube",
+      name: "Glaubensfragen",
       image: require("assets/images/Glaube.png"),
       path: "(renderCategory)/[renderCategory]",
     },
@@ -87,12 +87,11 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
   },
 
   element: {
-    width: 95,
-    height: 95,
+    width: 110,
+    height: 110,
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
@@ -130,6 +129,6 @@ const styles = StyleSheet.create({
     padding: 5,
     width: "100%",
     textAlign: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
   }
 });

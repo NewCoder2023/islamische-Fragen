@@ -56,7 +56,7 @@ export default function renderText() {
     loadDownloadedText,
     toggleDownload,
   } = useDownload(key, answers);
-  const [marja, setMarja] = useState<string[]>(["sistani", "khamenei"]);
+  const [marja, setMarja] = useState<string[]>([]);
 
   const flashListRef = useRef<any>(null);
 
@@ -74,23 +74,20 @@ export default function renderText() {
   };
 
   const marjaOptions = [
-    { label: "Sayyid Ali Khamenei", value: "khamenei" },
-    { label: "Sayyid Ali-as-Sistani", value: "sistani" },
+    { label: "Sayid al-Khamenei", value: "khamenei" },
+    { label: "Sayid as-Sistani", value: "sistani" },
   ];
 
   const handleCheckboxChange = (value: string) => {
-    setMarja((prev) => {
-      if (prev.includes(value)) {
-        return prev.length > 1 ? prev.filter((v) => v !== value) : prev;
-      } else {
-        return [...prev, value];
-      }
-    });
+    setMarja((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
   };
+
 
   const filteredAnswers = marja.length
     ? answers.filter((answer) => marja.includes(answer.name))
-    : answers;
+    : [];
 
   return (
     <View style={styles.container}>
@@ -134,7 +131,7 @@ export default function renderText() {
         <ScrollView style={styles.answerContainer}>
           <View style={styles.questionContainer}>
             <Text style={styles.questionText}>{question}</Text>
-            </View>
+          </View>
           <View style={styles.marjaChoiceContainer}>
             {marjaOptions.map((option) => (
               <View key={option.value} style={styles.marjaChoice}>
@@ -232,12 +229,12 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     borderRadius: 20,
-    padding: 10
+    padding: 10,
   },
   questionText: {
     fontSize: 20,
     textAlign: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 
   answers: {
@@ -269,12 +266,12 @@ const styles = StyleSheet.create({
   marjaCheckbox: {},
   marjaLable: {
     marginTop: 5,
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   headerImage: {},
   image: {
-    width: 70,
-    height: 105,
+    width: 60,
+    height: 90,
     borderRadius: 10,
   },
   headerText: {},

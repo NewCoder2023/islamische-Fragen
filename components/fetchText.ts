@@ -33,12 +33,12 @@ export default function fetchText(id: string, table: string) {
       if (data) {
         setAnswers([
           {
-            marja: "Sayyid Ali khamenei",
+            marja: "Sayid al-Khamenei (h)",
             answer: data.answer_khamenei || "",
             name: "khamenei",
           },
           {
-            marja: "Sayyid Ali-as-Sistani ",
+            marja: "Sayid as-Sistani (h)",
             answer: data.answer_sistani || "",
             name: "sistani",
           },

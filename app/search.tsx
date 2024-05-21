@@ -13,19 +13,27 @@ import { useState } from "react";
 import ItemSearch from "components/ItemSearch";
 import { Feather } from "@expo/vector-icons";
 import { coustomTheme } from "components/coustomTheme";
+import { useRef, useEffect } from "react";
 
 export default function TabOneScreen() {
   const [search, setSearch] = useState("");
 
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, []);
 
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
       accessible={false}
     >
-      <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+      <View style={styles.container}>
         <View style={[styles.searchContainer, themeStyles.container]}>
           <AntDesign
             name='search1'
@@ -41,6 +49,7 @@ export default function TabOneScreen() {
             keyboardType='default'
             editable
             value={search}
+            ref={searchInputRef}
             onChangeText={setSearch}
             onBlur={Keyboard.dismiss}
           />
@@ -57,7 +66,7 @@ export default function TabOneScreen() {
         <View style={styles.renderSearchContainer}>
           <ItemSearch search={search} />
         </View>
-      </SafeAreaView>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -95,20 +104,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 10,
     paddingLeft: 5,
-    paddingVertical: 10,
+    paddingVertical: 12,
   },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
-  lightInputText: {
-    color: Colors.light.text,
-  },
-  darkInputText: {
-    color: Colors.dark.text,
-  },
+
   renderSearchContainer: {
     flex: 1,
   },

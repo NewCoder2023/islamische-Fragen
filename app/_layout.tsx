@@ -86,6 +86,13 @@ function RootLayoutNav() {
             headerTitle: "Impressum",
           }}
         />
+        <Stack.Screen
+          name='search'
+          options={{
+            headerShown: true,
+            headerTitle: "Suche",
+          }}
+        />
       </Stack>
       <Toast />
     </ThemeProvider>
