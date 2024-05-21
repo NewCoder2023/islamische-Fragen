@@ -34,7 +34,7 @@ export default function renderText() {
     isFavorite: boolean;
   }
 
-  const { text, fetchError } = fetchText(id, table);
+  const { answers, fetchError } = fetchText(id, table);
   const key = `text-${id}-${table}`;
   const appColor = Appearance.getColorScheme();
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
@@ -47,7 +47,7 @@ export default function renderText() {
     downloadedText,
     loadDownloadedText,
     toggleDownload,
-  } = useDownload(key, text);
+  } = useDownload(key, answers);
 
   const flashListRef = useRef<any>(null);
 
@@ -59,12 +59,7 @@ export default function renderText() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
 
-  const textContentPerPage = useMemo(() => {
-    if (!text && !downloadedText) return [];
-    const content = downloadedText || text;
-    return content.split("\n\n\n").filter((t) => t.trim() !== "");
-  }, [text, downloadedText]);
-
+  console.log(answers);
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -99,98 +94,58 @@ export default function renderText() {
           headerTitle: title,
         }}
       />
-      {fetchError && !isDownloaded && (
+      {!answers.length ? (
         <View style={styles.renderError}>
-          <Text style={styles.errorText}>{fetchError}</Text>
+          <Text style={styles.errorText}>{fetchError || "Loading..."}</Text>
         </View>
-      )}
-      {textContentPerPage.length < 0 && (
-        <View style={styles.renderError}>
-          <Text style={styles.errorText}>{fetchError}</Text>
-        </View>
-      )}
-      {textContentPerPage.length > 0 && (
-        <View style={styles.FlashContainer}>
-          {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD && (
-            <Feather
-              name='arrow-up-circle'
-              size={35}
-              color={colorScheme == "dark" ? "#45CE30" : "#009432"}
-              style={styles.toTopButton}
-              onPress={() => {
-                flashListRef.current.scrollToOffset(true, 0);
+      ) : (
+        answers.map((answer, index) => (
+          <View key={index} style={styles.answerContainer}>
+            <View style={styles.marjaContainer}>
+              <Text>{answer.marja}</Text>
+            </View>
+            <Markdown
+              style={{
+                body: {
+                  ...themeStyles.text,
+                  fontSize: 20,
+                  lineHeight: 40,
+                  fontFamily: Platform.OS === "ios" ? "Helvetica" : "Roboto",
+                },
+                heading1: {
+                  fontSize: 25,
+                },
+                heading2: {
+                  ...themeStyles.text,
+                  fontSize: 30,
+                  textAlign: "center",
+                },
+                heading3: {
+                  ...themeStyles.text,
+                  fontSize: 30,
+                  fontWeight: "bold",
+                },
+                heading4: {
+                  ...themeStyles.text,
+                  fontSize: 30,
+                  textAlign: "center",
+                  fontWeight: "bold",
+                },
+                heading5: {
+                  ...themeStyles.text,
+                  fontSize: 30,
+                },
+                heading6: {
+                  ...themeStyles.text,
+                  fontSize: 20,
+                  textAlign: "center",
+                },
               }}
-            />
-          )}
-          <FlashList
-            data={textContentPerPage}
-            extraData={[appColor, bookmarks]}
-            ref={flashListRef}
-            onScroll={(event) => {
-              setContentVerticalOffset(event.nativeEvent.contentOffset.y);
-            }}
-            renderItem={({ item, index }) => (
-              <Pressable
-                onLongPress={() => toggleBookmark(index)}
-                style={[
-                  {
-                    backgroundColor: bookmarks[index]
-                      ? "lightgreen"
-                      : "transparent",
-                  },
-                  styles.bookmark,
-                ]}
-              >
-                <View style={[styles.textContainer, themeStyles.container]}>
-                  <Markdown
-                    style={{
-                      body: {
-                        ...themeStyles.text,
-                        fontSize: 20,
-                        lineHeight: 40,
-                        fontFamily:
-                          Platform.OS == "ios" ? "Helvetica" : "Roboto",
-                      },
-                      heading1: {
-                        fontSize: 25,
-                      },
-                      heading2: {
-                        ...themeStyles.text,
-                        fontSize: 30,
-                        textAlign: "center",
-                      },
-                      heading3: {
-                        ...themeStyles.text,
-                        fontSize: 30,
-                        fontWeight: "bold",
-                      },
-                      heading4: {
-                        ...themeStyles.text,
-                        fontSize: 30,
-                        textAlign: "center",
-                        fontWeight: "bold",
-                      },
-                      heading5: {
-                        ...themeStyles.text,
-                        fontSize: 30,
-                      },
-                      heading6: {
-                        ...themeStyles.text,
-                        fontSize: 20,
-                        textAlign: "center",
-                      },
-                    }}
-                  >
-                    {item}
-                  </Markdown>
-
-                  <Text style={styles.index}>{index + 1}</Text>
-                </View>
-              </Pressable>
-            )}
-            estimatedItemSize={100}
-          />
-        </View>
+            >
+              {answer.answer}
+            </Markdown>
+          </View>
+        ))
       )}
     </View>
   );
@@ -211,13 +166,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 30,
   },
-  textContainer: {
+  answerContainer: {
     flex: 1,
     marginBottom: 7,
     marginHorizontal: 15,
     padding: 20,
     borderRadius: 10,
   },
+  marjaContainer: {},
   bookmark: {
     paddingTop: 7,
   },
@@ -231,8 +187,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
   },
-  pageNumber: {},
-  separator: {},
   renderError: {
     flex: 1,
     marginTop: 20,

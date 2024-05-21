@@ -1,9 +1,14 @@
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
+interface Answer {
+  marja: string;
+  answer: string;
+}
 export default function fetchText(id: string, table: string) {
   const [fetchError, setFetchError] = useState<string>("");
-  const [text, setText] = useState<string>("");
+  const [answers, setAnswers] = useState<Answer[]>([]);
+
 
   // Encode title because () in title causes problems
   useEffect(() => {
@@ -21,11 +26,14 @@ export default function fetchText(id: string, table: string) {
           "Elemente konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internet Verbindung!"
         );
 
-        setText("");
+        setAnswers([]);
       }
 
       if (data) {
-        setText(data.content);
+        setAnswers([
+          { marja: 'sistani', answer: data.answer_sistani || "" },
+          { marja: 'khamenei', answer: data.answer_khamenei || "" }
+        ]);
         setFetchError("");
       }
     };
@@ -34,6 +42,6 @@ export default function fetchText(id: string, table: string) {
   }, [id, table]);
   return {
     fetchError,
-    text,
+    answers,
   };
 }
