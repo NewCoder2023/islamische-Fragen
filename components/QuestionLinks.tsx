@@ -14,27 +14,27 @@ export default function Categories() {
 
   const categories = [
     {
-      name: "Rechtsfragen",
+      name: "Recht",
       image: require("assets/images/rechtsfragen.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
-      name: "Glaubensfragen",
+      name: "Glaube",
       image: require("assets/images/glaubensfragen.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
-      name: "Quranische Fragen",
+      name: "Quran",
       image: require("assets/images/quran.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
-      name: "Ethische Fragen",
+      name: "Ethik",
       image: require("assets/images/ethischeFragen.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
-      name: "Historische Fragen",
+      name: "Historie",
       image: require("assets/images/historischeFragen.png"),
       path: "(renderCategory)/[renderCategory]",
     },
@@ -46,41 +46,32 @@ export default function Categories() {
   ];
 
   return (
-    <View>
-      <View style={styles.container}>
-        {categories.map((category, index) => (
-          <Link
-            key={index}
-            href={
-              {
-                pathname: category.path,
-                params: {
-                  category: category.name,
-                },
-              } as any
-            }
-            asChild
-          >
-            <Pressable>
-              <View style={[styles.element, themeStyles.container]}>
-                <Text style={styles.elementText}>{category.name}</Text>
-                <Image
-                  style={styles.elementIcon}
-                  source={category.image}
-                  contentFit='cover'
-                />
-              </View>
-            </Pressable>
-          </Link>
-        ))}
-        <Link href={"/askQuestion"} asChild>
+    <View style={styles.container}>
+      {categories.map((category, index) => (
+        <Link
+          key={index}
+          href={
+            {
+              pathname: category.path,
+              params: {
+                category: category.name,
+              },
+            } as any
+          }
+          asChild
+        >
           <Pressable>
-            <View style={[styles.element, themeStyles.container, styles.ask]}>
-              <Text style={styles.elementText}>Neue Frage Stellen</Text>
+            <View style={[styles.element, themeStyles.container]}>
+              <Text style={styles.elementText}>{category.name}</Text>
+              <Image
+                style={styles.elementIcon}
+                source={category.image}
+                contentFit='cover'
+              />
             </View>
           </Pressable>
         </Link>
-      </View>
+      ))}
     </View>
   );
 }
@@ -91,18 +82,16 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    gap: 20,
+    padding: 10,
   },
   element: {
-    width: 150,
-    height: 100,
+    width: 80,
+    height: 80,
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
-    gap: 8,
-    paddingTop: 10,
-    paddingBottom: 10,
-
+    backgroundColor: "green",
+    margin: 10,
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -115,24 +104,14 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  ask: {
-    width: "100%",
-    height: 60,
-    padding: 20
-  },
 
   elementIcon: {
     width: 40,
     height: 40,
   },
   elementText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "bold",
-  },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
+    paddingBottom: 10,
   },
 });

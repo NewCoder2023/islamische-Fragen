@@ -16,6 +16,9 @@ export const lightTheme = {
   background: {
     backgroundColor: Colors.light.background,
   },
+  inverseText: {
+    color: Colors.light.background,
+  },
 };
 
 export const darkTheme = {
@@ -33,6 +36,9 @@ export const darkTheme = {
   },
   background: {
     backgroundColor: Colors.dark.background,
+  },
+  inverseText: {
+    color: Colors.dark.background,
   },
 };
 

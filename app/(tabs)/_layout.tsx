@@ -16,7 +16,15 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return <FontAwesome size={30} style={ Platform.OS == "ios" ? {marginBottom: -20 } : {marginBottom: -10 }} {...props} />;
+  return (
+    <FontAwesome
+      size={30}
+      style={
+        Platform.OS == "ios" ? { marginBottom: -20 } : { marginBottom: -10 }
+      }
+      {...props}
+    />
+  );
 }
 
 export default function TabLayout() {
@@ -40,28 +48,28 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name='index'
+        name='(elements)'
         options={{
           title: "",
+          headerShown: false,
+          // tabBarIcon: ({ color }) => <Image source={require("assets/images/category.png")} style={{height: 28, width: 28, marginTop: 20}}/>,
           tabBarIcon: ({ color }) => <TabBarIcon name='home' color={color} />,
         }}
       />
 
       <Tabs.Screen
-        name='(elements)'
+        name='index'
         options={{
           title: "",
-          headerShown: false,
-         // tabBarIcon: ({ color }) => <Image source={require("assets/images/category.png")} style={{height: 28, width: 28, marginTop: 20}}/>,
-         tabBarIcon: ({ color }) => <TabBarIcon name='bars' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='bars' color={color} />,
         }}
       />
 
       <Tabs.Screen
-        name='search'
+        name='askQuestion'
         options={{
           title: "",
-          tabBarIcon: ({ color }) => <TabBarIcon name='search' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='question' color={color} />,
         }}
       />
       <Tabs.Screen

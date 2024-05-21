@@ -1,6 +1,6 @@
 //dasboard-neu:
 import { Keyboard, ScrollView, StyleSheet, TextInput } from "react-native";
-import { View, Text } from "components/Themed";
+import { View, Text, SafeAreaView } from "components/Themed";
 import Colors from "constants/Colors";
 import { TouchableWithoutFeedback } from "react-native";
 import { Pressable } from "react-native";
@@ -25,7 +25,6 @@ export default function adminDashboard() {
   const genderOptions = [
     { label: "Männlich", value: "Männlich" },
     { label: "Weiblich ", value: "Weiblich" },
-    { label: "Diverse", value: "Diverse" },
   ];
   const handleCheckboxChange = (value: string) => {
     setgender(value);
@@ -33,7 +32,7 @@ export default function adminDashboard() {
 
   return (
     <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {/* Submit button */}
         <Stack.Screen
           options={{
@@ -105,7 +104,7 @@ export default function adminDashboard() {
             keyboardType='default'
           />
         </ScrollView>
-      </View>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
