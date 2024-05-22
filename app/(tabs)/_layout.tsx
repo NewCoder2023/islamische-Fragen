@@ -65,7 +65,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name='bars' color={color} />,
         }}
       />
-
+      <Tabs.Screen
+        name='search'
+        options={{
+          title: "",
+          tabBarIcon: ({ color }) => <TabBarIcon name='search' color={color} />,
+        }}
+      />
       <Tabs.Screen
         name='askQuestion'
         options={{
@@ -84,15 +90,6 @@ export default function TabLayout() {
           headerShown: true,
           headerStyle: { backgroundColor: headerBackground },
           tabBarIcon: ({ color }) => <TabBarIcon name='star' color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name='info'
-        options={{
-          title: "",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name='info-circle' color={color} />
-          ),
         }}
       />
 

@@ -33,7 +33,7 @@ export default function TabOneScreen() {
       onPress={() => Keyboard.dismiss()}
       accessible={false}
     >
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={[styles.searchContainer, themeStyles.container]}>
           <AntDesign
             name='search1'
@@ -66,7 +66,7 @@ export default function TabOneScreen() {
         <View style={styles.renderSearchContainer}>
           <ItemSearch search={search} />
         </View>
-      </View>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }

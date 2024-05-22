@@ -123,15 +123,15 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   leftElements: {
-    height: "98%",
+    height: "100%",
     width: "50%",
-    backgroundColor: "green",
+
     alignItems: "center",
   },
   rightElements: {
-    height: "98%",
+    height: "100%",
     width: "50%",
-    backgroundColor: "blue",
+
     alignItems: "center",
   },
 
@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
     width: "90%",
     height: "60%",
     alignSelf: "center",
-  
   },
   textContainer: {
     backgroundColor: "white",
