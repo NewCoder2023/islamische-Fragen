@@ -33,7 +33,6 @@ const RenderNestedItems: React.FC<RenderNestedItemsProps> = ({
     return encodeURIComponent(cleanedTitle)
       .replace(/\(/g, "%28")
       .replace(/\)/g, "%29");
-     
   };
 
   const colorScheme = useColorScheme();
@@ -64,9 +63,7 @@ const RenderNestedItems: React.FC<RenderNestedItemsProps> = ({
                   {
                     pathname: "(renderCategory)/[renderCategory]",
                     params: {
-                      id: item.id,
-                      category: item.title,
-                      title: `${encodeTitle(item.title)}`,
+                      category: `${encodeTitle(item.title)}`,
                     },
                   } as any
                 }

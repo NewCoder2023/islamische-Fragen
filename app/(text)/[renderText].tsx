@@ -68,6 +68,7 @@ export default function renderText() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
 
+
   const images = {
     sistani: require("assets/images/sistani.png"),
     khamenei: require("assets/images/khamenei.png"),

@@ -26,6 +26,8 @@ export default function RenderItems({ items, fetchError, table }) {
   const themeErrorStyle =
     colorScheme === "light" ? styles.lightError : styles.darkError;
 
+    console.log(table)
+
   const appColor = Appearance.getColorScheme();
   return (
     <View style={styles.container}>

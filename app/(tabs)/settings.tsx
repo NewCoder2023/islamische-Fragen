@@ -28,7 +28,12 @@ export default function settings() {
           value={isDarkMode}
         />
       </View>
-      <View style={styles.linkContainer}>
+      <View style={styles.informationContainer}>
+        <Link style={styles.linkText} href='/information'>
+          Über die App
+        </Link>
+      </View>
+      <View style={styles.impressumContainer}>
         <Link style={styles.linkText} href='/impressum'>
           Impressum
         </Link>
@@ -42,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "space-between",
+  
   },
   switchContainer: {
     flexDirection: "row",
@@ -54,7 +59,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
   },
-  linkContainer: {
+  informationContainer: {},
+  impressumContainer: {
     justifyContent: "flex-end",
     alignItems: "center",
   },
