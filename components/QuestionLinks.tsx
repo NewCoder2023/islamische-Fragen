@@ -12,16 +12,15 @@ export default function Categories() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
 
-
-  const categories = [
+  const categoriesLeft = [
     {
       name: "Rechtsfragen",
-      image: require("assets/images/Recht.png"),
+      image: require("assets/images/Rechtsfragen.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
       name: "Glaubensfragen",
-      image: require("assets/images/Glaube.png"),
+      image: require("assets/images/Glaubensfragen.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
@@ -29,6 +28,8 @@ export default function Categories() {
       image: require("assets/images/Quran.png"),
       path: "(renderCategory)/[renderCategory]",
     },
+  ];
+  const categoriesRight = [
     {
       name: "Ethik",
       image: require("assets/images/Ethik.png"),
@@ -48,54 +49,88 @@ export default function Categories() {
 
   return (
     <View style={styles.container}>
-      {categories.map((category, index) => (
-        <Link
-          key={index}
-          href={
-            {
-              pathname: category.path,
-              params: {
-                category: category.name,
-              },
-            } as any
-          }
-          asChild
-        >
-          <Pressable>
-            <View style={[styles.element, themeStyles.categorieBackground]}>
-              <Image
-                style={styles.elementIcon}
-                source={category.image}
-                contentFit='cover'
-              />
-              <View style={[styles.textContainer, themeStyles.border]}>
-                <Text style={[styles.elementText, themeStyles.categorieText]}>
-                  {category.name}
-                </Text>
+      <View style={styles.leftElements}>
+        {categoriesLeft.map((category, index) => (
+          <Link
+            key={index}
+            href={
+              {
+                pathname: category.path,
+                params: {
+                  category: category.name,
+                },
+              } as any
+            }
+            asChild
+          >
+            <Pressable>
+              <View style={[styles.element, themeStyles.categorieBackground]}>
+                <Image
+                  style={styles.elementIcon}
+                  source={category.image}
+                  contentFit='cover'
+                />
+                <View style={[styles.textContainer, themeStyles.border]}>
+                  <Text style={[styles.elementText, themeStyles.categorieText]}>
+                    {category.name}
+                  </Text>
+                </View>
               </View>
-            </View>
-          </Pressable>
-        </Link>
-      ))}
+            </Pressable>
+          </Link>
+        ))}
+      </View>
+      <View style={styles.rightElements}>
+        {categoriesRight.map((category, index) => (
+          <Link
+            key={index}
+            href={
+              {
+                pathname: category.path,
+                params: {
+                  category: category.name,
+                },
+              } as any
+            }
+            asChild
+          >
+            <Pressable>
+              <View style={[styles.element, themeStyles.categorieBackground]}>
+                <Image
+                  style={styles.elementIcon}
+                  source={category.image}
+                  contentFit='cover'
+                />
+                <View style={[styles.textContainer, themeStyles.border]}>
+                  <Text style={[styles.elementText, themeStyles.categorieText]}>
+                    {category.name}
+                  </Text>
+                </View>
+              </View>
+            </Pressable>
+          </Link>
+        ))}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-end",
+    justifyContent: "space-around",
   },
+  leftElements: {},
+  rightElements: {},
 
   element: {
     width: 110,
-    height: 110,
+    height: 98,
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "green",
     margin: 10,
     borderWidth: 1,
     borderColor: "#eff8fc",
@@ -130,5 +165,5 @@ const styles = StyleSheet.create({
     width: "100%",
     textAlign: "center",
     paddingHorizontal: 5,
-  }
+  },
 });

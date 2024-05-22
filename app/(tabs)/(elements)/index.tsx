@@ -19,7 +19,7 @@ export default function index() {
       <View style={styles.headerContainer}>
         <Image
           style={styles.backgroundImage}
-          source={require("assets/images/background2.svg")}
+          source={require("assets/images/backgroundIndex.svg")}
           contentFit='fill'
         />
         <View style={styles.searchContainer}>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    flex: 0.65,
+    flex: 0.55,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     width: "100%",
     position: "absolute",
-    top: "72%",
+    top: "65%",
     backgroundColor: "transparent",
   },
   search: {
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 
   searchField: {},
   categoryContainer: {
-    flex: 0.35,
+    flex: 0.45,
     marginTop: 10,
     marginBottom: 10,
     justifyContent: "flex-end",

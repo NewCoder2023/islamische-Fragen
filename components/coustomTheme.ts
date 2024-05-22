@@ -20,10 +20,10 @@ export const lightTheme = {
     color: Colors.light.white,
   },
   categorieText: {
-    color: "#41acd2"
+    color: "#50707C"
   },
   categorieBackground: {
-    backgroundColor: "#d5edf7"
+    backgroundColor: "#A2D9EF"
   },
   border: {
     borderColor: "#FFFFFF",
@@ -53,7 +53,7 @@ export const darkTheme = {
     color: "#000000"
   },
   categorieBackground: {
-    backgroundColor: "# eff8fc"
+    backgroundColor: "#A2D9EF"
   },
   border: {
   borderColor: "#000000",
