@@ -6,7 +6,7 @@ interface Answer {
   answer: string;
   name: string;
 }
-export default function fetchText(id: string, table: string) {
+export default function useFetchText(id: string, table: string) {
   const [fetchError, setFetchError] = useState<string>("");
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [question, setQuestion] = useState<string>("");
@@ -53,6 +53,6 @@ export default function fetchText(id: string, table: string) {
   return {
     fetchError,
     answers,
-    question
+    question,
   };
 }

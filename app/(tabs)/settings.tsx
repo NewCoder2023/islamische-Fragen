@@ -28,6 +28,7 @@ export default function settings() {
           value={isDarkMode}
         />
       </View>
+
       <View style={styles.spacer} />
       <View style={styles.informationContainer}>
         <Link style={styles.linkText} href='/information'>
@@ -48,7 +49,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-  
   },
   switchContainer: {
     flexDirection: "row",
@@ -60,8 +60,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
   },
+
   spacer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   informationContainer: {},
   impressumContainer: {

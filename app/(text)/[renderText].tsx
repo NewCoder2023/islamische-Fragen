@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
-import fetchText from "components/fetchText";
+import useFetchText from "components/useFetchText";
 import Colors from "constants/Colors";
 import { Stack } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
@@ -35,16 +35,7 @@ export default function renderText() {
     title: string;
   }>();
 
-  interface FavoriteItem {
-    id: string;
-    title: string;
-    table: string;
-    isFavorite: boolean;
-  }
-
- 
-
-  const { question, answers, fetchError } = fetchText(id, table);
+  const { question, answers, fetchError } = useFetchText(id, table);
   const key = `text-${id}-${table}`;
   const appColor = Appearance.getColorScheme();
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
@@ -60,8 +51,6 @@ export default function renderText() {
   } = useDownload(key, answers);
   const [marja, setMarja] = useState<string[]>([]);
 
-  const flashListRef = useRef<any>(null);
-
   useLayoutEffect(() => {
     updateDownload();
     loadDownloadedText();
@@ -69,7 +58,6 @@ export default function renderText() {
 
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
-
 
   const images = {
     sistani: require("assets/images/sistani.png"),
@@ -86,7 +74,6 @@ export default function renderText() {
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
   };
-
 
   const filteredAnswers = marja.length
     ? answers.filter((answer) => marja.includes(answer.name))
@@ -126,9 +113,9 @@ export default function renderText() {
           headerTitle: title,
         }}
       />
-      {!answers.length ? (
+      {!answers.length && !fetchError ? null : fetchError ? (
         <View style={styles.renderError}>
-          <Text style={styles.errorText}>{fetchError || "Loading..."}</Text>
+          <Text style={styles.errorText}>{fetchError || "Lade"}</Text>
         </View>
       ) : (
         <ScrollView style={styles.answerContainer}>
