@@ -27,6 +27,7 @@ import useDownload from "components/useDownload";
 import { coustomTheme } from "components/coustomTheme";
 import { Image } from "expo-image";
 import Checkbox from "expo-checkbox";
+import { useSetFontSize } from "components/fontSizeStore";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -41,6 +42,7 @@ export default function renderText() {
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
   const CONTENT_OFFSET_THRESHOLD = 300;
   const { bookmarks, toggleBookmark } = useBookmarks(key);
+  const { fontSize } = useSetFontSize();
   const { toggleFavorite, isInFavorites } = useFavorites();
   const {
     updateDownload,
@@ -152,36 +154,36 @@ export default function renderText() {
                 style={{
                   body: {
                     ...themeStyles.text,
-                    fontSize: 20,
+                    fontSize: fontSize,
                     lineHeight: 40,
                     fontFamily: Platform.OS === "ios" ? "Helvetica" : "Roboto",
                   },
                   heading1: {
-                    fontSize: 25,
+                    fontSize: fontSize + 5,
                   },
                   heading2: {
                     ...themeStyles.text,
-                    fontSize: 30,
+                    fontSize: fontSize + 10,
                     textAlign: "center",
                   },
                   heading3: {
                     ...themeStyles.text,
-                    fontSize: 30,
+                    fontSize: fontSize + 10,
                     fontWeight: "bold",
                   },
                   heading4: {
                     ...themeStyles.text,
-                    fontSize: 30,
+                    fontSize: fontSize + 10,
                     textAlign: "center",
                     fontWeight: "bold",
                   },
                   heading5: {
                     ...themeStyles.text,
-                    fontSize: 30,
+                    fontSize: fontSize + 10,
                   },
                   heading6: {
                     ...themeStyles.text,
-                    fontSize: 20,
+                    fontSize: fontSize,
                     textAlign: "center",
                   },
                 }}
