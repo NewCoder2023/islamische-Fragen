@@ -20,14 +20,20 @@ export const lightTheme = {
     color: Colors.light.white,
   },
   categorieText: {
-    color: "#50707C"
+    color: "#50707C",
   },
   categorieBackground: {
-    backgroundColor: "#A2D9EF"
+    backgroundColor: "#A2D9EF",
   },
   border: {
     borderColor: "#FFFFFF",
-    }
+  },
+  borderIndex: {
+    borderColor: "#000000",
+  },
+  backgroundIndex: {
+    backgroundColor: "#41ACD2",
+  },
 };
 
 export const darkTheme = {
@@ -50,14 +56,20 @@ export const darkTheme = {
     color: Colors.dark.black,
   },
   categorieText: {
-    color: "#000000"
+    color: "#000000",
   },
   categorieBackground: {
-    backgroundColor: "#A2D9EF"
+    backgroundColor: "#A2D9EF",
   },
   border: {
-  borderColor: "#000000",
-  }
+    borderColor: "#000000",
+  },
+  borderIndex: {
+    borderColor: "#FFFFFF",
+  },
+  backgroundIndex: {
+    backgroundColor: "#41ACD2",
+  },
 };
 
 type ColorScheme = "light" | "dark" | undefined | null;

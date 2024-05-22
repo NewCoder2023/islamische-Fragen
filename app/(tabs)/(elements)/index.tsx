@@ -5,10 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { coustomTheme } from "components/coustomTheme";
 import { useColorScheme } from "react-native";
 import { Image } from "expo-image";
-import SearchBar from "components/SearchBar";
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "constants/Colors";
+import { Dimensions } from "react-native";
 
 export default function index() {
   const colorscheme = useColorScheme();
@@ -16,30 +16,25 @@ export default function index() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Image
-          style={styles.backgroundImage}
-          source={require("assets/images/backgroundIndex.svg")}
-          contentFit='fill'
-        />
-        <View style={styles.searchContainer}>
-          <Pressable onPress={() => router.push("/search")}>
-            <View
-              style={[styles.search, themeStyles.container, themeStyles.border]}
-            >
-              <AntDesign
-                name='search1'
-                size={20}
-                color='grey'
-                style={styles.searchIcon}
+      <View style={[styles.headerContainer, themeStyles.borderIndex]}>
+        <View style={[styles.header, themeStyles.backgroundIndex]}>
+          <View style={styles.headerElements}>
+            <View style={styles.headerImageContainer}>
+              <Image
+                style={styles.headerImage}
+                source={require("assets/images/logo.png")}
+                contentFit='contain'
               />
-              <Text style={styles.border}>|</Text>
-              <Text style={styles.seachText}>Suche nach Antworten...</Text>
             </View>
-          </Pressable>
+            <View style={styles.headerTextContainer}>
+              <Text style={[styles.headerText, themeStyles.inverseText]}>
+                Islam-Fragen
+              </Text>
+              <Text style={styles.headerDash}>__________</Text>
+            </View>
+          </View>
         </View>
       </View>
-
       <View style={styles.categoryContainer}>
         <QuestionLinks />
       </View>
@@ -49,22 +44,54 @@ export default function index() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: "100%",
+    backgroundColor: "transparent",
   },
   headerContainer: {
-    flex: 0.55,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
+    height: "40%",
+    borderBottomWidth: 3,
   },
-  backgroundImage: {
-    width: "100%",
+  header: {
+    flex: 1,
+    flexDirection: "column",
+    marginBottom: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  headerElements: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent",
+  },
+  headerTextContainer: {
+    marginTop: -30,
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  headerImageContainer: {
+    height: "75%",
+    aspectRatio: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent",
+  },
+  headerDash: {
+    fontSize: 20,
+    marginTop: -10,
+  },
+  headerText: {
+    fontSize: 40,
+  },
+
+  headerImage: {
+    width: "100%", // Take full width of the container
     height: "100%",
   },
   searchContainer: {
     width: "100%",
     position: "absolute",
-    top: "65%",
+    top: "70%",
     backgroundColor: "transparent",
   },
   search: {
@@ -73,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     marginTop: 20,
-    paddingRight:15,
+    paddingRight: 15,
     borderWidth: 2,
     borderRadius: 30,
     backgroundColor: "blue",
@@ -92,16 +119,10 @@ const styles = StyleSheet.create({
   seachText: {
     paddingLeft: 5,
     fontSize: 16,
-
   },
-  headerText: {},
-
   searchField: {},
   categoryContainer: {
-    flex: 0.45,
-    marginTop: 10,
-    marginBottom: 10,
-    justifyContent: "flex-end",
-    alignItems: "center",
+    height: "60%",
+    
   },
 });

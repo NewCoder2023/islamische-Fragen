@@ -51,64 +51,64 @@ export default function Categories() {
     <View style={styles.container}>
       <View style={styles.leftElements}>
         {categoriesLeft.map((category, index) => (
-          <Link
-            key={index}
-            href={
-              {
-                pathname: category.path,
-                params: {
-                  category: category.name,
-                },
-              } as any
-            }
-            asChild
-          >
-            <Pressable>
-              <View style={[styles.element, themeStyles.categorieBackground]}>
+          <View style={[styles.element, themeStyles.categorieBackground]}>
+            <Link
+              key={`${index}-left`}
+              href={
+                {
+                  pathname: category.path,
+                  params: {
+                    category: category.name,
+                  },
+                } as any
+              }
+              asChild
+            >
+              <Pressable>
                 <Image
                   style={styles.elementIcon}
                   source={category.image}
-                  contentFit='cover'
+                  contentFit='contain'
                 />
                 <View style={[styles.textContainer, themeStyles.border]}>
                   <Text style={[styles.elementText, themeStyles.categorieText]}>
                     {category.name}
                   </Text>
                 </View>
-              </View>
-            </Pressable>
-          </Link>
+              </Pressable>
+            </Link>
+          </View>
         ))}
       </View>
       <View style={styles.rightElements}>
         {categoriesRight.map((category, index) => (
-          <Link
-            key={index}
-            href={
-              {
-                pathname: category.path,
-                params: {
-                  category: category.name,
-                },
-              } as any
-            }
-            asChild
-          >
-            <Pressable>
-              <View style={[styles.element, themeStyles.categorieBackground]}>
+          <View style={[styles.element, themeStyles.categorieBackground]}>
+            <Link
+              key={`${index}-right`}
+              href={
+                {
+                  pathname: category.path,
+                  params: {
+                    category: category.name,
+                  },
+                } as any
+              }
+              asChild
+            >
+              <Pressable>
                 <Image
                   style={styles.elementIcon}
                   source={category.image}
-                  contentFit='cover'
+                  contentFit='contain'
                 />
                 <View style={[styles.textContainer, themeStyles.border]}>
                   <Text style={[styles.elementText, themeStyles.categorieText]}>
                     {category.name}
                   </Text>
                 </View>
-              </View>
-            </Pressable>
-          </Link>
+              </Pressable>
+            </Link>
+          </View>
         ))}
       </View>
     </View>
@@ -117,23 +117,34 @@ export default function Categories() {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    flex: 1,
     flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "space-around",
+    alignItems: "flex-end", // Align children to the bottom
+    backgroundColor: "transparent",
   },
-  leftElements: {},
-  rightElements: {},
+  leftElements: {
+    height: "98%",
+    width: "50%",
+    backgroundColor: "green",
+    alignItems: "center",
+  },
+  rightElements: {
+    height: "98%",
+    width: "50%",
+    backgroundColor: "blue",
+    alignItems: "center",
+  },
 
   element: {
-    width: 110,
-    height: 98,
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
+    flexShrink: 1,
+    flexGrow: 1,
+    flexBasis: "33%",
+    width: "90%",
     margin: 10,
+    textAlign: "center",
     borderWidth: 1,
     borderColor: "#eff8fc",
+    justifyContent: "flex-end",
     paddingHorizontal: 2,
     ...Platform.select({
       ios: {
@@ -149,20 +160,21 @@ const styles = StyleSheet.create({
   },
 
   elementIcon: {
-    width: 40,
-    height: 40,
+    width: "90%",
+    height: "60%",
+    alignSelf: "center",
+  
   },
   textContainer: {
     backgroundColor: "white",
     borderWidth: 1,
     borderRadius: 15,
-    marginTop: 8,
+    marginTop: 5,
   },
   elementText: {
     fontSize: 11,
     fontWeight: "bold",
     padding: 5,
-    width: "100%",
     textAlign: "center",
     paddingHorizontal: 5,
   },
