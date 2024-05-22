@@ -52,9 +52,9 @@ export default function Categories() {
     <View style={styles.container}>
       <View style={styles.leftElements}>
         {categoriesLeft.map((category, index) => (
-          <View style={[styles.element, themeStyles.categorieBackground]}>
+          <View  key={`${index}-left`} style={[styles.element, themeStyles.categorieBackground, themeStyles.border]}>
             <Link
-              key={`${index}-left`}
+             
               href={
                 {
                   pathname: category.path,
@@ -83,9 +83,11 @@ export default function Categories() {
       </View>
       <View style={styles.rightElements}>
         {categoriesRight.map((category, index) => (
-          <View style={[styles.element, themeStyles.categorieBackground]}>
+          <View
+            key={`${index}-right`}
+            style={[styles.element, themeStyles.categorieBackground, themeStyles.border]}
+          >
             <Link
-              key={`${index}-right`}
               href={
                 {
                   pathname: category.path,
@@ -140,10 +142,11 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexGrow: 1,
     flexBasis: "33%",
-    width: "90%",
-    margin: 10,
+    width: "70%",
+    margin: 15,
     textAlign: "center",
-    borderWidth: 1,
+    borderWidth: 2,
+    borderRadius: 10,
     borderColor: "#eff8fc",
     justifyContent: "flex-end",
     paddingHorizontal: 2,
@@ -170,8 +173,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 15,
     marginTop: 5,
-    width: "60%",
-    alignSelf: "center"
+    width: "80%",
+    alignSelf: "center",
   },
   elementText: {
     fontSize: 11,

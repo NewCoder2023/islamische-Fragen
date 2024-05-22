@@ -1,12 +1,9 @@
 import { Pressable, StyleSheet } from "react-native";
 import { View, Text } from "components/Themed";
 import QuestionLinks from "components/QuestionLinks";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { coustomTheme } from "components/coustomTheme";
 import { useColorScheme } from "react-native";
 import { Image } from "expo-image";
-import { router } from "expo-router";
-import { AntDesign } from "@expo/vector-icons";
 import Colors from "constants/Colors";
 import { ImageBackground } from "react-native";
 
@@ -20,7 +17,7 @@ export default function index() {
        
           <View style={[styles.header, themeStyles.backgroundIndex]}>
           <ImageBackground
-          source={require("assets/images/calligraphy3.png")}
+          source={require("assets/images/background.png")}
           style={styles.calligraphyBackground}
         >
             <View style={styles.headerElements}>
@@ -139,5 +136,6 @@ const styles = StyleSheet.create({
   searchField: {},
   categoryContainer: {
     height: "60%",
+    
   },
 });

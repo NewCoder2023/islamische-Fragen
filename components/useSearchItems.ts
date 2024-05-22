@@ -11,18 +11,22 @@ interface SearchResult {
 }
 
 const fetchAllTables =  async (): Promise<Table[]> => {
-  const { data, error } = await supabase.from("AllTables").select("tableName");
-
-  if (error) {
-    console.error("Error fetching tables:", error.message);
+  try {
+    const { data, error } = await supabase.from("AllQuestions").select("tableName");
+    if (error) {
+      throw new Error(`Error fetching tables: ${error.message}`);
+    }
+    return data;
+  } catch (error: any) {
+    console.error(error.message);
     return [];
   }
-  return data;
 };
+
 
 const searchInTables = async (search: string): Promise<SearchResult[]> => {
   const tables = await fetchAllTables();
-
+  
   const results = await Promise.all(
     tables.map(async (table) => {
       const { data, error } = await supabase
