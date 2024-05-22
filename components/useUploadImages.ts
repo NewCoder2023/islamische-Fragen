@@ -69,7 +69,7 @@ export function useUploadImages() {
       return;
     }
     startLoading();
-    router.navigate("/");
+    router.navigate("news");
 
     const uploadedImageUrls = await Promise.all(
       images.map((image) => uploadImage(image))

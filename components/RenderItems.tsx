@@ -13,6 +13,7 @@ export default function RenderItems({ items, fetchError, table }) {
     // Clean the title by trimming and removing new lines
     // Encode all characters with encodeURIComponent and manually encode parentheses since the cause trouble in the url
     const cleanedTitle = title.trim().replace(/\n/g, "");
+    console.log(cleanedTitle);
     return encodeURIComponent(cleanedTitle)
       .replace(/\(/g, "%28")
       .replace(/\)/g, "%29");
