@@ -19,20 +19,8 @@ export default function Categories() {
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
-      name: "Glaubensfragen",
-      image: require("assets/images/Glaubensfragen.png"),
-      path: "(renderCategory)/[renderCategory]",
-    },
-    {
       name: "Quran",
       image: require("assets/images/Quran.png"),
-      path: "(renderCategory)/[renderCategory]",
-    },
-  ];
-  const categoriesRight = [
-    {
-      name: "Ethik",
-      image: require("assets/images/Ethik.png"),
       path: "(renderCategory)/[renderCategory]",
     },
     {
@@ -40,6 +28,19 @@ export default function Categories() {
       image: require("assets/images/Historie.png"),
       path: "(renderCategory)/[renderCategory]",
     },
+  ];
+  const categoriesRight = [
+    {
+      name: "Glaubensfragen",
+      image: require("assets/images/Glaubensfragen.png"),
+      path: "(renderCategory)/[renderCategory]",
+    },
+    {
+      name: "Ethik",
+      image: require("assets/images/Ethik.png"),
+      path: "(renderCategory)/[renderCategory]",
+    },
+
     {
       name: "Ratschläge",
       image: require("assets/images/Ratschlaege.png"),
@@ -169,6 +170,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 15,
     marginTop: 5,
+    width: "60%",
+    alignSelf: "center"
   },
   elementText: {
     fontSize: 11,

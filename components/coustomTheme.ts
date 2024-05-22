@@ -23,16 +23,19 @@ export const lightTheme = {
     color: "#50707C",
   },
   categorieBackground: {
-    backgroundColor: "#A2D9EF",
+    backgroundColor: "#96BFCC",
   },
   border: {
     borderColor: "#FFFFFF",
   },
   borderIndex: {
-    borderColor: "#000000",
+    borderColor: "#424D52",
   },
   backgroundIndex: {
     backgroundColor: "#41ACD2",
+  },
+  dashIndex: {
+    color: "#424D52",
   },
 };
 
@@ -59,7 +62,7 @@ export const darkTheme = {
     color: "#000000",
   },
   categorieBackground: {
-    backgroundColor: "#A2D9EF",
+    backgroundColor: "#96BFCC",
   },
   border: {
     borderColor: "#000000",
@@ -69,6 +72,9 @@ export const darkTheme = {
   },
   backgroundIndex: {
     backgroundColor: "#41ACD2",
+  },
+  dashIndex: {
+    color: "#424D52",
   },
 };
 

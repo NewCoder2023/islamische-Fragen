@@ -8,7 +8,7 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "constants/Colors";
-import { Dimensions } from "react-native";
+import { ImageBackground } from "react-native";
 
 export default function index() {
   const colorscheme = useColorScheme();
@@ -17,23 +17,32 @@ export default function index() {
   return (
     <View style={styles.container}>
       <View style={[styles.headerContainer, themeStyles.borderIndex]}>
-        <View style={[styles.header, themeStyles.backgroundIndex]}>
-          <View style={styles.headerElements}>
-            <View style={styles.headerImageContainer}>
-              <Image
-                style={styles.headerImage}
-                source={require("assets/images/logo.png")}
-                contentFit='contain'
-              />
+       
+          <View style={[styles.header, themeStyles.backgroundIndex]}>
+          <ImageBackground
+          source={require("assets/images/calligraphy3.png")}
+          style={styles.calligraphyBackground}
+        >
+            <View style={styles.headerElements}>
+              <View style={styles.headerImageContainer}>
+                <Image
+                  style={styles.headerImage}
+                  source={require("assets/images/logo.png")}
+                  contentFit='contain'
+                />
+              </View>
+              <View style={styles.headerTextContainer}>
+                <Text style={[styles.headerText, themeStyles.inverseText]}>
+                  Islam-Fragen
+                </Text>
+                <Text style={[styles.headerDash, themeStyles.dashIndex]}>
+                  __________
+                </Text>
+              </View>
             </View>
-            <View style={styles.headerTextContainer}>
-              <Text style={[styles.headerText, themeStyles.inverseText]}>
-                Islam-Fragen
-              </Text>
-              <Text style={styles.headerDash}>__________</Text>
-            </View>
+            </ImageBackground>
           </View>
-        </View>
+        
       </View>
       <View style={styles.categoryContainer}>
         <QuestionLinks />
@@ -58,6 +67,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  calligraphyBackground: {
+    flex: 1,
+    width:"100%",
+    resizeMode: "cover",
+
+  },
+
   headerElements: {
     justifyContent: "center",
     alignItems: "center",
@@ -123,6 +139,5 @@ const styles = StyleSheet.create({
   searchField: {},
   categoryContainer: {
     height: "60%",
-    
   },
 });
