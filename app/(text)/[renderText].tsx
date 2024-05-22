@@ -42,6 +42,8 @@ export default function renderText() {
     isFavorite: boolean;
   }
 
+ 
+
   const { question, answers, fetchError } = fetchText(id, table);
   const key = `text-${id}-${table}`;
   const appColor = Appearance.getColorScheme();

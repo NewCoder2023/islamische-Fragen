@@ -28,15 +28,13 @@ export default function fetchNews() {
       if (error) {
         throw Error;
       }
-     
+
       if (data) {
         setPosts(data as NewsItem[]);
         setFetchError("");
       } else {
         setPosts([]);
       }
-
-     
     } catch (error) {
       setFetchError(
         "Neuigkeiten konnten nicht geladen werden.\n Überprüfen Sie bitte Ihre Internetverbindung!"

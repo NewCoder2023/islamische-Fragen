@@ -8,7 +8,22 @@ import { useColorScheme } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { Appearance } from "react-native";
 
-export default function RenderItems({ items, fetchError, table }) {
+interface Item {
+  id: number;
+  title: string;
+}
+
+interface RenderItemsProps {
+  items: Item[];
+  fetchError?: string;
+  table: string;
+}
+
+export default function RenderItems({
+  items,
+  fetchError,
+  table,
+}: RenderItemsProps) {
   const encodeTitle = (title: string) => {
     // Clean the title by trimming and removing new lines
     // Encode all characters with encodeURIComponent and manually encode parentheses since the cause trouble in the url
@@ -26,7 +41,7 @@ export default function RenderItems({ items, fetchError, table }) {
   const themeErrorStyle =
     colorScheme === "light" ? styles.lightError : styles.darkError;
 
-    console.log(table)
+  console.log(table);
 
   const appColor = Appearance.getColorScheme();
   return (
@@ -46,7 +61,6 @@ export default function RenderItems({ items, fetchError, table }) {
             renderItem={({ item }) => (
               <Link
                 style={styles.FlashListItems}
-                keyExtractor={(item) => item.id.toString()}
                 href={{
                   pathname: `/(text)/${encodeTitle(item.title)}`,
                   params: {

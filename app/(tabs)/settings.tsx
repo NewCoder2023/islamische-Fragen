@@ -28,6 +28,7 @@ export default function settings() {
           value={isDarkMode}
         />
       </View>
+      <View style={styles.spacer} />
       <View style={styles.informationContainer}>
         <Link style={styles.linkText} href='/information'>
           Über die App
@@ -58,6 +59,9 @@ const styles = StyleSheet.create({
   switchText: {
     fontSize: 20,
     fontWeight: "700",
+  },
+  spacer: {
+    flexGrow: 1
   },
   informationContainer: {},
   impressumContainer: {
