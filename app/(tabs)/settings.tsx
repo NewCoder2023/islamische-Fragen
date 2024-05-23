@@ -76,13 +76,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "flex-start",
+    paddingLeft: 20
+
+    
   },
   switchContainer: {
     flexDirection: "row",
     alignItems: "center",
     gap: 20,
     marginTop: 30,
+
   },
   switchText: {
     fontSize: 20,
@@ -91,32 +95,43 @@ const styles = StyleSheet.create({
   textSizeContainer: {
     flex: 1,
     flexDirection: "row",
-    marginTop: 15,
+    marginTop: 25,
+   
+
   },
   textSizeText: {
     fontSize: 20,
     fontWeight: "700",
+ 
   },
-  textSizeElements: {},
+  textSizeElements: {
+    flexDirection: "row",
+   
+  },
   textSizeCheckbox: {
     marginBottom: 15,
   },
   textSizeCheckboxContainer: {
     flexDirection: "row",
     marginLeft: 5,
+    
   },
   checboxLable: {
     marginLeft: 5,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
   },
   spacer: {
     flexGrow: 1,
+    
   },
-  informationContainer: {},
+  informationContainer: {
+    alignSelf: "center",
+    
+  },
   impressumContainer: {
-    justifyContent: "flex-end",
-    alignItems: "center",
+
+    alignSelf: "center"
   },
   linkText: {
     color: Colors.light.link,
