@@ -42,7 +42,7 @@ export default function renderText() {
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
   const CONTENT_OFFSET_THRESHOLD = 300;
   const { bookmarks, toggleBookmark } = useBookmarks(key);
-  const { fontSize } = useSetFontSize();
+  const { fontSize, lineHeight } = useSetFontSize();
   const { toggleFavorite, isInFavorites } = useFavorites();
   const {
     updateDownload,
@@ -155,7 +155,7 @@ export default function renderText() {
                   body: {
                     ...themeStyles.text,
                     fontSize: fontSize,
-                    lineHeight: 40,
+                    lineHeight: lineHeight,
                     fontFamily: Platform.OS === "ios" ? "Helvetica" : "Roboto",
                   },
                   heading1: {

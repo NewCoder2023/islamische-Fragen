@@ -12,7 +12,8 @@ export default function settings() {
   const colorScheme = Appearance.getColorScheme();
   const [isDarkMode, setIsDarkMode] = useState(colorScheme == "dark");
   const [selectSize, setSelectSize] = useState<number>();
-  const { fontSize, setFontSize } = useSetFontSize();
+  const { fontSize, setLineHeigth, setFontSize } = useSetFontSize();
+
 
   const toggleSwitch = () => {
     const changeColor = isDarkMode ? "light" : "dark";
@@ -21,9 +22,9 @@ export default function settings() {
   };
 
   const SizeOptions = [
-    { label: "Groß", value: 25 },
-    { label: "Mittel", value: 20 },
-    { label: "Klein", value: 16 },
+    { label: "Groß", fontSize: 25, lineHeight: 40 },
+    { label: "Mittel", fontSize: 20, lineHeight: 40 },
+    { label: "Klein", fontSize: 16, lineHeight: 30 },
   ];
 
   return (
@@ -43,13 +44,18 @@ export default function settings() {
         <Text style={styles.textSizeText}>Schriftgröße: </Text>
         <View style={styles.textSizeElements}>
           {SizeOptions.map((option) => (
-            <View key={option.value} style={styles.textSizeCheckboxContainer}>
+            <View
+              key={option.fontSize}
+              style={styles.textSizeCheckboxContainer}
+            >
               <Checkbox
                 style={styles.textSizeCheckbox}
-                value={fontSize === option.value}
+                value={fontSize === option.fontSize}
                 onValueChange={() => {
-                  setSelectSize(option.value);
-                  setFontSize(option.value);
+                  setLineHeigth(option.lineHeight);
+                  setSelectSize(option.fontSize);
+                  setFontSize(option.fontSize);
+                
                 }}
               />
               <Text style={styles.checboxLable}>{option.label}</Text>
@@ -77,16 +83,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "flex-start",
-    paddingLeft: 20
-
-    
+    paddingLeft: 20,
   },
   switchContainer: {
     flexDirection: "row",
     alignItems: "center",
     gap: 20,
     marginTop: 30,
-
   },
   switchText: {
     fontSize: 20,
@@ -96,17 +99,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     marginTop: 25,
-   
-
   },
   textSizeText: {
     fontSize: 20,
     fontWeight: "700",
- 
   },
   textSizeElements: {
     flexDirection: "row",
-   
   },
   textSizeCheckbox: {
     marginBottom: 15,
@@ -114,7 +113,6 @@ const styles = StyleSheet.create({
   textSizeCheckboxContainer: {
     flexDirection: "row",
     marginLeft: 5,
-    
   },
   checboxLable: {
     marginLeft: 5,
@@ -123,15 +121,12 @@ const styles = StyleSheet.create({
   },
   spacer: {
     flexGrow: 1,
-    
   },
   informationContainer: {
     alignSelf: "center",
-    
   },
   impressumContainer: {
-
-    alignSelf: "center"
+    alignSelf: "center",
   },
   linkText: {
     color: Colors.light.link,

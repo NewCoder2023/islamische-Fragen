@@ -21,35 +21,35 @@ export default function Categories() {
     {
       name: "Quran",
       image: require("assets/images/Quran.png"),
-      path: "(renderCategory)/[renderCategory]",
+      path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
       name: "Historie",
       image: require("assets/images/Historie.png"),
-      path: "(renderCategory)/[renderCategory]",
+      path: "(renderNestedCategories)/[renderNestedCategories]",
     },
   ];
   const categoriesRight = [
     {
       name: "Glaubensfragen",
       image: require("assets/images/Glaubensfragen.png"),
-      path: "(renderCategory)/[renderCategory]",
+      path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
       name: "Ethik",
       image: require("assets/images/Ethik.png"),
-      path: "(renderCategory)/[renderCategory]",
+      path: "(renderNestedCategories)/[renderNestedCategories]",
     },
 
     {
       name: "Ratschläge",
       image: require("assets/images/Ratschlaege.png"),
-      path: "(renderCategory)/[renderCategory]",
+      path: "(renderNestedCategories)/[renderNestedCategories]",
     },
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <View style={styles.leftElements}>
         {categoriesLeft.map((category, index) => (
           <View  key={`${index}-left`} style={[styles.element, themeStyles.categorieBackground, themeStyles.border]}>
@@ -123,19 +123,19 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "flex-end", // Align children to the bottom
-    backgroundColor: "transparent",
+   
   },
   leftElements: {
     height: "100%",
     width: "50%",
-
+    backgroundColor: "transparent",
     alignItems: "center",
   },
   rightElements: {
     height: "100%",
     width: "50%",
-
     alignItems: "center",
+    backgroundColor: "transparent",
   },
 
   element: {

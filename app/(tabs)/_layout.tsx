@@ -40,9 +40,12 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      initialRouteName='elements'
+      initialRouteName='(elements)'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        // tabBarStyle: {
+        //   backgroundColor: Colors[colorScheme ?? "light"].tabarBackground
+        // },
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, false),
@@ -76,8 +79,9 @@ export default function TabLayout() {
         name='askQuestion'
         options={{
           title: "",
+          headerShown: true,
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name='question-circle' color={color} />
+            <TabBarIcon name='question-circle' color={color}  />
           ),
         }}
       />

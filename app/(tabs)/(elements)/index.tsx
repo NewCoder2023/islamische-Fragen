@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
   searchField: {},
   categoryContainer: {
     height: "60%",
+   
     
   },
 });

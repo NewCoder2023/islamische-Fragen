@@ -9,7 +9,18 @@ import { useColorScheme } from "react-native";
 import { coustomTheme } from "components/coustomTheme";
 import { useState } from "react";
 import Checkbox from "expo-checkbox";
+import { useSendQuestion } from "components/useSendQuestion";
+import Toast from "react-native-toast-message";
+import { router } from "expo-router";
 
+interface Email {
+  name: string;
+  age: number;
+  email: string;
+  marja: string;
+  gender: string;
+  question: string;
+}
 export default function adminDashboard() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
@@ -19,27 +30,47 @@ export default function adminDashboard() {
   const [email, setEmail] = useState<string>("");
   const [validateEmail, setValidateEmail] = useState<string>("");
   const [marja, setMarja] = useState<string>("");
-  const [question, setQuestion] = useState<string>("");
   const [gender, setgender] = useState<string | null>(null);
+  const [question, setQuestion] = useState<string>("");
+  const { sendEmail } = useSendQuestion();
 
   const genderOptions = [
     { label: "Männlich", value: "Männlich" },
     { label: "Weiblich ", value: "Weiblich" },
   ];
+
   const handleCheckboxChange = (value: string) => {
     setgender(value);
   };
 
+  const send = async () => {
+    const success = await sendEmail(name, age, email, marja, gender, question);
+    if (success) {
+      Toast.show({
+        type: "success",
+        text1: "Frage erfolgreich gesendet!",
+        text2: "Du erhälst die Antwort in wenigen Tagen als Email",
+      });
+      router.navigate("index");
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Fehler",
+        text2: "Versuch es später erneut",
+      });
+    }
+  };
+
   return (
     <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         {/* Submit button */}
         <Stack.Screen
           options={{
-            headerTitle: "Neue Frage stellen",
+            headerTitle: "Eine Frage stellen",
             headerRight: () => (
               <View style={styles.headerButton}>
-                <Pressable>
+                <Pressable onPress={() => send()}>
                   <Text style={styles.submitButtonText}>Senden</Text>
                 </Pressable>
               </View>
@@ -104,7 +135,7 @@ export default function adminDashboard() {
             keyboardType='default'
           />
         </ScrollView>
-      </SafeAreaView>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -116,7 +147,7 @@ const styles = StyleSheet.create({
 
   headerButton: {
     backgroundColor: "transparent",
-    marginRight: -5,
+    marginRight: 20,
   },
   submitButtonText: {
     fontSize: 20,
