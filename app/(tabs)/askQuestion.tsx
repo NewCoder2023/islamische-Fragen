@@ -51,7 +51,7 @@ export default function adminDashboard() {
         text1: "Frage erfolgreich gesendet!",
         text2: "Du erhälst die Antwort in wenigen Tagen als Email",
       });
-      router.navigate("index");
+      router.navigate("(elements)");
     } else {
       Toast.show({
         type: "error",
@@ -181,7 +181,9 @@ const styles = StyleSheet.create({
   genderCheckbox: {
     borderRadius: 30,
   },
-  inputAge: {},
+  inputAge: {
+
+  },
   inputEmail: {},
   inputMarja: {},
   inputQuestion: {
