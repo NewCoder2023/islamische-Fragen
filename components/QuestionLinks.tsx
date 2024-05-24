@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   elementText: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: "bold",
     padding: 5,
     textAlign: "center",

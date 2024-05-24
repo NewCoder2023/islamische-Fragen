@@ -12,6 +12,7 @@ import Checkbox from "expo-checkbox";
 import { useSendQuestion } from "components/useSendQuestion";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
+import { Alert } from "react-native";
 
 interface Email {
   name: string;
@@ -43,21 +44,56 @@ export default function adminDashboard() {
     setgender(value);
   };
 
+  const validateForm = () => {
+    if (!age || !email || !validateEmail || !gender || !question) {
+      Alert.alert("Fehler", "Bitte füllen Sie alle Pflichtfelder aus.");
+      return false;
+    }
+
+    const ageNumber = parseInt(age);
+    if (isNaN(ageNumber) || ageNumber <= 0) {
+      Alert.alert("Fehler", "Bitte geben Sie ein gültiges Alter ein.");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Alert.alert("Fehler", "Bitte geben Sie eine gültige E-Mail-Adresse ein.");
+      return false;
+    }
+
+    if (email !== validateEmail) {
+      Alert.alert("Fehler", "Die E-Mail-Adressen stimmen nicht überein.");
+      return false;
+    }
+
+    return true;
+  };
+
   const send = async () => {
-    const success = await sendEmail(name, age, email, marja, gender, question);
-    if (success) {
-      Toast.show({
-        type: "success",
-        text1: "Frage erfolgreich gesendet!",
-        text2: "Du erhälst die Antwort in wenigen Tagen als Email",
-      });
-      router.navigate("(elements)");
-    } else {
-      Toast.show({
-        type: "error",
-        text1: "Fehler",
-        text2: "Versuch es später erneut",
-      });
+    if (validateForm()) {
+      const success = await sendEmail(
+        name,
+        age,
+        email,
+        marja,
+        gender,
+        question
+      );
+      if (success) {
+        Toast.show({
+          type: "success",
+          text1: "Frage erfolgreich gesendet!",
+          text2: "Du erhälst die Antwort in wenigen Tagen als Email",
+        });
+        router.navigate("(elements)");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Fehler",
+          text2: "Versuch es später erneut",
+        });
+      }
     }
   };
 
@@ -88,12 +124,12 @@ export default function adminDashboard() {
           <View style={styles.genderContainer}>
             {genderOptions.map((option) => (
               <View key={option.value} style={styles.gender}>
+                <Text style={styles.genderLable}>{option.label}</Text>
                 <Checkbox
                   style={styles.genderCheckbox}
                   value={gender === option.value}
                   onValueChange={() => handleCheckboxChange(option.value)}
                 />
-                <Text style={styles.genderLable}>{option.label}</Text>
               </View>
             ))}
           </View>
@@ -173,17 +209,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   gender: {
+    flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
+
   },
   genderLable: {
-    marginTop: 5,
+    marginRight: 5
   },
   genderCheckbox: {
     borderRadius: 30,
+    marginRight: 10
   },
-  inputAge: {
-
-  },
+  inputAge: {},
   inputEmail: {},
   inputMarja: {},
   inputQuestion: {
