@@ -124,12 +124,12 @@ export default function adminDashboard() {
           <View style={styles.genderContainer}>
             {genderOptions.map((option) => (
               <View key={option.value} style={styles.gender}>
-                <Text style={styles.genderLable}>{option.label}</Text>
                 <Checkbox
                   style={styles.genderCheckbox}
                   value={gender === option.value}
                   onValueChange={() => handleCheckboxChange(option.value)}
                 />
+                <Text style={styles.genderLable}>{option.label}</Text>
               </View>
             ))}
           </View>
@@ -212,14 +212,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-
   },
   genderLable: {
-    marginRight: 5
+    marginRight: 5,
   },
   genderCheckbox: {
     borderRadius: 30,
-    marginRight: 10
+    marginRight: 10,
   },
   inputAge: {},
   inputEmail: {},

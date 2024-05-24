@@ -10,6 +10,8 @@ export default function useFetchText(id: string, table: string) {
   const [fetchError, setFetchError] = useState<string>("");
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [question, setQuestion] = useState<string>("");
+  const [singleAnswer, setSingleAnswer] = useState<string>("");
+  const [headerTitle, setHeaderTitle] = useState<string>("");
 
   // Encode title because () in title causes problems
   useEffect(() => {
@@ -31,19 +33,34 @@ export default function useFetchText(id: string, table: string) {
       }
 
       if (data) {
-        setAnswers([
-          {
+        const newAnswers: Answer[] = [];
+
+        // Check if category has two answers
+
+        if (data.answer_khamenei) {
+          newAnswers.push({
             marja: "Sayid al-Khamenei (h)",
-            answer: data.answer_khamenei || "",
+            answer: data.answer_khamenei,
             name: "khamenei",
-          },
-          {
+          });
+        }
+
+        if (data.answer_sistani) {
+          newAnswers.push({
             marja: "Sayid as-Sistani (h)",
-            answer: data.answer_sistani || "",
+            answer: data.answer_sistani,
             name: "sistani",
-          },
-        ]);
-        setQuestion(data.question);
+          });
+        }
+        setAnswers(newAnswers);
+
+        // Check if the category has just one answer
+        if (data.answer) {
+          setSingleAnswer(data.answer);
+        }
+
+        setHeaderTitle(data.title)
+        setQuestion(data.question || "");
         setFetchError("");
       }
     };
@@ -51,8 +68,10 @@ export default function useFetchText(id: string, table: string) {
     fetchItems();
   }, [id, table]);
   return {
+    headerTitle,
     fetchError,
     answers,
     question,
+    singleAnswer,
   };
 }

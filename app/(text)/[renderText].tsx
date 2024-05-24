@@ -36,7 +36,9 @@ export default function renderText() {
     title: string;
   }>();
 
-  const { question, answers, fetchError } = useFetchText(id, table);
+  const { headerTitle, question, answers, fetchError, singleAnswer } =
+    useFetchText(id, table);
+
   const key = `text-${id}-${table}`;
   const appColor = Appearance.getColorScheme();
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
@@ -50,13 +52,18 @@ export default function renderText() {
     downloadedText,
     loadDownloadedText,
     toggleDownload,
-  } = useDownload(key, answers);
+  } = useDownload(key, question, answers, singleAnswer);
   const [marja, setMarja] = useState<string[]>([]);
 
   useLayoutEffect(() => {
-    updateDownload();
+   // updateDownload();
     loadDownloadedText();
   }, [id, table]);
+
+  const displayQuestion = downloadedText?.question || question;
+  const displaySingleAnswer = downloadedText?.singleAnswer || singleAnswer;
+  const displayAnswers = downloadedText?.answers || answers;
+
 
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
@@ -77,10 +84,12 @@ export default function renderText() {
     );
   };
 
-  const filteredAnswers = marja.length
-    ? answers.filter((answer) => marja.includes(answer.name))
-    : [];
 
+  const filteredAnswers = marja.length > 0
+      ? displayAnswers.filter(answer => marja.includes(answer.name))
+      : [];
+  
+    
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -112,17 +121,65 @@ export default function renderText() {
               />
             </View>
           ),
-          headerTitle: title,
+          headerTitle: headerTitle,
         }}
       />
-      {!answers.length && !fetchError ? null : fetchError ? (
+      {fetchError && !isDownloaded ? (
         <View style={styles.renderError}>
-          <Text style={styles.errorText}>{fetchError || "Lade"}</Text>
+          <Text style={styles.errorText}>{fetchError}</Text>
         </View>
+      ) : displaySingleAnswer ? (
+        <ScrollView style={styles.answerContainer}>
+          <View style={styles.questionContainer}>
+            <Text style={styles.questionText}>{displayQuestion}</Text>
+          </View>
+          <View style={styles.singleAnswers}>
+            <Markdown
+              style={{
+                body: {
+                  ...themeStyles.text,
+                  fontSize: fontSize,
+                  lineHeight: lineHeight,
+                  fontFamily: Platform.OS === "ios" ? "Helvetica" : "Roboto",
+                },
+                heading1: {
+                  fontSize: fontSize + 5,
+                },
+                heading2: {
+                  ...themeStyles.text,
+                  fontSize: fontSize + 10,
+                  textAlign: "center",
+                },
+                heading3: {
+                  ...themeStyles.text,
+                  fontSize: fontSize + 10,
+                  fontWeight: "bold",
+                },
+                heading4: {
+                  ...themeStyles.text,
+                  fontSize: fontSize + 10,
+                  textAlign: "center",
+                  fontWeight: "bold",
+                },
+                heading5: {
+                  ...themeStyles.text,
+                  fontSize: fontSize + 10,
+                },
+                heading6: {
+                  ...themeStyles.text,
+                  fontSize: fontSize,
+                  textAlign: "center",
+                },
+              }}
+            >
+              {displaySingleAnswer}
+            </Markdown>
+          </View>
+        </ScrollView>
       ) : (
         <ScrollView style={styles.answerContainer}>
           <View style={styles.questionContainer}>
-            <Text style={styles.questionText}>{question}</Text>
+            <Text style={styles.questionText}>{displayQuestion}</Text>
           </View>
           <View style={styles.marjaChoiceContainer}>
             {marjaOptions.map((option) => (
@@ -217,6 +274,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+
   questionContainer: {
     margin: 10,
     borderWidth: 1,
@@ -227,6 +285,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     fontWeight: "bold",
+  },
+  singleAnswers: {
+    flex: 1,
+    marginBottom: 20,
+    marginHorizontal: 15,
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+    paddingTop: 5,
+    borderWidth: 1,
+    borderRadius: 10,
   },
 
   answers: {
