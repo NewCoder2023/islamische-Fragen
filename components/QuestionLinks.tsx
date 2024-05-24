@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Platform } from "react-native";
 import { Text, View } from "./Themed";
-import { Link, LinkProps } from "expo-router";
+import { Link } from "expo-router";
 import { Pressable } from "react-native";
 import Colors from "constants/Colors";
 import { Image } from "expo-image";
@@ -15,35 +15,35 @@ export default function Categories() {
   const categoriesLeft = [
     {
       name: "Rechtsfragen",
-      image: require("assets/images/Rechtsfragen.png"),
+      image: require("assets/images/rechtsfragen.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
       name: "Quran",
-      image: require("assets/images/Quran.png"),
+      image: require("assets/images/quran.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
       name: "Historie",
-      image: require("assets/images/Historie.png"),
+      image: require("assets/images/historie.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
   ];
   const categoriesRight = [
     {
       name: "Glaubensfragen",
-      image: require("assets/images/Glaubensfragen.png"),
+      image: require("assets/images/glaubensfragen.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
     {
       name: "Ethik",
-      image: require("assets/images/Ethik.png"),
+      image: require("assets/images/ethik.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
 
     {
       name: "Ratschläge",
-      image: require("assets/images/Ratschlaege.png"),
+      image: require("assets/images/ratschlaege.png"),
       path: "(renderNestedCategories)/[renderNestedCategories]",
     },
   ];

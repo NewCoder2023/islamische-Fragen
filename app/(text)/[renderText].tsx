@@ -78,8 +78,8 @@ export default function renderText() {
   const themeStyles = coustomTheme(colorScheme);
 
   const images = {
-    sistani: require("assets/images/sistani.png"),
-    khamenei: require("assets/images/khamenei.png"),
+    sistani: require("assets/images/sistani.jpg"),
+    khamenei: require("assets/images/khamenei.jpg"),
   };
 
   const marjaOptions = [
