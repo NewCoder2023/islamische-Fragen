@@ -14,6 +14,7 @@ import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import { Alert } from "react-native";
 
+
 interface Email {
   name: string;
   age: number;
@@ -45,7 +46,7 @@ export default function adminDashboard() {
   };
 
   const validateForm = () => {
-    if (!age || !email || !validateEmail || !gender || !question) {
+    if (!age || !email || !validateEmail || !question) {
       Alert.alert("Fehler", "Bitte füllen Sie alle Pflichtfelder aus.");
       return false;
     }
@@ -121,19 +122,6 @@ export default function adminDashboard() {
             placeholder='Name (optional)'
             keyboardType='default'
           />
-          <View style={styles.genderContainer}>
-            {genderOptions.map((option) => (
-              <View key={option.value} style={styles.gender}>
-                <Checkbox
-                  style={styles.genderCheckbox}
-                  value={gender === option.value}
-                  onValueChange={() => handleCheckboxChange(option.value)}
-                />
-                <Text style={styles.genderLable}>{option.label}</Text>
-              </View>
-            ))}
-          </View>
-
           <TextInput
             style={[styles.input, styles.inputAge]}
             onChangeText={setAge}
@@ -162,6 +150,18 @@ export default function adminDashboard() {
             placeholder='Vorbild der Nachahmung (Marja)'
             keyboardType='default'
           />
+          <View style={styles.genderContainer}>
+            {genderOptions.map((option) => (
+              <View key={option.value} style={styles.gender}>
+                <Checkbox
+                  style={styles.genderCheckbox}
+                  value={gender === option.value}
+                  onValueChange={() => handleCheckboxChange(option.value)}
+                />
+                <Text style={styles.genderLable}>{option.label}</Text>
+              </View>
+            ))}
+          </View>
           <TextInput
             style={[styles.input, styles.inputQuestion]}
             onChangeText={setQuestion}

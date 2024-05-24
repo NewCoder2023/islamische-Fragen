@@ -4,14 +4,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function useDownload(
   key: string,
+  headerTitle: string,
   question: string,
   answers?: any[],
-  singleAnswer?: string,
-
+  singleAnswer?: string
 ) {
   const [isDownloaded, setIsDownloaded] = useState(false);
   const [downloadedText, setDownloadedText] = useState<{
     question: string;
+    headerTitle: string;
     singleAnswer?: string;
     answers?: string[];
   } | null>(null);
@@ -21,23 +22,23 @@ export default function useDownload(
     loadDownloadedText();
   }, [key]);
 
-
-
-  // If current text is in storage update it to make sure changes are in storage
-  const updateDownload = async () => {
+   // Update if the data is different
+   const updateDownload = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      if (jsonValue) {
-        const data = JSON.parse(jsonValue);
-        await AsyncStorage.setItem(
-          key,
-          JSON.stringify({ question, singleAnswer, answers })
-        );
+      const currentData = { headerTitle, question, singleAnswer, answers };
+      const currentDataString = JSON.stringify(currentData);
+      
+      // If exisiting and not the same then update!
+      if (jsonValue && jsonValue !== currentDataString) {
+        await AsyncStorage.setItem(key, currentDataString);
+        console.log("Data updated successfully");
       }
     } catch (e) {
-      console.log(e);
+      console.error("Failed to update data:", e);
     }
   };
+  
 
   const loadDownloadedText = async () => {
     try {
@@ -75,7 +76,7 @@ export default function useDownload(
           text1: "Text wird heruntergeladen!",
         });
         setIsDownloaded(true);
-        setDownloadedText({ question, singleAnswer, answers });
+        setDownloadedText({ headerTitle, question, singleAnswer, answers });
       }
     } catch (e) {
       Toast.show({

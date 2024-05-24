@@ -28,6 +28,7 @@ import { coustomTheme } from "components/coustomTheme";
 import { Image } from "expo-image";
 import Checkbox from "expo-checkbox";
 import { useSetFontSize } from "components/fontSizeStore";
+import * as Network from "expo-network";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -52,18 +53,26 @@ export default function renderText() {
     downloadedText,
     loadDownloadedText,
     toggleDownload,
-  } = useDownload(key, question, answers, singleAnswer);
+  } = useDownload(key, headerTitle, question, answers, singleAnswer);
   const [marja, setMarja] = useState<string[]>([]);
 
+  console.log(downloadedText)
+
+  // Update exisitng Data in Asynscstorage
   useLayoutEffect(() => {
-   // updateDownload();
+    async function handleDataLoad() {
+      const networkState = await Network.getNetworkStateAsync();
+      if (networkState.isConnected && networkState.isInternetReachable) {
+        await updateDownload();
+      }
+    }
     loadDownloadedText();
+    handleDataLoad();
   }, [id, table]);
 
   const displayQuestion = downloadedText?.question || question;
   const displaySingleAnswer = downloadedText?.singleAnswer || singleAnswer;
   const displayAnswers = downloadedText?.answers || answers;
-
 
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
@@ -84,12 +93,13 @@ export default function renderText() {
     );
   };
 
-
-  const filteredAnswers = marja.length > 0
-      ? displayAnswers.filter(answer => marja.includes(answer.name))
+  const filteredAnswers =
+    marja.length > 0
+      ? displayAnswers.filter((answer) => marja.includes(answer.name))
       : [];
+
   
-    
+
   return (
     <View style={styles.container}>
       {/* Change header Title */}
@@ -121,7 +131,7 @@ export default function renderText() {
               />
             </View>
           ),
-          headerTitle: headerTitle,
+          headerTitle: downloadedText?.headerTitle || headerTitle,
         }}
       />
       {fetchError && !isDownloaded ? (
@@ -130,10 +140,10 @@ export default function renderText() {
         </View>
       ) : displaySingleAnswer ? (
         <ScrollView style={styles.answerContainer}>
-          <View style={styles.questionContainer}>
+          <View style={[styles.questionContainer, themeStyles.container]}>
             <Text style={styles.questionText}>{displayQuestion}</Text>
           </View>
-          <View style={styles.singleAnswers}>
+          <View style={[styles.singleAnswers, themeStyles.container]}>
             <Markdown
               style={{
                 body: {
@@ -178,7 +188,7 @@ export default function renderText() {
         </ScrollView>
       ) : (
         <ScrollView style={styles.answerContainer}>
-          <View style={styles.questionContainer}>
+          <View style={[styles.questionContainer, themeStyles.container]}>
             <Text style={styles.questionText}>{displayQuestion}</Text>
           </View>
           <View style={styles.marjaChoiceContainer}>
@@ -194,8 +204,8 @@ export default function renderText() {
             ))}
           </View>
           {filteredAnswers.map((answer, index) => (
-            <View key={index} style={styles.answers}>
-              <View style={styles.headerContainer}>
+            <View key={index} style={[styles.answers, themeStyles.container]}>
+              <View style={[styles.headerContainer, , themeStyles.container]}>
                 <View style={styles.headerImage}>
                   <Image
                     source={images[answer.name]}
@@ -203,7 +213,7 @@ export default function renderText() {
                     contentFit='cover'
                   />
                 </View>
-                <View style={styles.headerText}>
+                <View style={[styles.headerText, themeStyles.container]}>
                   <Text style={styles.marjaText}>{answer.marja}</Text>
                 </View>
               </View>
@@ -337,7 +347,6 @@ const styles = StyleSheet.create({
   headerText: {},
   marjaText: {
     fontSize: 20,
-
     fontWeight: "bold",
   },
 
