@@ -57,6 +57,8 @@ export default function useSearchItems(search: string) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+     // Track the mounting status
+    let isMounted = true;
     if (search === "") {
       setSearchResults([]);
       setIsLoading(false);
@@ -64,12 +66,17 @@ export default function useSearchItems(search: string) {
     }
     const searchTables = async () => {
       const results = await searchInTables(search);
-      setSearchResults(results);
-      setIsLoading(false);
+      if (isMounted) {
+        setSearchResults(results);
+        setIsLoading(false);
+      }
     };
-
-    setIsLoading(true);
+  
     searchTables();
+  
+    return () => {
+      isMounted = false; 
+    };
   }, [search]);
   return { searchResults, isLoading };
 }

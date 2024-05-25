@@ -72,7 +72,7 @@ export default function Modal() {
           <Text style={styles.errorText}>{errorMessage}</Text>
         </View>
       )}
-      <StatusBar style='auto' />
+      <StatusBar style="light" />
     </View>
   );
 }

@@ -21,6 +21,7 @@ import { router } from "expo-router";
 import { Alert } from "react-native";
 import { Platform } from "react-native";
 import { useRef } from "react";
+import { Link } from "expo-router";
 
 interface Email {
   name: string;
@@ -38,9 +39,10 @@ export default function adminDashboard() {
   const [age, setAge] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [validateEmail, setValidateEmail] = useState<string>("");
-  const [marja, setMarja] = useState<string>("");
+  const [marja, setMarja] = useState<string | null>(null);
   const [gender, setgender] = useState<string | null>(null);
   const [question, setQuestion] = useState<string>("");
+  const [acceptRules, setAcceptRules] = useState<boolean>(false);
   const { sendEmail } = useSendQuestion();
 
   const scrollViewRef = useRef(null);
@@ -50,7 +52,13 @@ export default function adminDashboard() {
     { label: "Weiblich ", value: "Weiblich" },
   ];
 
-  const handleCheckboxChange = (value: string) => {
+  const marjaOptions = [
+    { label: "Sayid al-Khamenei", value: "Sayid al-Khamenei" },
+    { label: "Sayid as-Sistani", value: "Sayid as-Sistani" },
+    { label: "Keine Rechtsfrage", value: "Keine Rechtsfrage" },
+  ];
+
+  const handleCheckboxChangeGender = (value: string) => {
     setgender(value);
   };
 
@@ -62,24 +70,41 @@ export default function adminDashboard() {
       !question ||
       question.trim() === ""
     ) {
-      Alert.alert("Fehler", "Bitte füllen Sie alle Pflichtfelder aus.");
+      Alert.alert("Fehler", "Bitte fülle alle Pflichtfelder aus!");
       return false;
     }
 
     const ageNumber = parseInt(age);
     if (isNaN(ageNumber) || ageNumber <= 0) {
-      Alert.alert("Fehler", "Bitte geben Sie ein gültiges Alter ein.");
+      Alert.alert("Fehler", "Bitte gebe ein gültiges Alter ein!");
       return false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      Alert.alert("Fehler", "Bitte geben Sie eine gültige E-Mail-Adresse ein.");
+      Alert.alert("Fehler", "Bitte gebe eine gültige E-Mail-Adresse ein!");
       return false;
     }
 
     if (email !== validateEmail) {
-      Alert.alert("Fehler", "Die E-Mail-Adressen stimmen nicht überein.");
+      Alert.alert("Fehler", "Die E-Mail-Adressen stimmen nicht überein!");
+      return false;
+    }
+
+    if (marja == null) {
+      Alert.alert(
+        "Fehler",
+        "Bitte wähle einen Marja aus!"
+      );
+      return false;
+    }
+
+
+    if (!acceptRules) {
+      Alert.alert(
+        "Fehler",
+        "Bitte lies die Richtlinen und akzeptiere sie um die E-mail versenden zu können"
+      );
       return false;
     }
 
@@ -169,24 +194,44 @@ export default function adminDashboard() {
               placeholder='E-mail wiederholen (Pflicht)'
               keyboardType='email-address'
             />
-            <TextInput
-              style={[styles.input, styles.inputMarja, themeStyles.text]}
-              onChangeText={setMarja}
-              value={marja}
-              placeholder='Vorbild der Nachahmung (Marja)'
-              keyboardType='default'
-            />
-            <View style={styles.genderContainer}>
-              {genderOptions.map((option) => (
-                <View key={option.value} style={styles.gender}>
+            <View style={styles.checkboxContainerMarja}>
+              {marjaOptions.map((option) => (
+                <View key={option.value} style={styles.checkboxView}>
                   <Checkbox
-                    style={styles.genderCheckbox}
-                    value={gender === option.value}
-                    onValueChange={() => handleCheckboxChange(option.value)}
+                    style={styles.checkboxElementMarja}
+                    value={marja === option.value}
+                    onValueChange={() => setMarja(option.value)}
                   />
                   <Text style={styles.genderLable}>{option.label}</Text>
                 </View>
               ))}
+            </View>
+            <View style={styles.checkboxContainerGender}>
+              {genderOptions.map((option) => (
+                <View key={option.value} style={styles.checkboxView}>
+                  <Checkbox
+                    style={styles.checkboxElementGender}
+                    value={gender === option.value}
+                    onValueChange={() => setgender(option.value)}
+                  />
+                  <Text style={styles.genderLable}>{option.label}</Text>
+                </View>
+              ))}
+            </View>
+            <View style={styles.rules}>
+              <Checkbox
+                style={styles.rulesCheckbox}
+                value={acceptRules}
+                onValueChange={() => setAcceptRules(!acceptRules)}
+              />
+
+              <View style={styles.linkContainer}>
+                <Text style={styles.linkText}>Ich habe die</Text>
+              <Link href="/rulesModal" style={[styles.link, themeStyles.link]}>
+               Richtlinie 
+              </Link>
+              <Text style={styles.linkText}>gelesen und akzeptiere sie</Text>
+              </View>
             </View>
             <TextInput
               style={[styles.input, styles.inputQuestion, themeStyles.text]}
@@ -230,26 +275,62 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   inputName: {},
-  genderContainer: {
+  inputAge: {},
+  inputEmail: {},
+  checkboxContainerGender: {
     flexDirection: "row",
-    marginTop: 20,
+    flexWrap: "wrap",
     justifyContent: "space-around",
+    marginRight: 10,
+    marginTop: 20,
+    marginBottom: 30
   },
-  gender: {
+  checkboxView: {
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
+    marginLeft: 20,
+  },
+  checkboxContainerMarja: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    flexWrap: "wrap",
+    marginTop: 30,
+  },
+
+  checkboxElementGender: {
+    borderRadius: 30,
+    marginRight: 10,
+  },
+  checkboxElementMarja: {
+    borderRadius: 30,
+    marginRight: 10,
+    marginBottom: 10
   },
   genderLable: {
     marginRight: 5,
   },
-  genderCheckbox: {
-    borderRadius: 30,
+  rules: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10
+  },
+  rulesCheckbox: {
     marginRight: 10,
   },
-  inputAge: {},
-  inputEmail: {},
-  inputMarja: {},
+  linkContainer: {
+    flexDirection: "row",
+  },
+  linkText: {
+    marginLeft: 2,
+    marginRight: 2
+  },
+  link: {
+    marginLeft: 2,
+    marginRight: 2,
+    fontWeight: "bold"
+  },
+
   inputQuestion: {
     marginBottom: 50,
     paddingHorizontal: 12,

@@ -37,7 +37,9 @@ export const lightTheme = {
   dashIndex: {
     color: "#DDC092",
   },
-
+link: {
+  color: Colors.light.link
+}
 };
 
 export const darkTheme = {
@@ -77,6 +79,9 @@ export const darkTheme = {
   dashIndex: {
     color: "#DDC092",
   },
+  link: {
+    color: Colors.light.link
+  }
 };
 
 type ColorScheme = "light" | "dark" | undefined | null;
