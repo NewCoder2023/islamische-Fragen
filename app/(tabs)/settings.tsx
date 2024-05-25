@@ -26,11 +26,15 @@ export default function settings() {
     };
 
     const getFontSetting = async () => {
-      const storedFontSize = (await AsyncStorage.getItem("fontSize")) || 20;
-      const storedLineheigt = (await AsyncStorage.getItem("lineHeight")) || 40;
-      setLineHeigth(JSON.parse(storedLineheigt));
-      setSelectSize(JSON.parse(storedFontSize));
-      setFontSize(JSON.parse(storedFontSize));
+      const storedFontSize = await AsyncStorage.getItem("fontSize");
+      const storedLineHeight = await AsyncStorage.getItem("lineHeight");
+      if (storedFontSize) {
+        setFontSize(Number(storedFontSize));
+        setSelectSize(Number(storedFontSize));
+      }
+      if (storedLineHeight) {
+        setLineHeigth(Number(storedLineHeight));
+      }
     };
     getFontSetting();
     getColorMode();
@@ -49,7 +53,6 @@ export default function settings() {
     setFontSize(fontSize);
     await AsyncStorage.setItem("lineHeigth", JSON.stringify(lineHeight));
     await AsyncStorage.setItem("fontSize", JSON.stringify(fontSize));
-    await AsyncStorage.setItem("selectSize", JSON.stringify(fontSize));
   };
 
   const saveSwitchStatus = async (colorMode) => {
