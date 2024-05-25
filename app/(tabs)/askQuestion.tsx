@@ -92,13 +92,9 @@ export default function adminDashboard() {
     }
 
     if (marja == null) {
-      Alert.alert(
-        "Fehler",
-        "Bitte wähle einen Marja aus!"
-      );
+      Alert.alert("Fehler", "Bitte wähle einen Marja aus!");
       return false;
     }
-
 
     if (!acceptRules) {
       Alert.alert(
@@ -227,10 +223,13 @@ export default function adminDashboard() {
 
               <View style={styles.linkContainer}>
                 <Text style={styles.linkText}>Ich habe die</Text>
-              <Link href="/rulesModal" style={[styles.link, themeStyles.link]}>
-               Richtlinie 
-              </Link>
-              <Text style={styles.linkText}>gelesen und akzeptiere sie</Text>
+                <Link
+                  href="rulesModal/modal"
+                  style={[styles.link, themeStyles.link]}
+                >
+                  Richtlinien
+                </Link>
+                <Text style={styles.linkText}>gelesen und akzeptiere sie</Text>
               </View>
             </View>
             <TextInput
@@ -243,6 +242,7 @@ export default function adminDashboard() {
             />
           </ScrollView>
         </View>
+        
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginRight: 10,
     marginTop: 20,
-    marginBottom: 30
+    marginBottom: 30,
   },
   checkboxView: {
     flexDirection: "row",
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
   checkboxElementMarja: {
     borderRadius: 30,
     marginRight: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   genderLable: {
     marginRight: 5,
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10
+    marginBottom: 10,
   },
   rulesCheckbox: {
     marginRight: 10,
@@ -323,12 +323,12 @@ const styles = StyleSheet.create({
   },
   linkText: {
     marginLeft: 2,
-    marginRight: 2
+    marginRight: 2,
   },
   link: {
     marginLeft: 2,
     marginRight: 2,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 
   inputQuestion: {

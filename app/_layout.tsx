@@ -86,7 +86,14 @@ function RootLayoutNav() {
             headerTitle: "Impressum",
           }}
         />
-        
+        <Stack.Screen
+          name='rulesModal'
+          options={{
+            headerShown: false,
+            presentation: 'modal'
+          }}
+          
+        />
       </Stack>
       <Toast />
     </ThemeProvider>

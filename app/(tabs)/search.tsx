@@ -33,7 +33,7 @@ export default function TabOneScreen() {
       onPress={() => Keyboard.dismiss()}
       accessible={false}
     >
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={["top", "right", "left"]}>
         <View style={[styles.searchContainer, themeStyles.container]}>
           <AntDesign
             name='search1'
@@ -74,6 +74,7 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom: 5
   
   },
   searchContainer: {
