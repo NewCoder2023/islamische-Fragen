@@ -31,7 +31,7 @@ interface Email {
   gender: string;
   question: string;
 }
-export default function adminDashboard() {
+export default function askQuestion() {
   const colorScheme = useColorScheme();
   const themeStyles = coustomTheme(colorScheme);
 
@@ -99,7 +99,7 @@ export default function adminDashboard() {
     if (!acceptRules) {
       Alert.alert(
         "Fehler",
-        "Bitte lies die Richtlinen und akzeptiere sie um die E-mail versenden zu können"
+        "Bitte lies die Richtlinen und akzeptiere sie um die E-Mail versenden zu können!"
       );
       return false;
     }
@@ -180,28 +180,16 @@ export default function adminDashboard() {
               style={[styles.input, styles.inputEmail, themeStyles.text]}
               onChangeText={setEmail}
               value={email}
-              placeholder='E-mail (Pflicht)'
+              placeholder='E-Mail (Pflicht)'
               keyboardType='email-address'
             />
             <TextInput
               style={[styles.input, styles.inputEmail, themeStyles.text]}
               onChangeText={setValidateEmail}
               value={validateEmail}
-              placeholder='E-mail wiederholen (Pflicht)'
+              placeholder='E-Mail wiederholen (Pflicht)'
               keyboardType='email-address'
             />
-            <View style={styles.checkboxContainerMarja}>
-              {marjaOptions.map((option) => (
-                <View key={option.value} style={styles.checkboxView}>
-                  <Checkbox
-                    style={styles.checkboxElementMarja}
-                    value={marja === option.value}
-                    onValueChange={() => setMarja(option.value)}
-                  />
-                  <Text style={styles.genderLable}>{option.label}</Text>
-                </View>
-              ))}
-            </View>
             <View style={styles.checkboxContainerGender}>
               {genderOptions.map((option) => (
                 <View key={option.value} style={styles.checkboxView}>
@@ -214,6 +202,19 @@ export default function adminDashboard() {
                 </View>
               ))}
             </View>
+            <View style={styles.checkboxContainerMarja}>
+              {marjaOptions.map((option) => (
+                <View key={option.value} style={styles.checkboxView}>
+                  <Checkbox
+                    style={styles.checkboxElementMarja}
+                    value={marja === option.value}
+                    onValueChange={() => setMarja(option.value)}
+                  />
+                  <Text style={styles.marjaLable}>{option.label}</Text>
+                </View>
+              ))}
+            </View>
+
             <View style={styles.rules}>
               <Checkbox
                 style={styles.rulesCheckbox}
@@ -224,12 +225,12 @@ export default function adminDashboard() {
               <View style={styles.linkContainer}>
                 <Text style={styles.linkText}>Ich habe die</Text>
                 <Link
-                  href="rulesModal/modal"
+                  href='rulesModal/modal'
                   style={[styles.link, themeStyles.link]}
                 >
                   Richtlinien
                 </Link>
-                <Text style={styles.linkText}>gelesen und akzeptiere sie</Text>
+                <Text style={styles.linkText}>gelesen und akzeptiert.</Text>
               </View>
             </View>
             <TextInput
@@ -242,7 +243,6 @@ export default function adminDashboard() {
             />
           </ScrollView>
         </View>
-        
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-around",
     marginRight: 10,
-    marginTop: 20,
+    marginTop: 30,
     marginBottom: 30,
   },
   checkboxView: {
@@ -294,44 +294,49 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     flexWrap: "wrap",
-    marginTop: 30,
-  },
+    marginBottom: 25
 
+  },
   checkboxElementGender: {
     borderRadius: 30,
-    marginRight: 10,
+    marginRight: 7,
   },
   checkboxElementMarja: {
     borderRadius: 30,
-    marginRight: 10,
+    marginRight: 7,
     marginBottom: 10,
   },
-  genderLable: {
-    marginRight: 5,
-  },
+  genderLable: {},
+  marjaLable: {},
   rules: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
+    marginLeft: 10,
+    marginRight: 30,
   },
   rulesCheckbox: {
-    marginRight: 10,
+    marginRight: 7,
   },
   linkContainer: {
     flexDirection: "row",
+    flexWrap: "wrap",
   },
   linkText: {
     marginLeft: 2,
     marginRight: 2,
+    fontSize: 14,
   },
   link: {
     marginLeft: 2,
     marginRight: 2,
     fontWeight: "bold",
+    fontSize: 14,
   },
 
   inputQuestion: {
+    flex: 1,
     marginBottom: 50,
     paddingHorizontal: 12,
     paddingTop: 8,

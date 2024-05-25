@@ -205,6 +205,7 @@ export default function renderText() {
           </View>
           {filteredAnswers.map((answer, index) => (
             <View key={index} style={[styles.answers, themeStyles.container]}>
+              <Text>Hallo</Text>
               <View style={[styles.headerContainer, , themeStyles.container]}>
                 <View style={styles.headerImage}>
                   <Image
