@@ -6,7 +6,7 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import useFetchText from "components/useFetchText";
 import Colors from "constants/Colors";
@@ -28,7 +28,9 @@ import { coustomTheme } from "components/coustomTheme";
 import { Image } from "expo-image";
 import Checkbox from "expo-checkbox";
 import { useSetFontSize } from "components/fontSizeStore";
+import { MaterialIcons } from "@expo/vector-icons";
 import * as Network from "expo-network";
+import * as Clipboard from "expo-clipboard";
 
 export default function renderText() {
   const { id, table, title } = useLocalSearchParams<{
@@ -55,8 +57,21 @@ export default function renderText() {
     toggleDownload,
   } = useDownload(key, headerTitle, question, answers, singleAnswer);
   const [marja, setMarja] = useState<string[]>([]);
+  const [isCopiedMultiple, setIsCopiedMultiple] = useState({
+    khamenei: false,
+    sistani: false,
+  });
+  const [isCopiedSingle, setIsCopiedSingle] = useState(false);
+  const [copiedText, setCopiedText] = useState<string>("");
+  const timeoutRef = useRef(null);
 
-  console.log(downloadedText)
+  // clean Timout
+  const cleanTimeout = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  };
 
   // Update exisitng Data in Asynscstorage
   useLayoutEffect(() => {
@@ -69,6 +84,13 @@ export default function renderText() {
     loadDownloadedText();
     handleDataLoad();
   }, [id, table]);
+
+  useEffect(() => {
+    return () => {
+      // Clear timeout when component unmounts
+      cleanTimeout();
+    };
+  }, []);
 
   const displayQuestion = downloadedText?.question || question;
   const displaySingleAnswer = downloadedText?.singleAnswer || singleAnswer;
@@ -93,12 +115,38 @@ export default function renderText() {
     );
   };
 
+  // Filter Markdown from copied Text
+  const regex = /(\*\*|\*|######|#####|####|###|##|#)/g;
+
   const filteredAnswers =
     marja.length > 0
       ? displayAnswers.filter((answer) => marja.includes(answer.name))
       : [];
 
-  
+  const copyMultipleAnswers = async (marja: string, text: string) => {
+    await Clipboard.setStringAsync(text.replace(regex, ""));
+    setCopiedText(text.replace(regex, ""));
+    setIsCopiedMultiple((prev) => ({ ...prev, [marja]: true }));
+
+    // Clear any existing timeout
+    cleanTimeout();
+
+    timeoutRef.current = setTimeout(
+      () => setIsCopiedMultiple((prev) => ({ ...prev, [marja]: false })),
+      1000
+    );
+  };
+
+  const copySingleAnswer = async (text: string) => {
+    await Clipboard.setStringAsync(text.replace(regex, ""));
+    setCopiedText(text.replace(regex, ""));
+    setIsCopiedSingle(true);
+
+    // Clear any existing timeout
+    cleanTimeout();
+
+    timeoutRef.current = setTimeout(() => setIsCopiedSingle(false), 1000);
+  };
 
   return (
     <View style={styles.container}>
@@ -144,6 +192,20 @@ export default function renderText() {
             <Text style={styles.questionText}>{displayQuestion}</Text>
           </View>
           <View style={[styles.singleAnswers, themeStyles.container]}>
+            <View style={styles.copyContainerSingle}>
+              {isCopiedSingle ? (
+                <View style={styles.copyDoneContainer}>
+                  <MaterialIcons name='done' size={24} color={colorScheme == "dark" ? "white" : "black" } />
+                  <Text style={styles.copyDoneText}>Text Kopiert!</Text>
+                </View>
+              ) : (
+                <Pressable
+                  onPress={() => copySingleAnswer(displaySingleAnswer)}
+                >
+                  <AntDesign name='copy1' size={24} color={colorScheme == "dark" ? "white" : "black" } />
+                </Pressable>
+              )}
+            </View>
             <Markdown
               style={{
                 body: {
@@ -205,7 +267,22 @@ export default function renderText() {
           </View>
           {filteredAnswers.map((answer, index) => (
             <View key={index} style={[styles.answers, themeStyles.container]}>
-              <Text>Hallo</Text>
+              <View style={styles.copyContainer}>
+                {isCopiedMultiple[answer.name] ? (
+                  <View style={styles.copyDoneContainer}>
+                    <MaterialIcons name='done' size={24} color={colorScheme == "dark" ? "white" : "black" }/>
+                    <Text style={styles.copyDoneText}>Text Kopiert!</Text>
+                  </View>
+                ) : (
+                  <Pressable
+                    onPress={() =>
+                      copyMultipleAnswers(answer.name, answer.answer)
+                    }
+                  >
+                    <AntDesign name='copy1' size={24} color={colorScheme == "dark" ? "white" : "black" } />
+                  </Pressable>
+                )}
+              </View>
               <View style={[styles.headerContainer, , themeStyles.container]}>
                 <View style={styles.headerImage}>
                   <Image
@@ -316,7 +393,37 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
+  copyContainerSingle: {
+    marginTop: 10,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+  },
 
+  copyContainer: {
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+  },
+  copyDoneSingleContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "transparent",
+    marginTop: 10,
+  },
+  copyDoneContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "transparent",
+  },
+
+  copyDoneText: {
+    marginLeft: 5,
+  },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",

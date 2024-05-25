@@ -4,9 +4,10 @@ import Colors from "constants/Colors";
 import { Link } from "expo-router";
 import { Switch } from "react-native";
 import { Appearance } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Checkbox from "expo-checkbox";
 import { useSetFontSize } from "components/fontSizeStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function settings() {
   const colorScheme = Appearance.getColorScheme();
@@ -14,11 +15,45 @@ export default function settings() {
   const [selectSize, setSelectSize] = useState<number>();
   const { fontSize, setLineHeigth, setFontSize } = useSetFontSize();
 
+  useEffect(() => {
+    const getColorMode = async () => {
+      const colorMode = await AsyncStorage.getItem("ColorMode");
+      if (colorMode) {
+        Appearance.setColorScheme(colorMode);
+      } else {
+        Appearance.setColorScheme("light");
+      }
+    };
 
-  const toggleSwitch = () => {
+    const getFontSetting = async () => {
+      const storedFontSize = (await AsyncStorage.getItem("fontSize")) || 20;
+      const storedLineheigt = (await AsyncStorage.getItem("lineHeight")) || 40;
+      setLineHeigth(JSON.parse(storedLineheigt));
+      setSelectSize(JSON.parse(storedFontSize));
+      setFontSize(JSON.parse(storedFontSize));
+    };
+    getFontSetting();
+    getColorMode();
+  }, []);
+
+  const toggleSwitchColor = () => {
     const changeColor = isDarkMode ? "light" : "dark";
     Appearance.setColorScheme(changeColor);
+    saveSwitchStatus(changeColor);
     setIsDarkMode(!isDarkMode);
+  };
+
+  const toggleSwitchFont = async (lineHeight, fontSize) => {
+    setLineHeigth(lineHeight);
+    setSelectSize(fontSize);
+    setFontSize(fontSize);
+    await AsyncStorage.setItem("lineHeigth", JSON.stringify(lineHeight));
+    await AsyncStorage.setItem("fontSize", JSON.stringify(fontSize));
+    await AsyncStorage.setItem("selectSize", JSON.stringify(fontSize));
+  };
+
+  const saveSwitchStatus = async (colorMode) => {
+    await AsyncStorage.setItem("ColorMode", colorMode);
   };
 
   const SizeOptions = [
@@ -35,7 +70,7 @@ export default function settings() {
           trackColor={{ false: "#3e3e3e", true: "#4dd964" }}
           thumbColor={isDarkMode ? "#000000" : "#f4f3f4"}
           ios_backgroundColor='#3e3e3e'
-          onValueChange={toggleSwitch}
+          onValueChange={toggleSwitchColor}
           value={isDarkMode}
         />
       </View>
@@ -52,10 +87,7 @@ export default function settings() {
                 style={styles.textSizeCheckbox}
                 value={fontSize === option.fontSize}
                 onValueChange={() => {
-                  setLineHeigth(option.lineHeight);
-                  setSelectSize(option.fontSize);
-                  setFontSize(option.fontSize);
-                
+                  toggleSwitchFont(option.lineHeight, option.fontSize);
                 }}
               />
               <Text style={styles.checboxLable}>{option.label}</Text>
