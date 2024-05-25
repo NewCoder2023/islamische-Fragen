@@ -9,9 +9,9 @@ export default function fetchDate(table: string) {
     const fetchItems = async () => {
       const { data, error } = await supabase
         .from(table)
-        .select()
-        .order("id", { ascending: true });
-
+        .select("*")
+        .order("title", { ascending: true });
+        
       // Error checking
 
       if (error) {

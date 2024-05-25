@@ -2,7 +2,7 @@ import Colors from "constants/Colors";
 import { Text, View } from "components/Themed";
 import { Pressable, StyleSheet } from "react-native";
 import React from "react";
-import { EvilIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useColorScheme } from "react-native";
 
@@ -52,9 +52,9 @@ const RenderSearch: React.FC<RenderSearchProps> = ({ items, table }) => {
               <Pressable>
                 <View style={[styles.renderItem, themeContainerStyle]}>
                   <Text style={styles.itemText}>{item.title.trim()}</Text>
-                  <EvilIcons
-                    name='arrow-right'
-                    size={30}
+                  <Feather
+                    name='arrow-right-circle'
+                    size={25}
                     color={colorScheme == "light" ? "black" : "white"}
                   />
                 </View>

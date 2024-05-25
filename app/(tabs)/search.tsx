@@ -74,6 +74,7 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  
   },
   searchContainer: {
     flexDirection: "row",
@@ -109,5 +110,6 @@ const styles = StyleSheet.create({
 
   renderSearchContainer: {
     flex: 1,
+ 
   },
 });

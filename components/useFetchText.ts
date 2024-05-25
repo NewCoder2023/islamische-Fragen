@@ -59,7 +59,7 @@ export default function useFetchText(id: string, table: string) {
           setSingleAnswer(data.answer);
         }
 
-        setHeaderTitle(data.title)
+        setHeaderTitle(data.title);
         setQuestion(data.question || "");
         setFetchError("");
       }
