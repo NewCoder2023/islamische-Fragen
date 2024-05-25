@@ -55,7 +55,6 @@ export default function favourites() {
     };
     getFavorites();
   }, [favoriteChange]);
-
   return (
     <View style={styles.container}>
       {favorites[0] ? (

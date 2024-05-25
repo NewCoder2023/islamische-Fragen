@@ -1,6 +1,12 @@
 //dasboard-neu:
-import { Keyboard, ScrollView, StyleSheet, TextInput } from "react-native";
-import { View, Text, SafeAreaView } from "components/Themed";
+import {
+  KeyboardAvoidingView,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+} from "react-native";
+import { View, Text } from "components/Themed";
 import Colors from "constants/Colors";
 import { TouchableWithoutFeedback } from "react-native";
 import { Pressable } from "react-native";
@@ -13,7 +19,8 @@ import { useSendQuestion } from "components/useSendQuestion";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import { Alert } from "react-native";
-
+import { Platform } from "react-native";
+import { useRef } from "react";
 
 interface Email {
   name: string;
@@ -36,6 +43,8 @@ export default function adminDashboard() {
   const [question, setQuestion] = useState<string>("");
   const { sendEmail } = useSendQuestion();
 
+  const scrollViewRef = useRef(null);
+
   const genderOptions = [
     { label: "Männlich", value: "Männlich" },
     { label: "Weiblich ", value: "Weiblich" },
@@ -46,7 +55,13 @@ export default function adminDashboard() {
   };
 
   const validateForm = () => {
-    if (!age || !email || !validateEmail || !question) {
+    if (
+      !age ||
+      !email ||
+      !validateEmail ||
+      !question ||
+      question.trim() === ""
+    ) {
       Alert.alert("Fehler", "Bitte füllen Sie alle Pflichtfelder aus.");
       return false;
     }
@@ -99,80 +114,92 @@ export default function adminDashboard() {
   };
 
   return (
-    <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        {/* Submit button */}
-        <Stack.Screen
-          options={{
-            headerTitle: "Eine Frage stellen",
-            headerRight: () => (
-              <View style={styles.headerButton}>
-                <Pressable onPress={() => send()}>
-                  <Text style={styles.submitButtonText}>Senden</Text>
-                </Pressable>
-              </View>
-            ),
-          }}
-        />
-        <ScrollView contentContainerStyle={styles.contactContainer}>
-          <TextInput
-            style={[styles.input, styles.inputName]}
-            onChangeText={setName}
-            value={name}
-            placeholder='Name (optional)'
-            keyboardType='default'
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+    >
+      <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          {/* Submit button */}
+          <Stack.Screen
+            options={{
+              headerTitle: "Eine Frage stellen",
+              headerRight: () => (
+                <View style={styles.headerButton}>
+                  <Pressable onPress={() => send()}>
+                    <Text style={styles.submitButtonText}>Senden</Text>
+                  </Pressable>
+                </View>
+              ),
+            }}
           />
-          <TextInput
-            style={[styles.input, styles.inputAge]}
-            onChangeText={setAge}
-            value={age}
-            placeholder='Alter (pflicht)'
-            keyboardType='numeric'
-          />
-          <TextInput
-            style={[styles.input, styles.inputEmail]}
-            onChangeText={setEmail}
-            value={email}
-            placeholder='Email (pflicht)'
-            keyboardType='email-address'
-          />
-          <TextInput
-            style={[styles.input, styles.inputEmail]}
-            onChangeText={setValidateEmail}
-            value={validateEmail}
-            placeholder='Email wiederholen (pflicht)'
-            keyboardType='email-address'
-          />
-          <TextInput
-            style={[styles.input, styles.inputMarja]}
-            onChangeText={setMarja}
-            value={marja}
-            placeholder='Vorbild der Nachahmung (Marja)'
-            keyboardType='default'
-          />
-          <View style={styles.genderContainer}>
-            {genderOptions.map((option) => (
-              <View key={option.value} style={styles.gender}>
-                <Checkbox
-                  style={styles.genderCheckbox}
-                  value={gender === option.value}
-                  onValueChange={() => handleCheckboxChange(option.value)}
-                />
-                <Text style={styles.genderLable}>{option.label}</Text>
-              </View>
-            ))}
-          </View>
-          <TextInput
-            style={[styles.input, styles.inputQuestion]}
-            onChangeText={setQuestion}
-            value={question}
-            placeholder='Frage'
-            multiline={true}
-            keyboardType='default'
-          />
-        </ScrollView>
-      </View>
-    </TouchableWithoutFeedback>
+          <ScrollView
+            contentContainerStyle={styles.contactContainer}
+            ref={scrollViewRef}
+            onContentSizeChange={() =>
+              scrollViewRef.current.scrollToEnd({ animated: true })
+            }
+          >
+            <TextInput
+              style={[styles.input, styles.inputName, themeStyles.text]}
+              onChangeText={setName}
+              value={name}
+              placeholder='Name (optional)'
+              keyboardType='default'
+            />
+            <TextInput
+              style={[styles.input, styles.inputAge, themeStyles.text]}
+              onChangeText={setAge}
+              value={age}
+              placeholder='Alter (Pflicht)'
+              keyboardType='numeric'
+            />
+            <TextInput
+              style={[styles.input, styles.inputEmail, themeStyles.text]}
+              onChangeText={setEmail}
+              value={email}
+              placeholder='E-mail (Pflicht)'
+              keyboardType='email-address'
+            />
+            <TextInput
+              style={[styles.input, styles.inputEmail, themeStyles.text]}
+              onChangeText={setValidateEmail}
+              value={validateEmail}
+              placeholder='E-mail wiederholen (Pflicht)'
+              keyboardType='email-address'
+            />
+            <TextInput
+              style={[styles.input, styles.inputMarja, themeStyles.text]}
+              onChangeText={setMarja}
+              value={marja}
+              placeholder='Vorbild der Nachahmung (Marja)'
+              keyboardType='default'
+            />
+            <View style={styles.genderContainer}>
+              {genderOptions.map((option) => (
+                <View key={option.value} style={styles.gender}>
+                  <Checkbox
+                    style={styles.genderCheckbox}
+                    value={gender === option.value}
+                    onValueChange={() => handleCheckboxChange(option.value)}
+                  />
+                  <Text style={styles.genderLable}>{option.label}</Text>
+                </View>
+              ))}
+            </View>
+            <TextInput
+              style={[styles.input, styles.inputQuestion, themeStyles.text]}
+              onChangeText={setQuestion}
+              value={question}
+              placeholder='Frage (Pflicht)'
+              multiline={true}
+              keyboardType='default'
+            />
+          </ScrollView>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -190,7 +217,7 @@ const styles = StyleSheet.create({
     color: Colors.light.link,
   },
   contactContainer: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "flex-start",
   },
   input: {
@@ -224,7 +251,6 @@ const styles = StyleSheet.create({
   inputEmail: {},
   inputMarja: {},
   inputQuestion: {
-    flex: 1,
     marginBottom: 50,
     paddingHorizontal: 12,
     paddingTop: 8,

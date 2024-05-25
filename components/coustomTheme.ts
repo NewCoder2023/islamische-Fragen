@@ -37,6 +37,7 @@ export const lightTheme = {
   dashIndex: {
     color: "#DDC092",
   },
+
 };
 
 export const darkTheme = {

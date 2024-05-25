@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 5,
-    marginBottom: 10,
+    marginBottom: 5,
   },
 
   itemsContainer: {
