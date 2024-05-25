@@ -6,20 +6,49 @@ import { useColorScheme } from "react-native";
 import { Image } from "expo-image";
 import Colors from "constants/Colors";
 import { ImageBackground } from "react-native";
+import { useLayoutEffect } from "react";
+import { Appearance } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSetFontSize } from "components/fontSizeStore";
 
 export default function index() {
   const colorscheme = useColorScheme();
   const themeStyles = coustomTheme(colorscheme);
+  const { fontSize, setLineHeigth, setFontSize } = useSetFontSize();
+
+  // Load colorscheme Mode and Font size stored in Asyncstorage
+  useLayoutEffect(() => {
+    const getColorMode = async () => {
+      const colorMode = await AsyncStorage.getItem("ColorMode");
+      if (colorMode) {
+        Appearance.setColorScheme(colorMode);
+      }
+    };
+
+    const getFontSetting = async () => {
+      const storedFontSize = await AsyncStorage.getItem("fontSize");
+      const storedLineHeight = await AsyncStorage.getItem("lineHeight");
+      if (storedFontSize) {
+        setFontSize(Number(storedFontSize));
+      }
+
+      if (storedLineHeight) {
+        setLineHeigth(Number(storedLineHeight));
+      }
+    };
+    getFontSetting();
+    getColorMode();
+    getColorMode();
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={[styles.headerContainer, themeStyles.borderIndex]}>
-       
-          <View style={[styles.header, themeStyles.backgroundIndex]}>
+        <View style={[styles.header, themeStyles.backgroundIndex]}>
           <ImageBackground
-          source={require("assets/images/background.png")}
-          style={styles.calligraphyBackground}
-        >
+            source={require("assets/images/background.png")}
+            style={styles.calligraphyBackground}
+          >
             <View style={styles.headerElements}>
               <View style={styles.headerImageContainer}>
                 <Image
@@ -37,9 +66,8 @@ export default function index() {
                 </Text>
               </View>
             </View>
-            </ImageBackground>
-          </View>
-        
+          </ImageBackground>
+        </View>
       </View>
       <View style={styles.categoryContainer}>
         <QuestionLinks />
@@ -66,9 +94,8 @@ const styles = StyleSheet.create({
   },
   calligraphyBackground: {
     flex: 1,
-    width:"100%",
+    width: "100%",
     resizeMode: "cover",
-
   },
 
   headerElements: {
@@ -136,7 +163,5 @@ const styles = StyleSheet.create({
   searchField: {},
   categoryContainer: {
     height: "60%",
-   
-    
   },
 });

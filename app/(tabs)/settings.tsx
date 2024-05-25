@@ -4,7 +4,7 @@ import Colors from "constants/Colors";
 import { Link } from "expo-router";
 import { Switch } from "react-native";
 import { Appearance } from "react-native";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Checkbox from "expo-checkbox";
 import { useSetFontSize } from "components/fontSizeStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,25 +15,22 @@ export default function settings() {
   const [selectSize, setSelectSize] = useState<number>();
   const { fontSize, setLineHeigth, setFontSize } = useSetFontSize();
 
-  useEffect(() => {
+  // Save Font mode and Color mode in Asyncstorage
+  useLayoutEffect(() => {
     const getColorMode = async () => {
       const colorMode = await AsyncStorage.getItem("ColorMode");
       if (colorMode) {
-        Appearance.setColorScheme(colorMode);
+        setIsDarkMode(colorMode === "dark");
       } else {
-        Appearance.setColorScheme("light");
+        setIsDarkMode(colorMode === "dark");
       }
     };
 
     const getFontSetting = async () => {
       const storedFontSize = await AsyncStorage.getItem("fontSize");
-      const storedLineHeight = await AsyncStorage.getItem("lineHeight");
+
       if (storedFontSize) {
-        setFontSize(Number(storedFontSize));
         setSelectSize(Number(storedFontSize));
-      }
-      if (storedLineHeight) {
-        setLineHeigth(Number(storedLineHeight));
       }
     };
     getFontSetting();
