@@ -15,9 +15,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { useColorScheme } from "react-native";
 import { useIsChanging } from "components/favStore";
 import Markdown from "react-native-markdown-display";
-import { FlashList } from "@shopify/flash-list";
 import { storeFavorites, getFavorites } from "components/manageFavorites";
-import { useMemo } from "react";
+
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRef } from "react";
@@ -170,7 +169,6 @@ export default function renderText() {
                   onPress={toggleDownload}
                 />
               )}
-
               <AntDesign
                 name={isInFavorites(id, table) ? "star" : "staro"}
                 size={24}
