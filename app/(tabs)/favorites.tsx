@@ -93,10 +93,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
   },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
+  
 });

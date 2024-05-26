@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     fontSize: 16,
     fontWeight: "bold",
-  }
+  },
 });
 
 export default RenderSearch;

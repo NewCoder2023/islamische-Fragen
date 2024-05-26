@@ -238,7 +238,7 @@ export default function renderText() {
                   fontSize: fontSize + 10,
                 },
                 heading6: {
-                  ...themeStyle.markdownText,
+                  ...themeStyles.markdownText,
                   fontSize: fontSize,
                   textAlign: "center",
                 },
