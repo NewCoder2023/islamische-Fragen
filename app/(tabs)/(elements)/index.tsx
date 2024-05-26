@@ -43,7 +43,7 @@ export default function index() {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.headerContainer, themeStyles.borderIndex]}>
+      <View style={[styles.headerContainer, themeStyles.indexBorderDash]}>
         <View style={[styles.header, themeStyles.backgroundIndex]}>
           <ImageBackground
             source={require("assets/images/background.png")}
@@ -58,10 +58,10 @@ export default function index() {
                 />
               </View>
               <View style={styles.headerTextContainer}>
-                <Text style={[styles.headerText, themeStyles.inverseText]}>
+                <Text style={styles.headerText}>
                   Islam-Fragen
                 </Text>
-                <Text style={[styles.headerDash, themeStyles.dashIndex]}>
+                <Text style={[styles.headerDash, themeStyles.indexBorderDash]}>
                   __________
                 </Text>
               </View>

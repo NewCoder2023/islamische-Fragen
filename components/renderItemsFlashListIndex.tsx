@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, useColorScheme } from "react-native";
 import { View, Text } from "./Themed";
 import { Image } from "expo-image";
 import { FontAwesome } from "@expo/vector-icons";
@@ -9,21 +9,21 @@ import Colors from "constants/Colors";
 import { StyleSheet } from "react-native";
 import ImageCount from "./ImageCount";
 import { useState } from "react";
+import { coustomTheme } from "./coustomTheme";
 interface RenderItemsFlashListProps {
   item: any;
   isLoggedIn: boolean;
-  themeContainerStyle: object;
-  colorScheme: "light" | "dark" | undefined | null;
 }
 
 export const RenderItemsFlashList = ({
   item,
   isLoggedIn,
-  themeContainerStyle,
-  colorScheme,
 }: RenderItemsFlashListProps) => {
   const screenWidth = Dimensions.get("window").width;
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const colorScheme = useColorScheme();
+  const themeStyles = coustomTheme(colorScheme);
 
   // Get the current index of image for setting the icon
   const handleScroll = (event: any) => {
@@ -33,7 +33,7 @@ export const RenderItemsFlashList = ({
   };
 
   return (
-    <View style={[styles.newsContainer, themeContainerStyle]}>
+    <View style={[styles.newsContainer, themeStyles.containerContrast]}>
       <View style={styles.newsHeader}>
         <Image
           style={styles.newsImageMaher}
@@ -45,7 +45,7 @@ export const RenderItemsFlashList = ({
           <FontAwesome
             name='trash-o'
             size={24}
-            color={colorScheme == "dark" ? "#D63031" : "#BA2F16"}
+            style={themeStyles.trashIcon}
             onPress={() => deletePosts(item.id)}
           />
         ) : null}
@@ -59,7 +59,7 @@ export const RenderItemsFlashList = ({
           <View style={styles.ImageContainer}>
             <Image
               contentFit='cover'
-              style={styles.newsImageSingel}
+              style={styles.newsImageSingle}
               source={{ uri: item.imagePaths[0] }}
               recyclingKey={`${item.imagePaths[0]}`}
             />
@@ -72,14 +72,13 @@ export const RenderItemsFlashList = ({
               <FontAwesome
                 name='circle'
                 size={10}
-                color={colorScheme == "dark" ? "white" : "black"}
-              />
+                style={themeStyles. characterCountNewsImage} />
             );
             const characterNext = (
               <FontAwesome
                 name='circle-o'
                 size={10}
-                color={colorScheme == "dark" ? "white" : "black"}
+                style={themeStyles. characterCountNewsImage}
               />
             );
 
@@ -233,71 +232,17 @@ const styles = StyleSheet.create({
     marginRight: 10,
     aspectRatio: 0.8,
   },
-  newsImageSingel: {
+  newsImageSingle: {
     width: screenWidth - 50,
     height: "auto",
     aspectRatio: 0.8,
   },
-  renderError: {
-    flex: 1,
-    marginTop: 20,
-    paddingLeft: 12,
-    paddingRight: 12,
-  },
-  errorText: {
-    fontSize: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
+
   FlatListContainer: {
     flex: 1,
     alignItems: "center",
     padding: 0,
     margin: 0,
     backgroundColor: "transparent",
-  },
-  emptyText: {
-    fontSize: 25,
-    lineHeight: 35,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  updateContainer: {
-    width: "100%",
-    position: "absolute",
-    top: 0,
-    zIndex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "transparent",
-  },
-  updateButton: {
-    backgroundColor: "#2ecc71",
-    borderWidth: 1,
-    borderRadius: 30,
-  },
-  updateButtonText: {
-    fontSize: 16,
-    padding: 6,
-    fontWeight: "bold",
-    color: Colors.light.black,
-  },
-  lightThemeError: {
-    color: Colors.light.error,
-  },
-  darkThemeError: {
-    color: Colors.light.error,
-  },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
-  lightButton: {
-    color: Colors.light.adButton,
-  },
-  darkButton: {
-    color: Colors.dark.adButton,
   },
 });

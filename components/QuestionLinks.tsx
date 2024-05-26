@@ -52,40 +52,14 @@ export default function Categories() {
     <View style={[styles.container]}>
       <View style={styles.leftElements}>
         {categoriesLeft.map((category, index) => (
-          <View  key={`${index}-left`} style={[styles.element, themeStyles.categorieBackground, themeStyles.border]}>
-            <Link
-             
-              href={
-                {
-                  pathname: category.path,
-                  params: {
-                    category: category.name,
-                  },
-                } as any
-              }
-              asChild
-            >
-              <Pressable>
-                <Image
-                  style={styles.elementIcon}
-                  source={category.image}
-                  contentFit='contain'
-                />
-                <View style={[styles.textContainer, themeStyles.border]}>
-                  <Text style={[styles.elementText, themeStyles.categorieText]}>
-                    {category.name}
-                  </Text>
-                </View>
-              </Pressable>
-            </Link>
-          </View>
-        ))}
-      </View>
-      <View style={styles.rightElements}>
-        {categoriesRight.map((category, index) => (
           <View
-            key={`${index}-right`}
-            style={[styles.element, themeStyles.categorieBackground, themeStyles.border]}
+            key={`${index}-left`}
+            style={[
+              styles.element,
+              themeStyles.categorieBackground,
+              themeStyles.indexBorderDash,
+              themeStyles.shadow,
+            ]}
           >
             <Link
               href={
@@ -104,7 +78,54 @@ export default function Categories() {
                   source={category.image}
                   contentFit='contain'
                 />
-                <View style={[styles.textContainer, themeStyles.border]}>
+                <View
+                  style={[
+                    styles.textContainer,
+                    themeStyles.indexCategoryTextBorder,
+                  ]}
+                >
+                  <Text style={[styles.elementText, themeStyles.categorieText]}>
+                    {category.name}
+                  </Text>
+                </View>
+              </Pressable>
+            </Link>
+          </View>
+        ))}
+      </View>
+      <View style={styles.rightElements}>
+        {categoriesRight.map((category, index) => (
+          <View
+            key={`${index}-right`}
+            style={[
+              styles.element,
+              themeStyles.categorieBackground,
+              themeStyles.indexBorderDash,
+            ]}
+          >
+            <Link
+              href={
+                {
+                  pathname: category.path,
+                  params: {
+                    category: category.name,
+                  },
+                } as any
+              }
+              asChild
+            >
+              <Pressable>
+                <Image
+                  style={styles.elementIcon}
+                  source={category.image}
+                  contentFit='contain'
+                />
+                <View
+                  style={[
+                    styles.textContainer,
+                    themeStyles.indexCategoryTextBorder,
+                  ]}
+                >
                   <Text style={[styles.elementText, themeStyles.categorieText]}>
                     {category.name}
                   </Text>
@@ -123,7 +144,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "flex-end", // Align children to the bottom
-   
   },
   leftElements: {
     height: "100%",
@@ -147,12 +167,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: "#eff8fc",
     justifyContent: "flex-end",
     paddingHorizontal: 2,
     ...Platform.select({
       ios: {
-        shadowColor: "#000",
         shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 0.3,
         shadowRadius: 5,

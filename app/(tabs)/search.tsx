@@ -34,31 +34,32 @@ export default function TabOneScreen() {
       accessible={false}
     >
       <SafeAreaView style={styles.container} edges={["top", "right", "left"]}>
-        <View style={[styles.searchContainer, themeStyles.container]}>
+        <View style={[styles.searchContainer, themeStyles.inverseTextInput]}>
           <AntDesign
             name='search1'
             size={20}
             color='grey'
             style={styles.searchIcon}
           />
-          <Text style={styles.border}>|</Text>
+          <Text style={[styles.border, themeStyles.searchBorderDash]}>|</Text>
           <TextInput
-            style={[styles.searchField, themeStyles.text]}
+            style={[styles.searchField, themeStyles.inverseTextInput]}
             placeholder='Suche'
-            placeholderTextColor={themeStyles.text.color}
             keyboardType='default'
             editable
             value={search}
             ref={searchInputRef}
             onChangeText={setSearch}
-            onBlur={Keyboard.dismiss}
           />
           {search && (
-            <Pressable onPress={() => setSearch("")}>
+            <Pressable
+              style={styles.deleteIconContainer}
+              onPress={() => setSearch("")}
+            >
               <Feather
                 name='x-circle'
                 size={20}
-                style={[styles.deleteIcon, themeStyles.text]}
+                style={[styles.deleteIcon, themeStyles.deleteIcon]}
               />
             </Pressable>
           )}
@@ -74,28 +75,27 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 5
-  
+    marginBottom: 5,
   },
   searchContainer: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
     marginHorizontal: 15,
     borderWidth: 2,
     borderRadius: 30,
-    backgroundColor: Colors.dark.contrast,
   },
   searchIcon: {
     paddingLeft: 12,
+  },
+  deleteIconContainer: {
+    backgroundColor: "transparent",
   },
   deleteIcon: {
     paddingRight: 11,
     paddingVertical: 10,
   },
   border: {
-    color: Colors.light.border,
     fontSize: 25,
     paddingLeft: 3,
     paddingBottom: 5,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   searchField: {
-    flex: 1,
+    width: "80%",
     paddingRight: 10,
     paddingLeft: 5,
     paddingVertical: 12,
@@ -111,6 +111,5 @@ const styles = StyleSheet.create({
 
   renderSearchContainer: {
     flex: 1,
- 
   },
 });

@@ -159,14 +159,14 @@ export default function renderText() {
                 <MaterialCommunityIcons
                   name='file-remove-outline'
                   size={24}
-                  color={colorScheme == "dark" ? "white" : "black"}
+                 style={themeStyles.downloadIcon}
                   onPress={toggleDownload}
                 />
               ) : (
                 <Feather
                   name='download'
                   size={24}
-                  color={colorScheme == "dark" ? "white" : "black"}
+                  style={themeStyles.downloadIcon}
                   onPress={toggleDownload}
                 />
               )}
@@ -174,7 +174,7 @@ export default function renderText() {
               <AntDesign
                 name={isInFavorites(id, table) ? "star" : "staro"}
                 size={24}
-                color={Colors.light.star}
+                style={themeStyles.favoriteIcon}
                 onPress={() => toggleFavorite(id, table, title)}
               />
             </View>
@@ -188,10 +188,10 @@ export default function renderText() {
         </View>
       ) : displaySingleAnswer ? (
         <ScrollView style={styles.answerContainer}>
-          <View style={[styles.questionContainer, themeStyles.container]}>
-            <Text style={styles.questionText}>{displayQuestion}</Text>
+          <View style={[styles.questionContainer, themeStyles.containerContrast]}>
+            <Text style={[styles.questionText, {"lineHeight": lineHeight, "fontSize": fontSize}]}>{displayQuestion}</Text>
           </View>
-          <View style={[styles.singleAnswers, themeStyles.container]}>
+          <View style={[styles.singleAnswers, themeStyles.containerContrast]}>
             <View style={styles.copyContainerSingle}>
               {isCopiedSingle ? (
                 <View style={styles.copyDoneContainer}>
@@ -209,7 +209,7 @@ export default function renderText() {
             <Markdown
               style={{
                 body: {
-                  ...themeStyles.text,
+                  ...themeStyles.markdownText,
                   fontSize: fontSize,
                   lineHeight: lineHeight,
                   fontFamily: Platform.OS === "ios" ? "Helvetica" : "Roboto",
@@ -218,27 +218,27 @@ export default function renderText() {
                   fontSize: fontSize + 5,
                 },
                 heading2: {
-                  ...themeStyles.text,
+                  ...themeStyles.markdownText,
                   fontSize: fontSize + 10,
                   textAlign: "center",
                 },
                 heading3: {
-                  ...themeStyles.text,
+                  ...themeStyles.markdownText,
                   fontSize: fontSize + 10,
                   fontWeight: "bold",
                 },
                 heading4: {
-                  ...themeStyles.text,
+                  ...themeStyles.markdownText,
                   fontSize: fontSize + 10,
                   textAlign: "center",
                   fontWeight: "bold",
                 },
                 heading5: {
-                  ...themeStyles.text,
+                  ...themeStyles.markdownText,
                   fontSize: fontSize + 10,
                 },
                 heading6: {
-                  ...themeStyles.text,
+                  ...themeStyle.markdownText,
                   fontSize: fontSize,
                   textAlign: "center",
                 },
@@ -250,7 +250,7 @@ export default function renderText() {
         </ScrollView>
       ) : (
         <ScrollView style={styles.answerContainer}>
-          <View style={[styles.questionContainer, themeStyles.container]}>
+          <View style={[styles.questionContainer, themeStyles.containerContrast]}>
             <Text style={styles.questionText}>{displayQuestion}</Text>
           </View>
           <View style={styles.marjaChoiceContainer}>
@@ -266,7 +266,7 @@ export default function renderText() {
             ))}
           </View>
           {filteredAnswers.map((answer, index) => (
-            <View key={index} style={[styles.answers, themeStyles.container]}>
+            <View key={index} style={[styles.answers, themeStyles.containerContrast]}>
               <View style={styles.copyContainer}>
                 {isCopiedMultiple[answer.name] ? (
                   <View style={styles.copyDoneContainer}>
@@ -283,7 +283,7 @@ export default function renderText() {
                   </Pressable>
                 )}
               </View>
-              <View style={[styles.headerContainer, , themeStyles.container]}>
+              <View style={[styles.headerContainer, , themeStyles.containerContrast]}>
                 <View style={styles.headerImage}>
                   <Image
                     source={images[answer.name]}
@@ -291,14 +291,14 @@ export default function renderText() {
                     contentFit='cover'
                   />
                 </View>
-                <View style={[styles.headerText, themeStyles.container]}>
+                <View style={[styles.headerText, themeStyles.containerContrast]}>
                   <Text style={styles.marjaText}>{answer.marja}</Text>
                 </View>
               </View>
               <Markdown
                 style={{
                   body: {
-                    ...themeStyles.text,
+                    ...themeStyles.markdownText,
                     fontSize: fontSize,
                     lineHeight: lineHeight,
                     fontFamily: Platform.OS === "ios" ? "Helvetica" : "Roboto",
@@ -307,27 +307,27 @@ export default function renderText() {
                     fontSize: fontSize + 5,
                   },
                   heading2: {
-                    ...themeStyles.text,
+                    ...themeStyles.markdownText,
                     fontSize: fontSize + 10,
                     textAlign: "center",
                   },
                   heading3: {
-                    ...themeStyles.text,
+                    ...themeStyles.markdownText,
                     fontSize: fontSize + 10,
                     fontWeight: "bold",
                   },
                   heading4: {
-                    ...themeStyles.text,
+                    ...themeStyles.markdownText,
                     fontSize: fontSize + 10,
                     textAlign: "center",
                     fontWeight: "bold",
                   },
                   heading5: {
-                    ...themeStyles.text,
+                    ...themeStyles.markdownText,
                     fontSize: fontSize + 10,
                   },
                   heading6: {
-                    ...themeStyles.text,
+                    ...themeStyles.markdownText,
                     fontSize: fontSize,
                     textAlign: "center",
                   },
@@ -370,7 +370,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   questionText: {
-    fontSize: 20,
     textAlign: "center",
     fontWeight: "bold",
   },

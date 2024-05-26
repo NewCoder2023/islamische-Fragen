@@ -4,8 +4,13 @@ import React from "react";
 import { Link } from "expo-router";
 import { Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useColorScheme } from "react-native";
+import { coustomTheme } from "./coustomTheme";
 
-const HeaderFlashListIndex = ({ isLoggedIn, themeStyles }: any) => {
+const HeaderFlashListIndex = ({ isLoggedIn }: any) => {
+
+  const colorScheme = useColorScheme();
+  const themeStyles = coustomTheme(colorScheme)
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.headerTitle}>Neuigkeiten</Text>
@@ -15,7 +20,7 @@ const HeaderFlashListIndex = ({ isLoggedIn, themeStyles }: any) => {
             <MaterialIcons
               name='add-circle-outline'
               size={34}
-              style={themeStyles.button}
+              style={themeStyles.addNewsButton}
             />
           </Pressable>
         </Link>

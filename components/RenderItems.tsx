@@ -7,6 +7,7 @@ import { Link } from "expo-router";
 import { useColorScheme } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { Appearance } from "react-native";
+import { coustomTheme } from "./coustomTheme";
 
 interface Item {
   id: number;
@@ -35,11 +36,10 @@ export default function RenderItems({
   };
 
   const colorScheme = useColorScheme();
-
-  const themeContainerStyle =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-  const themeErrorStyle =
-    colorScheme === "light" ? styles.lightError : styles.darkError;
+  const themeStyles = coustomTheme(colorScheme);
+  
+  ;
+ 
 
   console.log(table);
 
@@ -48,7 +48,7 @@ export default function RenderItems({
     <View style={styles.container}>
       {fetchError && (
         <View style={styles.renderError}>
-          <Text style={[styles.errorText, themeErrorStyle]}>{fetchError}</Text>
+          <Text style={[styles.errorText, themeStyles.error]}>{fetchError}</Text>
         </View>
       )}
       {items && (
@@ -72,7 +72,7 @@ export default function RenderItems({
                 asChild
               >
                 <Pressable>
-                  <View style={[styles.renderItem, themeContainerStyle]}>
+                  <View style={[styles.renderItem, themeStyles.containerContrast]}>
                     <Text style={styles.itemText}>{item.title.trim()}</Text>
                     <Feather
                       name='arrow-right-circle'
@@ -126,16 +126,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
-  lightError: {
-    color: Colors.light.error,
-  },
-  darkError: {
-    color: Colors.dark.error,
-  },
+  
 });

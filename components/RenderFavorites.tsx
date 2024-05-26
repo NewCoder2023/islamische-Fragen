@@ -37,7 +37,7 @@ export default function RenderFavorites({ items }) {
       asChild
     >
       <Pressable>
-        <View style={[styles.renderItem, themeStyles.container]}>
+        <View style={[styles.renderItem, themeStyles.containerContrast]}>
           <Text style={styles.itemText}>{item.title.trim()}</Text>
           <Feather
             name='arrow-right-circle'

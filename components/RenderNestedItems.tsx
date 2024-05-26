@@ -70,7 +70,7 @@ const RenderNestedItems: React.FC<RenderNestedItemsProps> = ({
                 asChild
               >
                 <Pressable>
-                  <View style={[styles.renderItem, themeStyles.container]}>
+                  <View style={[styles.renderItem, themeStyles.containerContrast]}>
                     <Text style={styles.itemText}>{item.title.trim()}</Text>
                     <Feather
                       name='arrow-right-circle'

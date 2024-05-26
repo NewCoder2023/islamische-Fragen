@@ -5,6 +5,7 @@ import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useColorScheme } from "react-native";
+import { coustomTheme } from "./coustomTheme";
 
 interface Item {
   id: number;
@@ -19,9 +20,7 @@ interface RenderSearchProps {
 
 const RenderSearch: React.FC<RenderSearchProps> = ({ items, table }) => {
   const colorScheme = useColorScheme();
-
-  const themeContainerStyle =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+  const themeStyles = coustomTheme(colorScheme);
 
   const encodeTitle = (title: string) => {
     // Clean the title by trimming and removing new lines
@@ -50,7 +49,9 @@ const RenderSearch: React.FC<RenderSearchProps> = ({ items, table }) => {
               asChild
             >
               <Pressable>
-                <View style={[styles.renderItem, themeContainerStyle]}>
+                <View
+                  style={[styles.renderItem, themeStyles.containerContrast]}
+                >
                   <Text style={styles.itemText}>{item.title.trim()}</Text>
                   <Feather
                     name='arrow-right-circle'
@@ -92,13 +93,7 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     fontSize: 16,
     fontWeight: "bold",
-  },
-  lightContainer: {
-    backgroundColor: Colors.light.white,
-  },
-  darkContainer: {
-    backgroundColor: Colors.dark.contrast,
-  },
+  }
 });
 
 export default RenderSearch;

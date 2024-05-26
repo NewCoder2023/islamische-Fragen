@@ -59,28 +59,36 @@ export default function index() {
             <Text style={styles.activityText}>
               Neuer Beitrag wird hochgeladen!
             </Text>
-            <ActivityIndicator size='large' color='#009432' />
+            <ActivityIndicator
+              size='large'
+              color={
+                colorScheme == "light"
+                  ? Colors.light.activityIndicator
+                  : Colors.dark.activityIndicator
+              }
+            />
           </View>
         ) : null}
         {updateAvailable && (
           <View style={styles.updateContainer}>
-            <Pressable style={styles.updateButton} onPress={() => updateNews()}>
+            <Pressable
+              style={[styles.updateButton, themeStyles.updateButtonNews]}
+              onPress={() => updateNews()}
+            >
               <Text style={styles.updateButtonText}>Aktualisieren</Text>
             </Pressable>
           </View>
         )}
         {fetchError ? (
           <ScrollView
-          style={styles.fetchErrorScrollView}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={updateNews} />
-          }
-        >
-         
+            style={styles.fetchErrorScrollView}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={updateNews} />
+            }
+          >
             <Text style={[styles.errorText, themeStyles.error]}>
               {fetchError}
             </Text>
-
           </ScrollView>
         ) : posts.length == 0 && !fetchError ? (
           <ScrollView
@@ -89,10 +97,7 @@ export default function index() {
               <RefreshControl refreshing={refreshing} onRefresh={updateNews} />
             }
           >
-            <HeaderFlashListIndex
-              isLoggedIn={isLoggedIn}
-              themeStyles={themeStyles}
-            />
+            <HeaderFlashListIndex isLoggedIn={isLoggedIn} />
             <Text style={styles.emptyText}>
               Es gibt derzeit noch keine {"\n"} Neugikeiten!
             </Text>
@@ -109,7 +114,7 @@ export default function index() {
                 <Feather
                   name='arrow-up-circle'
                   size={35}
-                  color={colorScheme == "dark" ? "#45CE30" : "#009432"}
+                  style={themeStyles.arrowUp}
                 />
               </Pressable>
             )}
@@ -124,12 +129,7 @@ export default function index() {
                 />
               }
               renderItem={({ item }) => (
-                <RenderItemsFlashList
-                  item={item}
-                  isLoggedIn={isLoggedIn}
-                  themeContainerStyle={themeStyles.container}
-                  colorScheme={colorScheme}
-                />
+                <RenderItemsFlashList item={item} isLoggedIn={isLoggedIn} />
               )}
               estimatedItemSize={118}
               keyExtractor={(item) => item.id.toString()}
@@ -290,7 +290,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   updateButton: {
-    backgroundColor: "#2ecc71",
     borderWidth: 1,
     borderRadius: 30,
   },
@@ -298,6 +297,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 6,
     fontWeight: "bold",
-    color: Colors.light.black,
   },
 });

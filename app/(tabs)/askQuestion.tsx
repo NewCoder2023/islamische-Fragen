@@ -163,28 +163,28 @@ export default function askQuestion() {
             }
           >
             <TextInput
-              style={[styles.input, styles.inputName, themeStyles.text]}
+              style={[styles.input, styles.inputName, themeStyles.inverseTextInput]}
               onChangeText={setName}
               value={name}
               placeholder='Name (optional)'
               keyboardType='default'
             />
             <TextInput
-              style={[styles.input, styles.inputAge, themeStyles.text]}
+              style={[styles.input, styles.inputAge, themeStyles.inverseTextInput]}
               onChangeText={setAge}
               value={age}
               placeholder='Alter (Pflicht)'
               keyboardType='numeric'
             />
             <TextInput
-              style={[styles.input, styles.inputEmail, themeStyles.text]}
+              style={[styles.input, styles.inputEmail, themeStyles.inverseTextInput]}
               onChangeText={setEmail}
               value={email}
               placeholder='E-Mail (Pflicht)'
               keyboardType='email-address'
             />
             <TextInput
-              style={[styles.input, styles.inputEmail, themeStyles.text]}
+              style={[styles.input, styles.inputEmail, themeStyles.inverseTextInput]}
               onChangeText={setValidateEmail}
               value={validateEmail}
               placeholder='E-Mail wiederholen (Pflicht)'
@@ -234,7 +234,7 @@ export default function askQuestion() {
               </View>
             </View>
             <TextInput
-              style={[styles.input, styles.inputQuestion, themeStyles.text]}
+              style={[styles.input, styles.inputQuestion, themeStyles.inverseTextInput]}
               onChangeText={setQuestion}
               value={question}
               placeholder='Frage (Pflicht)'

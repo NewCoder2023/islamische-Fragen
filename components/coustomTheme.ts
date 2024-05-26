@@ -1,49 +1,75 @@
 import Colors from "constants/Colors";
 
 export const lightTheme = {
-  container: {
-    backgroundColor: Colors.light.white,
-  },
-  text: {
-    color: Colors.light.text,
+  containerContrast: {
+    backgroundColor: Colors.light.contrast,
   },
   error: {
     color: Colors.light.error,
   },
-  button: {
-    color: Colors.light.adButton,
+  addNewsButton: {
+    color: Colors.light.addNewsButton,
   },
-  background: {
-    backgroundColor: Colors.light.background,
-  },
-  inverseText: {
-    color: Colors.light.white,
+  inverseTextInput: {
+    color: Colors.light.black,
+    backgroundColor: Colors.light.contrast,
   },
   categorieText: {
-    color: "#50707C",
+    color: Colors.light.categorieText,
   },
   categorieBackground: {
-    backgroundColor: "#96BFCC",
+    backgroundColor: Colors.light.categorieBackground,
   },
-  border: {
-    borderColor: "#DDC092",
+  indexBorderDash: {
+    borderColor: Colors.light.indexBorderDash,
+    color: Colors.light.indexBorderDash,
   },
-  borderIndex: {
-    borderColor: "#DDC092",
+  indexCategoryTextBorder: {
+    borderColor: Colors.light.indexCategoryTextBorder,
   },
   backgroundIndex: {
-    backgroundColor: "#41ACD2",
+    backgroundColor: Colors.light.backgroundIndexHeader,
   },
-  dashIndex: {
-    color: "#DDC092",
+  link: {
+    color: Colors.light.link,
   },
-link: {
-  color: Colors.light.link
-}
+  shadow: {
+    shadowColor: Colors.light.shadowColor,
+  },
+  updateButtonNews: {
+    backgroundColor: Colors.light.updateButtonNews,
+  },
+  trashIcon: {
+    color: Colors.light.trashIcon,
+  },
+  characterCountNewsImage: {
+    color: Colors.light.characterCountNewsImage,
+  },
+  activityIndicator: {
+    color: Colors.light.activityIndicator,
+  },
+  arrowUp: {
+    color: Colors.light.arrowUp,
+  },
+  searchBorderDash: {
+    color: Colors.light.searchBorderDash,
+  },
+  deleteIcon: {
+    color: Colors.light.deleteIcon,
+  },
+  downloadIcon: {
+    color: Colors.light.deleteIcon,
+  },
+  favoriteIcon: {
+    color: Colors.light.favoriteIcon,
+  },
+  markdownText: {
+    color: Colors.light.text,
+  }
 };
 
 export const darkTheme = {
-  container: {
+  containerContrast: {
     backgroundColor: Colors.dark.contrast,
   },
   text: {
@@ -52,35 +78,67 @@ export const darkTheme = {
   error: {
     color: Colors.dark.error,
   },
-  button: {
-    color: Colors.dark.adButton,
+  addNewsButton: {
+    color: Colors.dark.addNewsButton,
   },
   background: {
     backgroundColor: Colors.dark.background,
   },
-  inverseText: {
-    color: Colors.dark.black,
+  inverseTextInput: {
+    color: Colors.dark.white,
+    backgroundColor: Colors.dark.contrast,
   },
   categorieText: {
-    color: "#000000",
+    color: Colors.dark.categorieText,
   },
   categorieBackground: {
-    backgroundColor: "#96BFCC",
+    backgroundColor: Colors.dark.categorieBackground,
   },
-  border: {
-    borderColor: "#DDC092",
+  indexCategoryTextBorder: {
+    borderColor: Colors.dark.indexCategoryTextBorder,
   },
-  borderIndex: {
-    borderColor: "#DDC092",
+  indexBorderDash: {
+    borderColor: Colors.dark.indexBorderDash,
+    color: Colors.dark.indexBorderDash,
   },
   backgroundIndex: {
-    backgroundColor: "#41ACD2",
+    backgroundColor: Colors.dark.backgroundIndexHeader,
   },
-  dashIndex: {
-    color: "#DDC092",
+  shadow: {
+    shadowColor: Colors.dark.shadowColor,
   },
   link: {
-    color: Colors.light.link
+    color: Colors.dark.link,
+  },
+  updateButtonNews: {
+    backgroundColor: Colors.dark.updateButtonNews,
+  },
+  trashIcon: {
+    color: Colors.dark.trashIcon,
+  },
+  characterCountNewsImage: {
+    color: Colors.dark.characterCountNewsImage,
+  },
+  activityIndicator: {
+    color: Colors.dark.activityIndicator,
+  },
+  arrowUp: {
+    color: Colors.dark.arrowUp,
+  },
+  searchBorderDash: {
+    color: Colors.dark.searchBorderDash,
+  },
+  deleteIcon: {
+    color: Colors.dark.deleteIcon,
+  },
+  downloadIcon: {
+    color: Colors.dark.deleteIcon,
+  },
+  favoriteIcon: {
+    color: Colors.dark.favoriteIcon,
+  },
+  markdownText: {
+    color: Colors.dark.text,
   }
 };
 
